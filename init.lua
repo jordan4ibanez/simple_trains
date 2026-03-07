@@ -1,5 +1,8 @@
 local modpath = core.get_modpath(core.get_current_modname())
-print(dofile(modpath .. "/track.lua"))
+local track = dofile(modpath .. "/track.lua")
+if track == "unsupported" then
+	return
+end
 
 ---@class Train
 local train = {}
