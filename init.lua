@@ -18,7 +18,7 @@ train.initial_properties = {
 }
 
 function train:detect_on_track()
-	return false
+	self.on_track = core.get_node(self.position).name == track
 end
 
 function train:on_activate(staticdata, dtime_s)
