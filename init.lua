@@ -1,3 +1,6 @@
+local modpath = core.get_modpath(core.get_current_modname())
+print(dofile(modpath .. "/track.lua"))
+
 ---@class Train
 local train = {}
 train.object = nil
@@ -15,16 +18,8 @@ function train:on_activate(staticdata, dtime_s)
 	self.last_position = vector.round(self.object:get_pos())
 end
 
-function train:test()
-	print("choo choo")
-end
-
 function train:on_step(dtime, moveresult)
-	print(dtime)
-	self:test()
+
 end
 
 core.register_entity("simple_trains:train", train)
-
-local modpath = core.get_modpath(core.get_current_modname())
-dofile(modpath .. "/track.lua")
