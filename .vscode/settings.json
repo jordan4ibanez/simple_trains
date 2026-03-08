@@ -1,6 +1,7 @@
 {
 	"Lua.diagnostics.globals": [
 		"core",
-		"vector"
+		"vector",
+		"dump"
 	],
 }
