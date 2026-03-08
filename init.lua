@@ -53,14 +53,18 @@ function train:on_activate(staticdata, dtime_s)
 end
 
 ---Train sits there idle and waits for a track update.
-function train:idle()
+---@param dtime number
+function train:idle(dtime)
 	print("idling")
 end
 
+---Train on server step.
+---@param dtime number
+---@param moveresult table
 function train:on_step(dtime, moveresult)
 	self:detect_on_track()
 	if self.state == STATE.idle then
-		self:idle()
+		self:idle(dtime)
 	elseif self.state == STATE.rolling then
 	end
 end
