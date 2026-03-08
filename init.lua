@@ -4,6 +4,14 @@ if track == "unsupported" then
 	return
 end
 
+
+---@enum states
+local STATE = {
+	idle = 0,
+	rolling = 1
+}
+
+
 ---@class Train
 local train = {}
 train.object = nil
