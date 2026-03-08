@@ -18,9 +18,12 @@ train.object = nil
 
 train.position = vector.new(0, 0, 0)
 train.old_position = vector.new(0, 0, 0)
+---@type boolean
 train.on_track = false
 ---@type train_state
 train.state = STATE.idle
+---@type number
+train.idle_timer = 0
 
 train.initial_properties = {
 	visual = "mesh",
@@ -49,8 +52,17 @@ function train:on_activate(staticdata, dtime_s)
 	print(dump(self.object:get_properties().collisionbox))
 end
 
+---Train sits there idle and waits for a track update.
+function train:idle()
+	print("idling")
+end
+
 function train:on_step(dtime, moveresult)
 	self:detect_on_track()
+	if self.state == STATE.idle then
+		self:idle()
+	elseif self.state == STATE.rolling then
+	end
 end
 
 core.register_entity("simple_trains:train", train)
