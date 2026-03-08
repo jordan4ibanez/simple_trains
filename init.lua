@@ -15,8 +15,12 @@ train.on_track = false
 train.initial_properties = {
 	visual = "mesh",
 	mesh = "test_train.gltf",
-	textures = {"test_train.png"},
+	textures = { "test_train.png" },
 	physical = true,
+	collision_box = {
+		0, 0, 0,
+		1, 1, 1,
+	}
 }
 
 function train:detect_on_track()
@@ -26,11 +30,13 @@ end
 function train:on_activate(staticdata, dtime_s)
 	-- self.object:set_acceleration(vector.new(0,-10,0))
 	self.object:set_velocity(vector.new(0, 0, 0))
-	self.object:set_acceleration(vector.new(0,-10,0))
+	self.object:set_acceleration(vector.new(0, -10, 0))
 
 
 	self.position = vector.round(self.object:get_pos())
 	self.old_position = vector.copy(self.position)
+
+	-- print(dump(self.object:get_properties()))
 end
 
 function train:on_step(dtime, moveresult)
