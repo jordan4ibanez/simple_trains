@@ -17,7 +17,7 @@ train.initial_properties = {
 	mesh = "test_train.gltf",
 	textures = { "test_train.png" },
 	physical = true,
-	collision_box = {
+	collisionbox = {
 		0, 0, 0,
 		1, 1, 1,
 	}
@@ -36,7 +36,7 @@ function train:on_activate(staticdata, dtime_s)
 	self.position = vector.round(self.object:get_pos())
 	self.old_position = vector.copy(self.position)
 
-	-- print(dump(self.object:get_properties()))
+	print(dump(self.object:get_properties().collisionbox))
 end
 
 function train:on_step(dtime, moveresult)
@@ -44,3 +44,14 @@ function train:on_step(dtime, moveresult)
 end
 
 core.register_entity("simple_trains:train", train)
+
+
+core.register_chatcommand("t", {
+	func = function(name)
+		local p = core.get_player_by_name(name)
+		if not p then return end
+		local pos = p:get_pos()
+		pos.y = pos.y + 1
+		core.add_entity(pos, "simple_trains:train")
+	end
+})
