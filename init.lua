@@ -5,7 +5,7 @@ if track == "unsupported" then
 end
 
 
----@enum states
+---@enum train_state
 local STATE = {
 	idle = 0,
 	rolling = 1
@@ -19,6 +19,8 @@ train.object = nil
 train.position = vector.new(0, 0, 0)
 train.old_position = vector.new(0, 0, 0)
 train.on_track = false
+---@type train_state
+train.state = STATE.idle
 
 train.initial_properties = {
 	visual = "mesh",
