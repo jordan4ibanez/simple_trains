@@ -20,6 +20,8 @@ train.position = vector.new(0, 0, 0)
 train.old_position = vector.new(0, 0, 0)
 ---@type boolean
 train.on_track = false
+---@type boolean
+train.was_on_track = false
 ---@type train_state
 train.state = STATE.idle
 ---@type number
@@ -37,6 +39,7 @@ train.initial_properties = {
 }
 
 function train:detect_on_track()
+	self.was_on_track = self.on_track
 	self.on_track = core.get_node(self.position).name == track
 end
 
