@@ -35,6 +35,8 @@ train.was_on_track = false
 train.state = STATE.idle
 ---@type number
 train.idle_timer = 0
+---@type direction
+train.direction = DIRECTION.north
 
 train.initial_properties = {
 	visual = "mesh",
