@@ -80,7 +80,6 @@ end
 ---Train sits there idle and waits for a track update.
 ---@param dtime number
 function train:idle(dtime)
-	print("idling")
 	if not self.was_on_track and self.on_track then
 		self.object:set_pos(self.position)
 	end
