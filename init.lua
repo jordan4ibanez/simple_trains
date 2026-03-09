@@ -44,18 +44,20 @@ function train:on_activate(staticdata, dtime_s)
 	-- self.object:set_velocity(vector.new(0, 0, 0))
 end
 
-		self.object:set_properties({
-			physical = not self.on_track
-		})
+-- function train:handle_physics()
+-- 	if self.on_track ~= self.was_on_track then
+-- 		self.object:set_properties({
+-- 			physical = not self.on_track
+-- 		})
 
-		local gravity = -10
-		if self.on_track then gravity = 0 end
-		self.object:set_acceleration(vector.new(0, gravity, 0))
-		self.object:set_velocity(vector.new(0, 0, 0))
-		-- This fixes a client side guessing bug.
-		self.object:set_pos(self.object:get_pos())
-	end
-end
+-- 		local gravity = -10
+-- 		if self.on_track then gravity = 0 end
+-- 		self.object:set_acceleration(vector.new(0, gravity, 0))
+-- 		self.object:set_velocity(vector.new(0, 0, 0))
+-- 		-- This fixes a client side guessing bug.
+-- 		self.object:set_pos(self.object:get_pos())
+-- 	end
+-- end
 
 function train:update_position()
 	self.old_position = vector.copy(self.position)
