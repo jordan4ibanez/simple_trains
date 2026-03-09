@@ -80,26 +80,30 @@ end
 ---Train sits there idle and waits for a track update.
 ---@param dtime number
 function train:idle(dtime)
+	if not self.on_track then
+		-- Magnetize to the nearest track.
+		self.idle_timer = self.idle_timer + dtime
+		if self.idle_timer > 0.25 then
+			self.idle_timer = self.idle_timer - 0.25
 
-	self.idle_timer = self.idle_timer + dtime
-
-	if self.idle_timer > 0.25 then
-
-
+			local new_pos = core.find_node_near(self.object:get_pos(), 1, track)
+			if new_pos then
+				self.object:move_to(new_pos)
+			end
+		end
 	end
 
 	-- if not self.was_on_track and self.on_track then
 	-- 	self.object:set_pos(self.position)
 	-- end
-
 end
 
 ---Train on server step.
 ---@param dtime number
 ---@param moveresult table
 function train:on_step(dtime, moveresult)
-	-- self:update_position()
-	-- self:detect_on_track()
+	self:update_position()
+	self:detect_on_track()
 
 	if self.state == STATE.idle then
 		self:idle(dtime)
