@@ -42,6 +42,7 @@ function train:on_activate(staticdata, dtime_s)
 	-- self.object:set_acceleration(vector.new(0,-10,0))
 	self.object:set_velocity(vector.new(0, 0, 0))
 	self.object:set_acceleration(vector.new(0, -10, 0))
+end
 
 
 	self.position = vector.round(self.object:get_pos())
