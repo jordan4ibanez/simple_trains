@@ -41,6 +41,15 @@ function train:on_activate(staticdata, dtime_s)
 	self.object:set_acceleration(vector.new(0, -10, 0))
 end
 
+function train:handle_physics()
+	self.object:set_properties({
+		physical = not self.on_track
+	})
+	local gravity = -10
+	if self.on_track then gravity = 0 end
+	self.object:set_acceleration(vector.new(0, gravity, 0))
+end
+
 function train:update_position()
 	self.position = vector.round(self.object:get_pos())
 	self.old_position = vector.copy(self.position)
