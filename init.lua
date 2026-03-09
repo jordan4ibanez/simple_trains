@@ -11,6 +11,14 @@ local STATE = {
 	rolling = 1
 }
 
+---@enum direction
+local DIRECTION = {
+	north = 0,
+	east = 1,
+	south = 2,
+	west = 3,
+}
+
 
 ---@class Train
 local train = {}
