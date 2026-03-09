@@ -31,7 +31,7 @@ train.initial_properties = {
 	visual = "mesh",
 	mesh = "test_train.gltf",
 	textures = { "test_train.png" },
-	physical = true,
+	physical = false,
 	collide_with_objects = false,
 	selectionbox = {
 		-0.2, -0.4, -0.2,
@@ -40,7 +40,7 @@ train.initial_properties = {
 }
 
 function train:on_activate(staticdata, dtime_s)
-	self.object:set_acceleration(vector.new(0, -10, 0))
+	-- self.object:set_acceleration(vector.new(0, -10, 0))
 	-- self.object:set_velocity(vector.new(0, 0, 0))
 end
 
@@ -80,17 +80,26 @@ end
 ---Train sits there idle and waits for a track update.
 ---@param dtime number
 function train:idle(dtime)
-	if not self.was_on_track and self.on_track then
-		self.object:set_pos(self.position)
+
+	self.idle_timer = self.idle_timer + dtime
+
+	if self.idle_timer > 0.25 then
+
+
 	end
+
+	-- if not self.was_on_track and self.on_track then
+	-- 	self.object:set_pos(self.position)
+	-- end
+
 end
 
 ---Train on server step.
 ---@param dtime number
 ---@param moveresult table
 function train:on_step(dtime, moveresult)
-	self:update_position()
-	self:detect_on_track()
+	-- self:update_position()
+	-- self:detect_on_track()
 
 	if self.state == STATE.idle then
 		self:idle(dtime)
