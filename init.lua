@@ -44,11 +44,18 @@ function train:on_activate(staticdata, dtime_s)
 	self.object:set_acceleration(vector.new(0, -10, 0))
 end
 
-
+function train:update_position()
 	self.position = vector.round(self.object:get_pos())
 	self.old_position = vector.copy(self.position)
 
-	print(dump(self.object:get_properties().collisionbox))
+	core.add_particle({
+		pos = self.position,
+		velocity = { x = 0, y = 2, z = 0 },
+		size = 1,
+		texture = "default_stone.png"
+	})
+end
+
 function train:detect_on_track()
 	self.was_on_track = self.on_track
 	self.on_track = core.get_node(self.position).name == track
