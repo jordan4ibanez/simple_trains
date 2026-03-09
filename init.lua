@@ -33,6 +33,10 @@ train.initial_properties = {
 	textures = { "test_train.png" },
 	physical = true,
 	collide_with_objects = false,
+	selectionbox = {
+		-0.2, -0.4, -0.2,
+		0.2, 0.4, 0.2
+	}
 }
 
 function train:on_activate(staticdata, dtime_s)
