@@ -88,6 +88,10 @@ function train:detect_on_track()
 	self.on_track = core.get_node(self.position).name == track
 end
 
+function train:search_idle()
+
+end
+
 ---Train sits there idle and waits for a track update.
 ---@param dtime number
 function train:idle(dtime)
@@ -102,6 +106,9 @@ function train:idle(dtime)
 				self.object:move_to(new_pos)
 			end
 		end
+	else
+		-- This allows you to change the locomotive initial direction.
+		self:search_idle()
 	end
 
 	-- if not self.was_on_track and self.on_track then
