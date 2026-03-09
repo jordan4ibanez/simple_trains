@@ -56,6 +56,9 @@ end
 function train:detect_on_track()
 	self.was_on_track = self.on_track
 	self.on_track = core.get_node(self.position).name == track
+	self.object:set_properties({
+		physical = self.on_track
+	})
 end
 
 ---Train sits there idle and waits for a track update.
