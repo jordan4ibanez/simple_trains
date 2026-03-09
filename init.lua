@@ -62,7 +62,7 @@ end
 function train:update_position()
 	self.old_position = vector.copy(self.position)
 	self.position = vector.round(self.object:get_pos())
-	self:handle_physics()
+	-- self:handle_physics()
 
 	core.add_particle({
 		pos = self.position,
