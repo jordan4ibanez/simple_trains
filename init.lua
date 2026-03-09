@@ -37,7 +37,7 @@ train.state = STATE.idle
 ---@type number
 train.idle_timer = 0
 ---@type direction
-train.direction = DIRECTION.north
+train.direction = DIRECTION.null
 
 train.initial_properties = {
 	visual = "mesh",
@@ -89,8 +89,14 @@ function train:detect_on_track()
 	self.on_track = core.get_node(self.position).name == track
 end
 
-function train:search_idle()
-
+---Train on a single track searches for a
+---@param dtime number
+function train:search_idle(dtime)
+	self.idle_timer = self.idle_timer + dtime
+	if self.idle_timer > 0.25 then
+		self.idle_timer = self.idle_timer - 0.25
+		print("searching for direction")
+	end
 end
 
 ---Train sits there idle and waits for a track update.
@@ -107,9 +113,9 @@ function train:idle(dtime)
 				self.object:move_to(new_pos)
 			end
 		end
-	else
+	elseif self.direction == DIRECTION.null then
 		-- This allows you to change the locomotive initial direction.
-		self:search_idle()
+		self:search_idle(dtime)
 	end
 
 	-- if not self.was_on_track and self.on_track then
