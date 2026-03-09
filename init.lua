@@ -32,10 +32,7 @@ train.initial_properties = {
 	mesh = "test_train.gltf",
 	textures = { "test_train.png" },
 	physical = true,
-	collisionbox = {
-		0, 0, 0,
-		1, 1, 1,
-	}
+	collide_with_objects = false,
 }
 
 function train:on_activate(staticdata, dtime_s)
