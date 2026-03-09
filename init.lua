@@ -52,6 +52,7 @@ end
 function train:update_position()
 	self.position = vector.round(self.object:get_pos())
 	self.old_position = vector.copy(self.position)
+	self:handle_physics()
 
 	core.add_particle({
 		pos = self.position,
@@ -70,6 +71,9 @@ end
 ---@param dtime number
 function train:idle(dtime)
 	print("idling")
+	if not self.was_on_track and self.on_track then
+		self.object:set_pos(self.position)
+	end
 end
 
 ---Train on server step.
