@@ -11,6 +11,7 @@ local STATE = {
 	rolling = 1
 }
 
+---Goes clockwise from 0.
 ---@enum direction
 local DIRECTION = {
 	north = 0,
