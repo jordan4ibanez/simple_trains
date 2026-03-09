@@ -21,13 +21,23 @@ local DIRECTION = {
 	west = 4,
 }
 
+---@class vec3
+---@field public x number
+---@field public y number
+---@field public z number
+
 
 ---@class Train
 local train = {}
 train.object = nil
 
+---@type vec3
 train.position = vector.new(0, 0, 0)
+---@type vec3
 train.old_position = vector.new(0, 0, 0)
+---@type vec3
+train.forward_position = vector.new(0, 0, 0)
+
 ---@type boolean
 train.on_track = false
 ---@type boolean
