@@ -113,10 +113,10 @@ local dirs = {
 }
 
 local reverse_lookup_enum = {
-	[2] = DIRECTION.north,
-	[3] = DIRECTION.east,
-	[4] = DIRECTION.south,
-	[5] = DIRECTION.west
+	DIRECTION.north,
+	DIRECTION.east,
+	DIRECTION.south,
+	DIRECTION.west
 }
 
 ---Holds result of fast_output.
