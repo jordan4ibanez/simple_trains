@@ -7,7 +7,7 @@ if track == "unsupported" then
 	return
 end
 
-local debug_timer = 0.1
+-- local debug_timer = 0.1
 
 ---@type number
 local track_id = core.get_content_id(track)
@@ -250,8 +250,8 @@ end
 function train:idle(dtime)
 	self.idle_timer = self.idle_timer + dtime
 
-	if self.idle_timer < debug_timer then return end
-	self.idle_timer = self.idle_timer - debug_timer
+	if self.idle_timer < 0.2 then return end
+	self.idle_timer = self.idle_timer - 0.2
 
 	if not self.on_track then
 		-- Magnetize to the nearest track.
