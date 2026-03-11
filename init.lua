@@ -89,6 +89,10 @@ end
 -- 	end
 -- end
 
+function train:set_rotation()
+	self.object:set_yaw(((self.direction * -90) + 90) * DEG_TO_RAD)
+end
+
 function train:update_position()
 	self.old_position = vector.copy(self.position)
 	self.position = vector.round(self.object:get_pos())
