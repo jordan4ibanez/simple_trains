@@ -107,6 +107,7 @@ local dirs = {
 	vector.new(0, 0, -1),
 }
 
+---Holds result of fast_output.
 ---@type vec3
 local output = vector.new()
 
