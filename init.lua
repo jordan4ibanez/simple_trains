@@ -148,8 +148,16 @@ function train:search_idle(dtime)
 		self.idle_timer = self.idle_timer - 0.25
 		print("searching for direction")
 
-		for _, dir in ipairs(dirs) do
+		for index, dir in ipairs(dirs) do
 			fast_output(self.position, dir, output)
+
+			---@type number
+			local id = core.get_node_raw(output.x, output.y, output.z)
+
+			if id == track_id then
+				self.direction = reverse_lookup_enum[index]
+				self:set_rotation()
+			end
 		end
 	end
 end
