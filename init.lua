@@ -203,6 +203,7 @@ function train:search_idle()
 			self.direction = reverse_lookup_enum[index]
 			self:set_rotation()
 			self.forward_position = vector.copy(output)
+			break
 		end
 	end
 end
