@@ -325,6 +325,11 @@ function train:roll(dtime)
 	lerp(self.position, self.forward_position, self.movement_lerp)
 
 	self.object:move_to(output)
+
+	-- Tick forward and reset interpolation.
+	if self.movement_lerp < 1 then return end
+	self.movement_lerp = 0
+
 	---@type number
 	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
 	if id == track_id then
