@@ -7,6 +7,8 @@ if track == "unsupported" then
 	return
 end
 
+local debug_timer = 0.1
+
 ---@type number
 local track_id = core.get_content_id(track)
 
@@ -245,8 +247,8 @@ end
 function train:idle(dtime)
 	self.idle_timer = self.idle_timer + dtime
 
-	if self.idle_timer < 0.25 then return end
-	self.idle_timer = self.idle_timer - 0.25
+	if self.idle_timer < debug_timer then return end
+	self.idle_timer = self.idle_timer - debug_timer
 
 	if not self.on_track then
 		-- Magnetize to the nearest track.
@@ -274,8 +276,8 @@ end
 ---@param dtime number
 function train:roll(dtime)
 	self.rolling_timer = self.rolling_timer + dtime
-	if self.rolling_timer < 0.25 then return end
-	self.rolling_timer = self.rolling_timer - 0.25
+	if self.rolling_timer < debug_timer then return end
+	self.rolling_timer = self.rolling_timer - debug_timer
 
 	---@type number
 	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
