@@ -106,8 +106,8 @@ end
 
 ---@type vec3[]
 local dirs = {
-	vector.new(0, 0, 1), -- North.
-	vector.new(1, 0, 0), -- East.
+	vector.new(0, 0, 1), --  North.
+	vector.new(1, 0, 0), --  East.
 	vector.new(0, 0, -1), -- South.
 	vector.new(-1, 0, 0), -- West.
 }
