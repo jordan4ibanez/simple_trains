@@ -181,6 +181,13 @@ function train:update_position()
 		size = 1,
 		texture = "default_stone.png"
 	})
+
+	core.add_particle({
+		pos = self.forward_position,
+		velocity = { x = 0, y = 2, z = 0 },
+		size = 1,
+		texture = "default_dirt.png"
+	})
 end
 
 function train:detect_on_track()
