@@ -143,20 +143,15 @@ end
 ---Train on a single track searches for a
 ---@param dtime number
 function train:search_idle(dtime)
-	self.idle_timer = self.idle_timer + dtime
-	if self.idle_timer > 0.25 then
-		self.idle_timer = self.idle_timer - 0.25
+	for index, dir in ipairs(dirs) do
+		fast_output(self.position, dir, output)
 
-		for index, dir in ipairs(dirs) do
-			fast_output(self.position, dir, output)
+		---@type number
+		local id = core.get_node_raw(output.x, output.y, output.z)
 
-			---@type number
-			local id = core.get_node_raw(output.x, output.y, output.z)
-
-			if id == track_id then
-				self.direction = reverse_lookup_enum[index]
-				self:set_rotation()
-			end
+		if id == track_id then
+			self.direction = reverse_lookup_enum[index]
+			self:set_rotation()
 		end
 	end
 end
@@ -164,21 +159,22 @@ end
 ---Train sits there idle and waits for a track update.
 ---@param dtime number
 function train:idle(dtime)
+	self.idle_timer = self.idle_timer + dtime
+
+	if self.idle_timer < 0.25 then return end
+	self.idle_timer = self.idle_timer - 0.25
+
 	if not self.on_track then
 		-- Magnetize to the nearest track.
-		self.idle_timer = self.idle_timer + dtime
-		if self.idle_timer > 0.25 then
-			self.idle_timer = self.idle_timer - 0.25
-
-			local new_pos = core.find_node_near(self.object:get_pos(), 1, track)
-			if new_pos then
-				self.object:move_to(new_pos)
-			end
+		local new_pos = core.find_node_near(self.object:get_pos(), 1, track)
+		if new_pos then
+			self.object:move_to(new_pos)
 		end
 	elseif self.direction == DIRECTION.null then
 		-- This allows you to change the locomotive initial direction.
 		self:search_idle(dtime)
 	end
+
 
 	-- if not self.was_on_track and self.on_track then
 	-- 	self.object:set_pos(self.position)
