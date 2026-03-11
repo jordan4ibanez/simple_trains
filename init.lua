@@ -121,10 +121,16 @@ function train:reverse_direction()
 		o = ((i + self.direction) % 4) + 1
 
 		if o ~= self.direction then
-			---@type number
-			local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
+			fast_output(self.position, dirs[o], output)
 
-			print(o, self.direction)
+			---@type number
+			local id = core.get_node_raw(output.x, output.y, output.z)
+
+			if id == track_id then
+				self.direction = reverse_lookup_enum[o]
+				self:set_rotation()
+				break
+			end
 		end
 	end
 end
