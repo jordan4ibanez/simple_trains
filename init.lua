@@ -245,13 +245,21 @@ function train:idle(dtime)
 	end
 end
 
+function train:roll_forward_check()
+	--todo check if track is still in front.
+end
+
+
 ---Train tries to roll forward.
 ---@param dtime number
 function train:roll(dtime)
 	self.rolling_timer = self.rolling_timer + dtime
 	if self.rolling_timer < 0.25 then return end
 	self.rolling_timer = self.rolling_timer - 0.25
+
 	print("rolling")
+
+	self.object:move_to(self.forward_position)
 end
 
 ---Train on server step.
