@@ -248,6 +248,9 @@ end
 ---Train tries to roll forward.
 ---@param dtime number
 function train:roll(dtime)
+	self.rolling_timer = self.rolling_timer + dtime
+	if self.rolling_timer < 0.25 then return end
+	self.rolling_timer = self.rolling_timer - 0.25
 	print("rolling")
 end
 
