@@ -18,6 +18,18 @@ local DEG_TO_RAD = math.pi / 180
 ---Holds result of fast_output and lerp.
 ---@type vec3
 local output = vector.new()
+
+---Linear interpolate 2 vectors.
+---Outputs to ``output`` variable.
+---@param a vec3
+---@param b vec3
+---@param amount number
+local function lerp(a, b, amount)
+	output.x = a.x * amount + b.x * (1 - amount)
+	output.y = a.y * amount + b.y * (1 - amount)
+	output.z = a.z * amount + b.z * (1 - amount)
+end
+
 ---@enum train_state
 local STATE = {
 	idle = 0,
