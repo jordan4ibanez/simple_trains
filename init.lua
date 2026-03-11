@@ -5,6 +5,8 @@ if track == "unsupported" then
 	return
 end
 
+---@type number
+local track_id = core.get_content_id(track)
 
 ---@enum train_state
 local STATE = {
