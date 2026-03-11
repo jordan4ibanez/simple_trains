@@ -136,7 +136,7 @@ end
 ---Attempt to turn the train around.
 function train:reverse_direction()
 	-- Trying to turn the train around while moving would be very complex.
-	if self.state ~= STATE.idle then return end
+	if self.state == STATE.rolling then return end
 
 	---@type number
 	local o = 0
