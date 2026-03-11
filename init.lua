@@ -15,6 +15,9 @@ local track_id = core.get_content_id(track)
 ---@type number
 local DEG_TO_RAD = math.pi / 180
 
+---Holds result of fast_output and lerp.
+---@type vec3
+local output = vector.new()
 ---@enum train_state
 local STATE = {
 	idle = 0,
@@ -62,9 +65,7 @@ local turn_skip_dir = {
 	[DIRECTION.west] = DIRECTION.east,
 }
 
----Holds result of fast_output.
----@type vec3
-local output = vector.new()
+
 
 ---auto dump calc into output vec3.
 ---@param pos vec3
