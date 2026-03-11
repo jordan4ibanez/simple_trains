@@ -139,6 +139,7 @@ function train:reverse_direction()
 			if id == track_id then
 				self.direction = reverse_lookup_enum[o]
 				self:set_rotation()
+				self.forward_position = vector.copy(output)
 				break
 			end
 		end
