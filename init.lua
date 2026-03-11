@@ -185,6 +185,9 @@ end
 function train:detect_on_track()
 	self.was_on_track = self.on_track
 	self.on_track = core.get_node(self.position).name == track
+	if not self.on_track  then
+		self.direction = DIRECTION.null
+	end
 end
 
 ---Ensure the forward position still exists.
