@@ -197,11 +197,6 @@ function train:idle(dtime)
 		-- Also allows you to change the initial direction.
 		self:check_forward()
 	end
-
-
-	-- if not self.was_on_track and self.on_track then
-	-- 	self.object:set_pos(self.position)
-	-- end
 end
 
 ---Train on server step.
