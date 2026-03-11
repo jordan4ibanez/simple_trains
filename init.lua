@@ -173,6 +173,10 @@ function train:idle(dtime)
 	elseif self.direction == DIRECTION.null then
 		-- This allows you to change the locomotive initial direction.
 		self:search_idle()
+	else
+		-- This makes sure the locomotive can move at least 1 node forward.
+		-- Also allows you to change the initial direction.
+		self:check_forward()
 	end
 
 
