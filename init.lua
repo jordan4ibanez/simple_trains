@@ -89,7 +89,7 @@ end
 -- 	end
 -- end
 
----Set the train's rotation.
+---Set the locomotive's rotation.
 function train:set_rotation()
 	if self.direction == DIRECTION.null then
 		self.object:set_yaw(((DIRECTION.north * -90) + 90) * DEG_TO_RAD)
@@ -114,6 +114,20 @@ end
 function train:detect_on_track()
 	self.was_on_track = self.on_track
 	self.on_track = core.get_node(self.position).name == track
+end
+
+---Ensure the forward position still exists.
+function train:check_forward()
+	---@type number
+	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
+
+	-- Track still exists.
+	if id == track_id then return end
+
+	-- Locomotive gets reset to initial properties.
+	self.forward_position = vector.new(0, 0, 0)
+	self.direction = DIRECTION.null
+	self:set_rotation()
 end
 
 ---@type vec3[]
