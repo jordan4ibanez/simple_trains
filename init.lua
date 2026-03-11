@@ -151,6 +151,7 @@ function train:search_idle()
 		if id == track_id then
 			self.direction = reverse_lookup_enum[index]
 			self:set_rotation()
+			self.forward_position = vector.copy(output)
 		end
 	end
 end
