@@ -126,8 +126,10 @@ end
 function train:on_punch(puncher, time_from_last_punch, tool_capabilities, dir, damage)
 	if self.state == STATE.idle then
 		self.state = STATE.rolling
-	else
+	elseif self.state == STATE.rolling then
 		self.state = STATE.idle
+	elseif self.state == STATE.halted then
+		self.state = STATE.rolling
 	end
 end
 
