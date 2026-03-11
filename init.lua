@@ -192,6 +192,9 @@ end
 
 function train:detect_on_track()
 	self.was_on_track = self.on_track
+	local id = core.get_node_raw(self.position.x, self.position.y, self.position.z)
+	self.on_track = id == track_id
+	if not self.on_track then
 		self.direction = DIRECTION.null
 	end
 end
@@ -254,7 +257,6 @@ end
 function train:roll_forward_check()
 	--todo check if track is still in front.
 end
-
 
 ---Train tries to roll forward.
 ---@param dtime number
