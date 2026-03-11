@@ -23,7 +23,7 @@ local output = vector.new()
 ---Outputs to ``output`` variable.
 ---@param a vec3
 ---@param b vec3
----@param amount number
+---@param amount number 0.0 - 1.0
 local function lerp(a, b, amount)
 	output.x = a.x * amount + b.x * (1 - amount)
 	output.y = a.y * amount + b.y * (1 - amount)
