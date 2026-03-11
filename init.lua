@@ -114,7 +114,7 @@ train.direction = DIRECTION.null
 ---@type number
 train.rolling_timer = 0
 ---@type number
-train.turn_lerp = 0
+train.movement_lerp = 0
 
 train.initial_properties = {
 	visual = "mesh",
