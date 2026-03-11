@@ -111,6 +111,14 @@ function train:on_rightclick(clicker)
 	self:reverse_direction()
 end
 
+function train:on_punch(puncher, time_from_last_punch, tool_capabilities, dir, damage)
+	if self.state == STATE.idle then
+		self.state = STATE.rolling
+	else
+		self.state = STATE.idle
+	end
+end
+
 ---Attempt to turn the train around.
 function train:reverse_direction()
 	-- Trying to turn the train around while moving would be very complex.
