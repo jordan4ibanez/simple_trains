@@ -140,9 +140,8 @@ local function fast_output(pos, dir, out)
 	out.z = pos.z + dir.z
 end
 
----Train on a single track searches for a
----@param dtime number
-function train:search_idle(dtime)
+--- Train on a single track searches for track.
+function train:search_idle()
 	for index, dir in ipairs(dirs) do
 		fast_output(self.position, dir, output)
 
@@ -172,7 +171,7 @@ function train:idle(dtime)
 		end
 	elseif self.direction == DIRECTION.null then
 		-- This allows you to change the locomotive initial direction.
-		self:search_idle(dtime)
+		self:search_idle()
 	end
 
 
