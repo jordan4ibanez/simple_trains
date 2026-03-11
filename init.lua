@@ -89,8 +89,13 @@ end
 -- 	end
 -- end
 
+---Set the train's rotation.
 function train:set_rotation()
-	self.object:set_yaw(((self.direction * -90) + 90) * DEG_TO_RAD)
+	if self.direction == DIRECTION.null then
+		self.object:set_yaw(((DIRECTION.north * -90) + 90) * DEG_TO_RAD)
+	else
+		self.object:set_yaw(((self.direction * -90) + 90) * DEG_TO_RAD)
+	end
 end
 
 function train:update_position()
