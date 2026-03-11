@@ -107,6 +107,19 @@ local dirs = {
 	vector.new(0, 0, -1),
 }
 
+---@type vec3
+local output = vector.new()
+
+---auto dump calc into output vec3.
+---@param pos vec3
+---@param dir vec3
+---@param out vec3
+local function fast_output(pos, dir, out)
+	out.x = pos.x + dir.x
+	out.y = pos.y + dir.y
+	out.z = pos.z + dir.z
+end
+
 ---Train on a single track searches for a
 ---@param dtime number
 function train:search_idle(dtime)
@@ -114,6 +127,10 @@ function train:search_idle(dtime)
 	if self.idle_timer > 0.25 then
 		self.idle_timer = self.idle_timer - 0.25
 		print("searching for direction")
+
+		for _, dir in ipairs(dirs) do
+			fast_output(self.position, dir, output)
+		end
 	end
 end
 
