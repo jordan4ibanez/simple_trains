@@ -336,7 +336,7 @@ function train:roll(dtime)
 	self.movement_lerp = 0
 
 	---@type number
-	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
+	id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
 	if id == track_id then
 		self.position = vector.copy(self.forward_position)
 
