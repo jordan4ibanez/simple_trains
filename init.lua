@@ -18,7 +18,8 @@ local DEG_TO_RAD = math.pi / 180
 ---@enum train_state
 local STATE = {
 	idle = 0,
-	rolling = 1
+	rolling = 1,
+	halted = 2,
 }
 
 ---Goes clockwise from 0.
