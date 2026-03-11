@@ -192,6 +192,7 @@ end
 
 function train:detect_on_track()
 	self.was_on_track = self.on_track
+	---@type number
 	local id = core.get_node_raw(self.position.x, self.position.y, self.position.z)
 	self.on_track = id == track_id
 	if not self.on_track then
@@ -254,8 +255,15 @@ function train:idle(dtime)
 	end
 end
 
+---
+---@return boolean
 function train:roll_forward_check()
 	--todo check if track is still in front.
+	---@type number
+	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
+	if id == track_id then return true end
+
+	return false
 end
 
 ---Train tries to roll forward.
