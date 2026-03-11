@@ -1,3 +1,4 @@
+-- It was a lie, this isn't simple at all.
 local modpath = core.get_modpath(core.get_current_modname())
 local track = dofile(modpath .. "/track.lua")
 if track == "unsupported" then
