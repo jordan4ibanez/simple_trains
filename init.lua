@@ -304,8 +304,20 @@ function train:roll(dtime)
 		self.object:move_to(self.forward_position)
 		fast_output(self.position, dirs[self.direction], output)
 		self.forward_position = vector.copy(output)
+
+		-- Turn check.
+		id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
+
+		if id ~= track_id then
+			print("trying to turn")
+			local turn_success = self:turn()
+			if turn_success then
+				fast_output(self.position, dirs[self.direction], output)
+				self.forward_position = vector.copy(output)
+			end
+		end
 	else
-		print("trying to turn")
+		print("idle please")
 	end
 end
 
