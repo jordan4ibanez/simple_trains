@@ -146,7 +146,6 @@ function train:search_idle(dtime)
 	self.idle_timer = self.idle_timer + dtime
 	if self.idle_timer > 0.25 then
 		self.idle_timer = self.idle_timer - 0.25
-		print("searching for direction")
 
 		for index, dir in ipairs(dirs) do
 			fast_output(self.position, dir, output)
