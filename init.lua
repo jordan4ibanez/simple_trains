@@ -83,6 +83,20 @@ end
 function train:reverse_direction()
 	-- Trying to turn the train around while moving would be very complex.
 	if self.state ~= STATE.idle then return end
+
+	---@type number
+	local o = 0
+
+	for i = 1, 4 do
+		o = ((i + self.direction) % 4) + 1
+
+		if o ~= self.direction then
+			---@type number
+			local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
+
+			print(o, self.direction)
+		end
+	end
 end
 
 -- function train:handle_physics()
