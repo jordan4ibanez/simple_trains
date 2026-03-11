@@ -314,9 +314,9 @@ end
 ---Stops if no track available.
 ---@param dtime number
 function train:roll(dtime)
-	self.rolling_timer = self.rolling_timer + dtime
-	if self.rolling_timer < 0.5 then return end
-	self.rolling_timer = self.rolling_timer - 0.5
+	-- self.rolling_timer = self.rolling_timer + dtime
+	-- if self.rolling_timer < 0.5 then return end
+	-- self.rolling_timer = self.rolling_timer - 0.5
 
 	---@type number
 	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
