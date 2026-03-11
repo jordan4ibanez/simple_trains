@@ -99,6 +99,14 @@ function train:detect_on_track()
 	self.on_track = core.get_node(self.position).name == track
 end
 
+---@type vec3[]
+local dirs = {
+	vector.new(1, 0, 0),
+	vector.new(-1, 0, 0),
+	vector.new(0, 0, 1),
+	vector.new(0, 0, -1),
+}
+
 ---Train on a single track searches for a
 ---@param dtime number
 function train:search_idle(dtime)
