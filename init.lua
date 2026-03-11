@@ -318,6 +318,13 @@ function train:roll(dtime)
 	-- if self.rolling_timer < 0.5 then return end
 	-- self.rolling_timer = self.rolling_timer - 0.5
 
+	self.movement_lerp = self.movement_lerp + dtime
+
+	if self.movement_lerp > 1 then self.movement_lerp = 1 end
+
+	lerp(self.position, self.forward_position, self.movement_lerp)
+
+	self.object:move_to(output)
 	---@type number
 	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
 	if id == track_id then
