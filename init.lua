@@ -357,10 +357,9 @@ end
 ---@param dtime number
 ---@param moveresult table
 function train:on_step(dtime, moveresult)
-	self:update_position()
-	self:detect_on_track()
-
 	if self.state == STATE.idle then
+		self:update_position()
+		self:detect_on_track()
 		self:idle(dtime)
 	elseif self.state == STATE.rolling then
 		self:roll(dtime)
