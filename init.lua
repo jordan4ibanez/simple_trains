@@ -266,8 +266,27 @@ function train:idle(dtime)
 	end
 end
 
+---Attempts to turn the locomotive.
+---Returns success.
+---@return boolean
 function train:turn()
+	local avoid = turn_skip_dir[self.direction]
+	for index, dir in ipairs(dirs) do
+		if index ~= avoid then
+			fast_output(self.position, dir, output)
 
+			---@type number
+			local id = core.get_node_raw(output.x, output.y, output.z)
+
+			if id == track_id then
+				self.direction = reverse_lookup_enum[index]
+				self:set_rotation()
+				self.forward_position = vector.copy(output)
+				return true
+			end
+		end
+	end
+	return false
 end
 
 ---Train tries to roll forward.
