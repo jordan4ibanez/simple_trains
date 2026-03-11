@@ -25,9 +25,9 @@ local output = vector.new()
 ---@param b vec3
 ---@param amount number 0.0 - 1.0
 local function lerp(a, b, amount)
-	output.x = a.x * amount + b.x * (1 - amount)
-	output.y = a.y * amount + b.y * (1 - amount)
-	output.z = a.z * amount + b.z * (1 - amount)
+	output.x = a.x * (1 - amount) + b.x * amount
+	output.y = a.y * (1 - amount) + b.y * amount
+	output.z = a.z * (1 - amount) + b.z * amount
 end
 
 ---@enum train_state
