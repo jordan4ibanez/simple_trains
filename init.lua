@@ -319,7 +319,7 @@ function train:roll(dtime)
 			end
 		end
 	else
-		print("idle please")
+		self.state = STATE.halted
 	end
 end
 
