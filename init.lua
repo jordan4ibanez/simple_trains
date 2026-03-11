@@ -117,6 +117,8 @@ train.rolling_timer = 0
 train.movement_lerp = 0
 ---@type boolean
 train.in_turn = false
+---@type number
+train.speed = 0
 
 train.initial_properties = {
 	visual = "mesh",
