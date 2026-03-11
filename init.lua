@@ -106,10 +106,17 @@ end
 
 ---@type vec3[]
 local dirs = {
-	vector.new(1, 0, 0),
-	vector.new(-1, 0, 0),
-	vector.new(0, 0, 1),
-	vector.new(0, 0, -1),
+	vector.new(0, 0, 1), -- North.
+	vector.new(1, 0, 0), -- East.
+	vector.new(0, 0, -1), -- South.
+	vector.new(-1, 0, 0), -- West.
+}
+
+local reverse_lookup_enum = {
+	[2] = DIRECTION.north,
+	[3] = DIRECTION.east,
+	[4] = DIRECTION.south,
+	[5] = DIRECTION.west
 }
 
 ---Holds result of fast_output.
