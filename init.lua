@@ -242,6 +242,12 @@ function train:idle(dtime)
 	end
 end
 
+---Train tries to roll forward.
+---@param dtime number
+function train:roll(dtime)
+	print("rolling")
+end
+
 ---Train on server step.
 ---@param dtime number
 ---@param moveresult table
@@ -252,6 +258,7 @@ function train:on_step(dtime, moveresult)
 	if self.state == STATE.idle then
 		self:idle(dtime)
 	elseif self.state == STATE.rolling then
+		self:roll(dtime)
 	end
 end
 
