@@ -327,8 +327,12 @@ function train:roll(dtime)
 		return
 	end
 
+	--!Debugging!
+	self.speed = self.speed + (dtime * 0.5)
+	if self.speed > 10 then self.speed = 0 end
+
 	-- Smooth movement.
-	self.movement_lerp = self.movement_lerp + dtime
+	self.movement_lerp = self.movement_lerp + (dtime * self.speed)
 
 	if self.movement_lerp > 1 then self.movement_lerp = 1 end
 
