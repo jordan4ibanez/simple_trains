@@ -333,7 +333,8 @@ function train:roll(dtime)
 	---@type number
 	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
 	if id == track_id then
-		self.object:move_to(self.forward_position)
+		self.position = vector.copy(self.forward_position)
+
 		fast_output(self.position, dirs[self.direction], output)
 		self.forward_position = vector.copy(output)
 
