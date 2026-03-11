@@ -255,18 +255,9 @@ function train:idle(dtime)
 	end
 end
 
----
----@return boolean
-function train:roll_forward_check()
-	--todo check if track is still in front.
-	---@type number
-	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
-	if id == track_id then return true end
-
-	return false
-end
-
 ---Train tries to roll forward.
+---Then attempts to turn.
+---Stops if no track available.
 ---@param dtime number
 function train:roll(dtime)
 	self.rolling_timer = self.rolling_timer + dtime
@@ -274,6 +265,15 @@ function train:roll(dtime)
 	self.rolling_timer = self.rolling_timer - 0.25
 
 	print("rolling")
+
+	---@type number
+	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
+	if id == track_id then
+
+	else
+
+	end
+
 
 	self.object:move_to(self.forward_position)
 end
