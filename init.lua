@@ -86,6 +86,8 @@ train.state = STATE.idle
 train.idle_timer = 0
 ---@type direction
 train.direction = DIRECTION.null
+---@type number
+train.rolling_timer = 0
 
 train.initial_properties = {
 	visual = "mesh",
