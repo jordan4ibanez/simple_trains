@@ -10,6 +10,9 @@ end
 ---@type number
 local track_id = core.get_content_id(track)
 
+---@type number
+local DEG_TO_RAD = math.pi / 180
+
 ---@enum train_state
 local STATE = {
 	idle = 0,
