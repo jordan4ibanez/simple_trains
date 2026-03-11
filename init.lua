@@ -50,6 +50,15 @@ local reverse_lookup_enum = {
 	DIRECTION.west
 }
 
+--- This is set up so the train doesn't turn backwards.
+local turn_skip_dir = {
+	[DIRECTION.north] = DIRECTION.south,
+	[DIRECTION.south] = DIRECTION.north,
+
+	[DIRECTION.east] = DIRECTION.west,
+	[DIRECTION.west] = DIRECTION.east,
+}
+
 ---Holds result of fast_output.
 ---@type vec3
 local output = vector.new()
@@ -253,6 +262,10 @@ function train:idle(dtime)
 		-- Also allows you to change the initial direction.
 		self:check_forward()
 	end
+end
+
+function train:turn()
+
 end
 
 ---Train tries to roll forward.
