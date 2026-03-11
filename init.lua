@@ -320,7 +320,10 @@ function train:roll(dtime)
 
 	-- Check if the locomotive can keep going forward.
 	local id = core.get_node_raw(self.forward_position.x, self.forward_position.y, self.forward_position.z)
-	if id ~= track_id then return end
+	if id ~= track_id then
+		self.state = STATE.halted
+		return
+	end
 
 	-- Smooth movement.
 	self.movement_lerp = self.movement_lerp + dtime
