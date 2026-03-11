@@ -35,6 +35,36 @@ local DIRECTION = {
 ---@field public z number
 
 
+---@type vec3[]
+local dirs = {
+	vector.new(0, 0, 1), --  North.
+	vector.new(1, 0, 0), --  East.
+	vector.new(0, 0, -1), -- South.
+	vector.new(-1, 0, 0), -- West.
+}
+
+local reverse_lookup_enum = {
+	DIRECTION.north,
+	DIRECTION.east,
+	DIRECTION.south,
+	DIRECTION.west
+}
+
+---Holds result of fast_output.
+---@type vec3
+local output = vector.new()
+
+---auto dump calc into output vec3.
+---@param pos vec3
+---@param dir vec3
+---@param out vec3
+local function fast_output(pos, dir, out)
+	out.x = pos.x + dir.x
+	out.y = pos.y + dir.y
+	out.z = pos.z + dir.z
+end
+
+
 ---@class Train
 local train = {}
 train.object = nil
@@ -153,35 +183,6 @@ function train:check_forward()
 	self.forward_position = vector.new(0, 0, 0)
 	self.direction = DIRECTION.null
 	self:set_rotation()
-end
-
----@type vec3[]
-local dirs = {
-	vector.new(0, 0, 1), --  North.
-	vector.new(1, 0, 0), --  East.
-	vector.new(0, 0, -1), -- South.
-	vector.new(-1, 0, 0), -- West.
-}
-
-local reverse_lookup_enum = {
-	DIRECTION.north,
-	DIRECTION.east,
-	DIRECTION.south,
-	DIRECTION.west
-}
-
----Holds result of fast_output.
----@type vec3
-local output = vector.new()
-
----auto dump calc into output vec3.
----@param pos vec3
----@param dir vec3
----@param out vec3
-local function fast_output(pos, dir, out)
-	out.x = pos.x + dir.x
-	out.y = pos.y + dir.y
-	out.z = pos.z + dir.z
 end
 
 --- Train on a single track searches for track.
