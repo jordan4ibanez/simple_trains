@@ -24,10 +24,10 @@
 interpolation notation
 
 ```
-    | Currently in middle
+  | Currently in middle
 \___
 
-       | Possibly could use forward vector to subtract a 0.5 vector from it to interpolate from edge to edge
+    | Possibly could use forward vector to subtract a 0.5 vector from it to interpolate from edge to edge
 \___
 
 this could be used for uphills. Needs to be studied though. Will probably break turns though. Might be able to do turns by literally turning but that is a lot of work.
