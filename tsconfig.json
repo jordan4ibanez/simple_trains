@@ -11,7 +11,7 @@
     ],
     "types": [
       "lua-types/jit",
-      "./minetest-api"
+      "./luanti-api"
     ],
     "strict": true,
     // "noUnusedLocals": true,
