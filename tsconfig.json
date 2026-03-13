@@ -1,0 +1,40 @@
+{
+  //! If you edit this file while in watch mode: Prepare to clean up.
+  "$schema": "https://raw.githubusercontent.com/TypeScriptToLua/TypeScriptToLua/master/tsconfig-schema.json",
+  "compilerOptions": {
+    // "ignoreDeprecations": "6.0",
+    "target": "ESNext",
+    "module": "System",
+    "moduleResolution": "Node",
+    "lib": [
+      "ESNext"
+    ],
+    "types": [
+      "lua-types/jit",
+      "./minetest-api"
+    ],
+    "strict": true,
+    // "noUnusedLocals": true,
+    "outDir": "mods/",
+    "rootDir": "source/",
+    "sourceMap": false,
+    "downlevelIteration": true,
+    "noImplicitAny": true,
+  },
+  "include": [
+    "source/**/*.ts"
+  ],
+  "exclude": [
+    "mods/**/*.lua",
+    "mods/**/*.mts",
+  ],
+  "tstl": {
+    "luaTarget": "JIT",
+    "noHeader": true,
+    "noImplicitSelf": true,
+    "sourceMapTraceback": true,
+    // "luaLibImport": "inline"
+    "luaBundle": "./fishanti/init.lua",
+    "luaBundleEntry": "./source/init.ts"
+  }
+}
