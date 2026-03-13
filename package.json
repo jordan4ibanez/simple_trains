@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "lua-types": "^2.13.1",
+    "typescript": "^5.9.3",
+    "typescript-to-lua": "^1.33.2"
+  }
+}
