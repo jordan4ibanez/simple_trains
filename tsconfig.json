@@ -25,8 +25,8 @@
     "source/**/*.ts"
   ],
   "exclude": [
-    "mods/**/*.lua",
-    "mods/**/*.mts",
+    "**/*.lua",
+    "**/**/*.mts",
   ],
   "tstl": {
     "luaTarget": "JIT",
@@ -34,7 +34,7 @@
     "noImplicitSelf": true,
     "sourceMapTraceback": true,
     // "luaLibImport": "inline"
-    "luaBundle": "./fishanti/init.lua",
+    "luaBundle": "./init.lua",
     "luaBundleEntry": "./source/init.ts"
   }
 }
