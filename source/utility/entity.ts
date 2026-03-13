@@ -32,7 +32,7 @@ export abstract class Entity implements LuaEntity {
 type leClassType = { new (): LuaEntity };
 
 /**
- * A bolt on to allow you to directly register MT lua entities as TS classes.
+ * A bolt on to allow you to directly register Luanti lua entities as TS classes.
  * @param clazz Class definition.
  */
 export function registerEntity(name: string, clazz: leClassType) {
