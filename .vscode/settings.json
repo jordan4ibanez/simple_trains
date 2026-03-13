@@ -1,8 +1,7 @@
 {
 	  "files.exclude": {
-        "**/**/**.lua": true,
+        // "**/**/**.lua": true,
 		"original_lua_code/**": true,
-        "mods/": true,
         "node_modules": true,
         "scripts/": true,
         "menu/": true,
