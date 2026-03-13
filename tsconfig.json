@@ -15,7 +15,7 @@
     ],
     "strict": true,
     // "noUnusedLocals": true,
-    "outDir": "mods/",
+    "outDir": "./",
     "rootDir": "source/",
     "sourceMap": false,
     "downlevelIteration": true,
