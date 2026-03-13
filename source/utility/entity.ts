@@ -37,7 +37,7 @@ type leClassType = { new (): LuaEntity };
  */
 export function registerEntity(name: string, clazz: leClassType) {
 	const instance = new clazz();
-	core.register_entity(":" + string, instance);
+	core.register_entity(":" + name, instance);
 }
 
 /**
