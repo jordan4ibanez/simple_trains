@@ -22,7 +22,7 @@
   ],
   "exclude": [
     "**/*.lua",
-    "**/**/*.mts",
+    "**/**/*.mts"
   ],
   "tstl": {
     "luaTarget": "JIT",
