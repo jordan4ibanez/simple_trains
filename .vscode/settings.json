@@ -1,7 +1,27 @@
 {
-	"Lua.diagnostics.globals": [
-		"core",
-		"vector",
-		"dump"
-	],
+	  "files.exclude": {
+        "**/**/**.lua": true,
+		"original_lua_code/**": true,
+        // "mods/": true,
+        "node_modules": true,
+        "scripts/": true,
+        "menu/": true,
+        "package.json": true,
+        "package-lock.json": true,
+        "LICENSE": true,
+        //! Here starts things that probably shouldn't be hidden.
+        // ".gitignore": true,
+        // ".gitattributes": true,
+        // "game.conf": true,
+        // "tsconfig.json": true,
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.enable": true,
+	"prettier.bracketSpacing": true,
+	"prettier.tabWidth": 4,
+	"prettier.useTabs": true,
+	"js/ts.format.semicolons": "insert",
+    "Lua.runtime.version": "LuaJIT"
 }
