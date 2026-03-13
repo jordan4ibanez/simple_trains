@@ -2,7 +2,7 @@
 	  "files.exclude": {
         "**/**/**.lua": true,
 		"original_lua_code/**": true,
-        // "mods/": true,
+        "mods/": true,
         "node_modules": true,
         "scripts/": true,
         "menu/": true,
