@@ -2,17 +2,10 @@ import { ShallowVector3 } from "../../minetest-api";
 import { LogLevel } from "./enums";
 import { Vec2, Vec3 } from "./vector";
 
-export interface EntityFireTable {
-	position: Vec3;
-	visualSize: Vec2;
-}
-
 /** Typescript Luaentity. */
 export abstract class Entity implements LuaEntity {
 	name: string = "";
 	object: ObjectRef = {} as ObjectRef;
-	fireEntity: ObjectRef | null = null;
-	fireTable: EntityFireTable | null = null;
 
 	// Abstract members.
 	initial_properties?: ObjectProperties;
@@ -25,7 +18,7 @@ export abstract class Entity implements LuaEntity {
 		timeFromLastPunch: number | null,
 		toolCapabilities: ToolCapabilities | null,
 		dir: Vec3 | null,
-		damage: number
+		damage: number,
 	): void;
 	on_death?(killer: ObjectRef): void;
 	on_rightclick?(clicker: ObjectRef): void;
@@ -42,15 +35,9 @@ type leClassType = { new (): LuaEntity };
  * A bolt on to allow you to directly register MT lua entities as TS classes.
  * @param clazz Class definition.
  */
-export function registerEntity(clazz: leClassType) {
+export function registerEntity(name: string, clazz: leClassType) {
 	const instance = new clazz();
-
-	if (instance.name == "__builtin:item") {
-		core.register_entity(":" + instance.name, instance);
-	} else {
-		instance.name = clazz.name;
-		core.register_entity(":" + clazz.name, instance);
-	}
+	core.register_entity(":" + string, instance);
 }
 
 /**
@@ -62,13 +49,13 @@ export function registerEntity(clazz: leClassType) {
 export function spawnEntity(
 	pos: ShallowVector3,
 	clazz: leClassType,
-	initFunction?: (obj: ObjectRef) => void
+	initFunction?: (obj: ObjectRef) => void,
 ): ObjectRef | null {
 	const ent = core.add_entity(pos, clazz.name);
 	if (ent == null || !ent.is_valid()) {
 		core.log(
 			LogLevel.error,
-			`Failed to spawn entity at: ${pos.toString()}`
+			`Failed to spawn entity at: ${pos.toString()}`,
 		);
 		return null;
 	}
