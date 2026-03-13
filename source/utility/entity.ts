@@ -1,4 +1,4 @@
-import { ShallowVector3 } from "../../minetest-api";
+import { ShallowVector3 } from "../../luanti-api";
 import { LogLevel } from "./enums";
 import { Vec2, Vec3 } from "./vector";
 
