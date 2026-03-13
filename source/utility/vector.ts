@@ -1,4 +1,4 @@
-import { ShallowVector2, ShallowVector3 } from "../../minetest-api";
+import { ShallowVector2, ShallowVector3 } from "../../luanti-api";
 import { randomRange } from "./math";
 
 const rr = randomRange;
