@@ -110,6 +110,21 @@ class TestTrain extends Entity {
 			if (this.onTrack && !this.wasOnTrack) {
 				this.magnetizeTrack();
 			}
+
+			if (!this.forwardValid) {
+				this.detectForward();
+			}
+		}
+	}
+
+	/**
+	 * Set the locomotive's rotation.
+	 */
+	setRotation(): void {
+		if (this.direction == DIRECTION.null) {
+			this.object.set_yaw(DIRECTION.north * -90 * degToRad);
+		} else {
+			this.object.set_yaw(this.direction * -90 * degToRad);
 		}
 	}
 
@@ -125,6 +140,30 @@ class TestTrain extends Entity {
 		}
 	}
 
+	detectForward(): void {
+		const temp = new Vec3();
+		let index = 0;
+		for (const dir of dirs) {
+			temp.setVec(this.position).add(dir);
+
+			// Don't try to steer into itself.
+			if (this.backwardValid && temp.equals(this.backwardPosition)) {
+				continue;
+			}
+
+			const [id] = core.get_node_raw(temp.x, temp.y, temp.z);
+
+			if (id == trackID) {
+				this.direction = reverseLookupEnum[index];
+				this.setRotation();
+				this.forwardPosition.setVec(temp);
+				this.forwardValid = true;
+				break;
+			}
+			index++;
+		}
+	}
+
 	detectOnTrack(): void {
 		this.wasOnTrack = this.onTrack;
 		this.onTrack = isTrack(
@@ -136,12 +175,30 @@ class TestTrain extends Entity {
 			this.backwardValid = false;
 		}
 
-		core.add_particle({
-			pos: this.position,
-			velocity: new Vec3(0, 2, 0),
-			size: 1,
-			texture: "default_stone.png",
-		});
+		if (this.onTrack) {
+			core.add_particle({
+				pos: this.position,
+				velocity: new Vec3(0, 2, 0),
+				size: 1,
+				texture: "default_stone.png",
+			});
+		}
+		if (this.forwardValid) {
+			core.add_particle({
+				pos: this.forwardPosition,
+				velocity: new Vec3(0, 2, 0),
+				size: 1,
+				texture: "default_wood.png",
+			});
+		}
+		if (this.backwardValid) {
+			core.add_particle({
+				pos: this.backwardPosition,
+				velocity: new Vec3(0, 2, 0),
+				size: 1,
+				texture: "default_dirt.png",
+			});
+		}
 	}
 }
 
