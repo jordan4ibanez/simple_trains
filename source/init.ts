@@ -1,6 +1,9 @@
+import { track } from "./game_detection";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual } from "./utility/enums";
 import { Vec3 } from "./utility/vector";
+
+const trackID: number = core.get_content_id(track);
 
 enum State {
 	idle = 0,
