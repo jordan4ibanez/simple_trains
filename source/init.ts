@@ -154,14 +154,14 @@ class TestTrain extends Entity {
 		} else {
 			// This also makes sure the locomotive can move at least 1 node forward.
 			// Also allows you to change the initial direction.
-			this.checkForward();
+			this.idleCheckForward();
 		}
 	}
 
 	/**
 	 * Check if the forward node is still a track when idling.
 	 */
-	checkForward(): void {
+	idleCheckForward(): void {
 		const [id] = core.get_node_raw(
 			this.forwardPosition.x,
 			this.forwardPosition.y,
