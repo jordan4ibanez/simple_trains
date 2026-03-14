@@ -111,7 +111,21 @@ class TestTrain extends Entity {
 	}
 
 	idle(delta: number): void {
-		
+		this.idleTimer += delta;
+		if (this.idleTimer < 0.2) {
+			return;
+		}
+		this.idleTimer -= 0.2;
+
+		if (!this.onTrack) {
+			// Magnetize to the nearest track.
+			const newPos = core.find_node_near(this.object.get_pos(), 1, track);
+			if (newPos != null) {
+				this.object.move_to(newPos);
+			}
+		} else if (this.direction == DIRECTION.null) {
+		} else {
+		}
 	}
 
 	detectOnTrack(): void {
