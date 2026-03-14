@@ -322,6 +322,11 @@ interface core {
 	swap_node(position: ShallowVector3, nodeTable: NodeTable): void;
 	remove_node(position: ShallowVector3): void;
 	get_node(position: ShallowVector3): NodeTable;
+	get_node_raw(
+		x: number,
+		y: number,
+		z: number,
+	): LuaMultiReturn<[number, number, number, boolean]>;
 	get_node_or_nil(position: ShallowVector3): NodeTable | null;
 	get_node_light(
 		position: ShallowVector3,
