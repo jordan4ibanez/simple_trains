@@ -162,16 +162,22 @@ class TestTrain extends Entity {
 		this.movementLerp += delta * this.speed;
 
 		if (this.movementLerp > 1) {
-			this.movementLerp = 0;
+			this.movementLerp = 1;
 		}
-
-		print("rolling");
 
 		// Visually and physically move the locomotive to it's virtual position.
 		this.movementVec
 			.setVec(this.position)
 			.lerp(this.forwardPosition, this.movementLerp);
 		this.object.move_to(this.movementVec);
+
+		// Tick forward and reset interpolation.
+		if (this.movementLerp < 1) {
+			return;
+		}
+		this.movementLerp = 0;
+
+		
 	}
 
 	//? ******************
