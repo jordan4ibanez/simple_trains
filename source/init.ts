@@ -139,6 +139,16 @@ class TestTrain extends Entity {
 		});
 	}
 
+	on_punch(
+		puncher: ObjectRef | null,
+		timeFromLastPunch: number | null,
+		toolCapabilities: ToolCapabilities | null,
+		dir: Vec3 | null,
+		damage: number,
+	): void {
+		this.state = STATE.rolling;
+	}
+
 	/**
 	 * Set the locomotive's rotation.
 	 */
