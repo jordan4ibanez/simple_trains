@@ -158,20 +158,26 @@ class TestTrain extends Entity {
 	}
 
 	debugRolling(delta: number): void {
-		if (this.up) {
-			this.movementLerp += delta;
-			if (this.movementLerp >= 1) {
-				this.movementLerp = 1;
-				this.up = false;
-			}
-		} else {
-			this.movementLerp -= delta;
-			if (this.movementLerp <= -1) {
-				this.movementLerp = -1;
-				this.up = true;
-			}
+		//! This was debug.
+		// if (this.up) {
+		// 	this.movementLerp += delta;
+		// 	if (this.movementLerp >= 1) {
+		// 		this.movementLerp = 1;
+		// 		this.up = false;
+		// 	}
+		// } else {
+		// 	this.movementLerp -= delta;
+		// 	if (this.movementLerp <= -1) {
+		// 		this.movementLerp = -1;
+		// 		this.up = true;
+		// 	}
+		// }
+
+		this.movementLerp += delta;
+
+		if (this.movementLerp >= 1.0) {
+			this.movementLerp = 1.0;
 		}
-		print(this.movementLerp);
 
 		if (this.movementLerp == 0) {
 			this.object.move_to(this.position);
