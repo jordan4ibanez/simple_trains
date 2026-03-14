@@ -131,6 +131,11 @@ class TestTrain extends Entity {
 			this.position.setVec(this.object.get_pos()).round(),
 		);
 
+		if (!this.onTrack) {
+			this.forwardValid = false;
+			this.backwardValid = false;
+		}
+
 		core.add_particle({
 			pos: this.position,
 			velocity: new Vec3(0, 2, 0),
