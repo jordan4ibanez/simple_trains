@@ -1910,9 +1910,9 @@ declare global {
 
 	/** @noSelf **/ interface ParticleDefinition {
 		pos: ShallowVector3;
-		velocity: ShallowVector3;
-		acceleration: ShallowVector3;
-		expirationtime: number;
+		velocity?: ShallowVector3;
+		acceleration?: ShallowVector3;
+		expirationtime?: number;
 		size: number;
 		collisiondetection?: boolean;
 		collision_removal?: boolean;
