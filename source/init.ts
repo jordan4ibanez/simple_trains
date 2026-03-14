@@ -176,10 +176,22 @@ class TestTrain extends Entity {
 		if (this.movementLerp == 0) {
 			this.object.move_to(this.position);
 		} else if (this.movementLerp > 0) {
+			if (!this.forwardValid) {
+				return;
+			}
 			this.object.move_to(
 				this.vecMovement
 					.setVec(this.position)
 					.lerp(this.forwardPosition, this.movementLerp),
+			);
+		} else if (this.movementLerp < 0) {
+			if (!this.backwardValid) {
+				return;
+			}
+			this.object.move_to(
+				this.vecMovement
+					.setVec(this.position)
+					.lerp(this.backwardPosition, math.abs(this.movementLerp)),
 			);
 		}
 
