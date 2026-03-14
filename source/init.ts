@@ -4,6 +4,9 @@ import { EntityVisual } from "./utility/enums";
 import { degToRad } from "./utility/math";
 import { Vec3 } from "./utility/vector";
 
+/**
+ * A game agnostic way to have rails function faster.
+ */
 const trackID: number = core.get_content_id(track);
 
 enum STATE {
