@@ -152,9 +152,7 @@ class TestTrain extends Entity {
 				continue;
 			}
 
-			const [id] = core.get_node_raw(temp.x, temp.y, temp.z);
-
-			if (id == trackID) {
+			if (isTrack(temp)) {
 				this.direction = reverseLookupEnum[index];
 				this.setRotation();
 				this.forwardPosition.setVec(temp);
