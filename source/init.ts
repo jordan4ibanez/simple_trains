@@ -61,6 +61,11 @@ const turn_skip_dir: Dictionary<DIRECTION, DIRECTION> = {
 	[DIRECTION.west]: DIRECTION.east, //   3 - 1
 };
 
+function isTrack(pos: Vec3): boolean {
+	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
+	return id == trackID;
+}
+
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	oldPosition: Vec3 = new Vec3();
@@ -86,6 +91,35 @@ class TestTrain extends Entity {
 		collide_with_objects: false,
 		selectionbox: [-0.2, -0.4, -0.2, 0.2, 0.4, 0.2],
 	};
+
+	on_step(delta: number, moveResult: MoveResult | null): void {
+		if (this.state == STATE.idle) {
+			// Do not want locomotives hogging the cpu.
+			this.idleTimer += delta;
+			if (this.idleTimer < 0.2) {
+				return;
+			}
+			this.idleTimer -= 0.2;
+
+			if (!this.onTrack) {
+				this.searchForTrack(delta);
+			}
+		}
+	}
+
+	searchForTrack(delta: number): void {
+		const newPos = core.find_node_near(this.object.get_pos(), 1, track);
+		if (newPos != null) {
+			this.object.move_to(newPos);
+		}
+		this.detectOnTrack();
+	}
+
+	detectOnTrack(): void {
+		this.onTrack = isTrack(
+			this.position.setVec(this.object.get_pos()).round(),
+		);
+	}
 }
 
 registerEntity("simple_trains:train", TestTrain);
