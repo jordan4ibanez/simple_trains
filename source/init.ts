@@ -206,6 +206,9 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Detect if the current position of the locomotive is track.
+	 */
 	detectOnTrack(): void {
 		this.wasOnTrack = this.onTrack;
 		this.onTrack = isTrack(
