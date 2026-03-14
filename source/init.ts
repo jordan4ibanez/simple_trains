@@ -110,8 +110,6 @@ class TestTrain extends Entity {
 	}
 
 	magnetizeTrack(): void {
-		print("trying to magnetize track.");
-
 		const [id] = core.get_node_raw(
 			this.position.x,
 			this.position.y,
@@ -119,14 +117,11 @@ class TestTrain extends Entity {
 		);
 
 		if (id == trackID) {
-			print("snapping");
 			this.object.move_to(this.position);
 		}
 	}
 
 	detectOnTrack(): void {
-		print("detecting if on track");
-
 		this.wasOnTrack = this.onTrack;
 		this.onTrack = isTrack(
 			this.position.setVec(this.object.get_pos()).round(),
