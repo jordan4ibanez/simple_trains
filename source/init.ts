@@ -1,6 +1,7 @@
 import { track } from "./game_detection";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual } from "./utility/enums";
+import { degToRad } from "./utility/math";
 import { Vec3 } from "./utility/vector";
 
 const trackID: number = core.get_content_id(track);
@@ -107,6 +108,14 @@ class TestTrain extends Entity {
 			case STATE.halted: {
 				// Does nothing.
 			}
+		}
+	}
+
+	setRotation(): void {
+		if (this.direction == DIRECTION.null) {
+			this.object.set_yaw((DIRECTION.north * -90 + 90) * degToRad);
+		} else {
+			this.object.set_yaw((this.direction * -90 + 90) * degToRad);
 		}
 	}
 
