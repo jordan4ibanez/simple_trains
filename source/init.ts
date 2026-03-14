@@ -66,6 +66,8 @@ function isTrack(pos: Vec3): boolean {
 	return id == trackID;
 }
 
+const temp: Vec3 = new Vec3();
+
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 
@@ -130,19 +132,12 @@ class TestTrain extends Entity {
 	}
 
 	magnetizeTrack(): void {
-		const [id] = core.get_node_raw(
-			this.position.x,
-			this.position.y,
-			this.position.z,
-		);
-
-		if (id == trackID) {
+		if (isTrack(this.position)) {
 			this.object.move_to(this.position);
 		}
 	}
 
 	detectForward(): void {
-		const temp = new Vec3();
 		let index = 0;
 		for (const dir of dirs) {
 			temp.setVec(this.position).add(dir);
@@ -164,7 +159,6 @@ class TestTrain extends Entity {
 	}
 
 	detectBackward(): void {
-		const temp = new Vec3();
 		let index = 0;
 		for (const dir of dirs) {
 			temp.setVec(this.position).add(dir);
