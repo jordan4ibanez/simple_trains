@@ -241,7 +241,7 @@ class TestTrain extends Entity {
 	}
 
 	/**
-	 * Attempt to turn the locomotive around.
+	 * Attempt to turn the locomotive around when idling.
 	 */
 	reverseDirection(): void {
 		if (this.state != STATE.idle) {
