@@ -263,20 +263,7 @@ class TestTrain extends Entity {
 		}
 	}
 
-	/**
-	 * Detect if the current position of the locomotive is track.
-	 */
-	detectOnTrack(): void {
-		this.wasOnTrack = this.onTrack;
-		this.onTrack = isTrack(
-			this.position.setVec(this.object.get_pos()).round(),
-		);
-
-		if (!this.onTrack) {
-			this.forwardValid = false;
-			this.backwardValid = false;
-		}
-
+	debugPositionsVisual(): void {
 		if (this.onTrack) {
 			core.add_particle({
 				pos: this.position,
@@ -301,6 +288,23 @@ class TestTrain extends Entity {
 				texture: "default_dirt.png",
 			});
 		}
+	}
+
+	/**
+	 * Detect if the current position of the locomotive is track.
+	 */
+	detectOnTrack(): void {
+		this.wasOnTrack = this.onTrack;
+		this.onTrack = isTrack(
+			this.position.setVec(this.object.get_pos()).round(),
+		);
+
+		if (!this.onTrack) {
+			this.forwardValid = false;
+			this.backwardValid = false;
+		}
+
+		this.debugPositionsVisual();
 	}
 }
 
