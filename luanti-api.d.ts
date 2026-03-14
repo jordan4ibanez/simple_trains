@@ -371,7 +371,7 @@ interface core {
 	find_node_near(
 		position: ShallowVector3,
 		radius: number,
-		nodeNames: string[],
+		nodeNames: string | string[],
 		searchCenter?: boolean,
 	): ShallowVector3 | null;
 	find_nodes_in_area(
