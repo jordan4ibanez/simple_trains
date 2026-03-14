@@ -26,7 +26,7 @@ const dirs = [
 	new Vec3(-1, 0, 0), // West.
 ];
 
-const reverse_lookup_enum = [
+const reverseLookupEnum = [
 	DIRECTION.north,
 	DIRECTION.east,
 	DIRECTION.south,
@@ -169,7 +169,7 @@ class TestTrain extends Entity {
 			const [id] = core.get_node_raw(temp.x, temp.y, temp.z);
 
 			if (id == trackID) {
-				this.direction = reverse_lookup_enum[index];
+				this.direction = reverseLookupEnum[index];
 				this.setRotation();
 				this.forwardPosition.setVec(temp);
 				break;
