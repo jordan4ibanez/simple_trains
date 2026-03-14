@@ -106,7 +106,7 @@ class TestTrain extends Entity {
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		switch (this.state) {
 			case STATE.idle: {
-				this.updatePosition();
+				this.idleUpdatePosition();
 				this.idleDetectOnTrack();
 				this.idle(delta);
 			}
@@ -221,7 +221,7 @@ class TestTrain extends Entity {
 	/**
 	 * Locomotive gets it's rounded node positioning when idle.
 	 */
-	updatePosition(): void {
+	idleUpdatePosition(): void {
 		this.oldPosition.setVec(this.position);
 		this.position.setVec(this.object.get_pos()).round();
 
