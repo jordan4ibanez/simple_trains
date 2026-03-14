@@ -110,12 +110,15 @@ class TestTrain extends Entity {
 				this.idleUpdatePosition();
 				this.idleDetectOnTrack();
 				this.idle(delta);
+				break;
 			}
 			case STATE.rolling: {
 				this.roll(delta);
+				break;
 			}
 			case STATE.halted: {
 				// Does nothing.
+				break;
 			}
 		}
 	}
