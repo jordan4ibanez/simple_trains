@@ -122,6 +122,10 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Locomotive idle behavior.
+	 * @param delta Time between server ticks.
+	 */
 	idle(delta: number): void {
 		this.idleTimer += delta;
 		if (this.idleTimer < 0.2) {
@@ -145,6 +149,9 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Check if the forward node is still a track.
+	 */
 	checkForward(): void {
 		const [id] = core.get_node_raw(
 			this.forwardPosition.x,
