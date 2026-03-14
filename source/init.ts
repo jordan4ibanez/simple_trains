@@ -63,6 +63,7 @@ class TestTrain extends Entity {
 	direction: DIRECTION = DIRECTION.null;
 	rollingTimer: number = 0;
 	movementLerp: number = 0;
+	movementVec: Vec3 = new Vec3();
 
 	speed: number = 0;
 
@@ -148,7 +149,19 @@ class TestTrain extends Entity {
 			this.speed = 0;
 		}
 
-		
+		this.movementLerp += delta * this.speed;
+
+		if (this.movementLerp > 1) {
+			this.movementLerp = 0;
+		}
+
+		print("rolling");
+
+		// Visually and physically move the locomotive to it's virtual position.
+		this.movementVec
+			.setVec(this.position)
+			.lerp(this.forwardPosition, this.movementLerp);
+		this.object.move_to(this.movementVec);
 	}
 
 	//? ******************
