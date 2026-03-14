@@ -5,7 +5,7 @@ import { Vec3 } from "./utility/vector";
 
 const trackID: number = core.get_content_id(track);
 
-enum State {
+enum STATE {
 	idle = 0,
 	rolling = 1,
 	halted = 2,
@@ -48,7 +48,7 @@ class TestTrain extends Entity {
 
 	onTrack: boolean = false;
 	wasOnTrack: boolean = false;
-	state: State = State.idle;
+	state: STATE = STATE.idle;
 
 	idleTimer: number = 0;
 	direction: DIRECTION = DIRECTION.null;
@@ -82,29 +82,29 @@ class TestTrain extends Entity {
 		damage: number,
 	): void {
 		switch (this.state) {
-			case State.idle: {
-				this.state = State.rolling;
+			case STATE.idle: {
+				this.state = STATE.rolling;
 			}
-			case State.rolling: {
-				this.state = State.idle;
+			case STATE.rolling: {
+				this.state = STATE.idle;
 			}
-			case State.halted: {
-				this.state = State.rolling;
+			case STATE.halted: {
+				this.state = STATE.rolling;
 			}
 		}
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		switch (this.state) {
-			case State.idle: {
+			case STATE.idle: {
 				this.updatePosition();
 				this.detectOnTrack();
 				// this.idleTimer(delta); // todo
 			}
-			case State.rolling: {
+			case STATE.rolling: {
 				// this.roll(delta); // todo
 			}
-			case State.halted: {
+			case STATE.halted: {
 				// Does nothing.
 			}
 		}
@@ -145,7 +145,7 @@ class TestTrain extends Entity {
 	}
 
 	reverseDirection(): void {
-		if (this.state == State.idle) {
+		if (this.state == STATE.idle) {
 			return;
 		}
 
