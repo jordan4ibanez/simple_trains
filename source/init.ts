@@ -124,8 +124,14 @@ class TestTrain extends Entity {
 				this.object.move_to(newPos);
 			}
 		} else if (this.direction == DIRECTION.null) {
+			// Allows you to change the locomotive initial direction.
+			this.searchIdle();
 		} else {
 		}
+	}
+
+	searchIdle(): void {
+		
 	}
 
 	detectOnTrack(): void {
