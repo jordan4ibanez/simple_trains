@@ -4,6 +4,18 @@ import { EntityVisual } from "./utility/enums";
 import { degToRad } from "./utility/math";
 import { Vec3 } from "./utility/vector";
 
+core.register_chatcommand("t", {
+	func: (name: string) => {
+		const player = core.get_player_by_name(name);
+		if (player == null) {
+			return;
+		}
+		const pos = player.get_pos();
+		pos.y += 0.5;
+		core.add_entity(pos, "simple_trains:train");
+	},
+});
+
 /**
  * A game agnostic way to have rails function faster.
  */
