@@ -96,29 +96,48 @@ class TestTrain extends Entity {
 		if (this.state == STATE.idle) {
 			// Do not want locomotives hogging the cpu.
 			this.idleTimer += delta;
-			if (this.idleTimer < 0.2) {
+			if (this.idleTimer < 0.3) {
 				return;
 			}
-			this.idleTimer -= 0.2;
+			this.idleTimer -= 0.3;
 
-			if (!this.onTrack) {
-				this.searchForTrack(delta);
+			this.detectOnTrack();
+
+			if (this.onTrack && !this.wasOnTrack) {
+				this.magnetizeTrack();
 			}
 		}
 	}
 
-	searchForTrack(delta: number): void {
-		const newPos = core.find_node_near(this.object.get_pos(), 1, track);
-		if (newPos != null) {
-			this.object.move_to(newPos);
+	magnetizeTrack(): void {
+		print("trying to magnetize track.");
+
+		const [id] = core.get_node_raw(
+			this.position.x,
+			this.position.y,
+			this.position.z,
+		);
+
+		if (id == trackID) {
+			print("snapping");
+			this.object.move_to(this.position);
 		}
-		this.detectOnTrack();
 	}
 
 	detectOnTrack(): void {
+		print("detecting if on track");
+
+		this.wasOnTrack = this.onTrack;
 		this.onTrack = isTrack(
 			this.position.setVec(this.object.get_pos()).round(),
 		);
+
+		core.add_particle({
+			pos: this.position,
+			velocity: new Vec3(0, 2, 0),
+			size: 1,
+			texture: "default_stone.png",
+		});
 	}
 }
 
