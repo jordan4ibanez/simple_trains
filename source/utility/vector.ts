@@ -155,6 +155,13 @@ export class Vec3 implements ShallowVector3 {
 		}
 	}
 
+	round(): Vec3 {
+		this.x = Math.round(this.x);
+		this.y = Math.round(this.y);
+		this.z = Math.round(this.z);
+		return this;
+	}
+
 	/**
 	 * Set the vector to a yaw.
 	 * @param yaw The yaw in radians.
