@@ -148,6 +148,16 @@ class TestTrain extends Entity {
 			this.forwardPosition.y,
 			this.forwardPosition.z,
 		);
+
+		// Track still exists.
+		if (id == trackID) {
+			return;
+		}
+
+		// Locomotive gets reset to initial properties.
+		this.forwardPosition.set(0, 0, 0);
+		this.direction = DIRECTION.null;
+		this.setRotation();
 	}
 
 	searchIdle(): void {
