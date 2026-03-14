@@ -42,7 +42,7 @@ const reverseLookupEnum = [
 /**
  * This is set up so the train doesn't turn backwards when turning.
  */
-const turn_skip_dir = {
+const turn_skip_dir: Dictionary<DIRECTION, DIRECTION> = {
 	[DIRECTION.north]: DIRECTION.south,
 	[DIRECTION.south]: DIRECTION.north,
 
@@ -202,6 +202,12 @@ class TestTrain extends Entity {
 				this.state = STATE.halted;
 			}
 		}
+	}
+
+	turn(): boolean {
+		const avoid = turn_skip_dir[this.direction];
+
+		return false;
 	}
 
 	//? ******************
