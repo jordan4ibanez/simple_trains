@@ -159,7 +159,7 @@ class TestTrain extends Entity {
 	}
 
 	/**
-	 * Check if the forward node is still a track.
+	 * Check if the forward node is still a track when idling.
 	 */
 	checkForward(): void {
 		const [id] = core.get_node_raw(
