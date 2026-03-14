@@ -71,6 +71,26 @@ class TestTrain extends Entity {
 		this.reverseDirection();
 	}
 
+	on_punch(
+		puncher: ObjectRef | null,
+		timeFromLastPunch: number | null,
+		toolCapabilities: ToolCapabilities | null,
+		dir: Vec3 | null,
+		damage: number,
+	): void {
+		switch (this.state) {
+			case State.idle: {
+				this.state = State.rolling;
+			}
+			case State.rolling: {
+				this.state = State.idle;
+			}
+			case State.halted: {
+				this.state = State.rolling;
+			}
+		}
+	}
+
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		for (const ent of core.get_objects_inside_radius(
 			this.object.get_pos(),
@@ -95,6 +115,7 @@ class TestTrain extends Entity {
 		}
 
 		for (const i of $range(1, 4)) {
+			print("implement reverseDirection");
 		}
 	}
 }
