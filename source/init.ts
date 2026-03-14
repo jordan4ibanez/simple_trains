@@ -107,7 +107,7 @@ class TestTrain extends Entity {
 		switch (this.state) {
 			case STATE.idle: {
 				this.updatePosition();
-				this.detectOnTrack();
+				this.idleDetectOnTrack();
 				this.idle(delta);
 			}
 			case STATE.rolling: {
@@ -180,7 +180,7 @@ class TestTrain extends Entity {
 	}
 
 	/**
-	 * Locomotive searches around itself for a node it can face towards.
+	 * Locomotive searches around itself for a node it can face towards when idling.
 	 */
 	idleSearch(): void {
 		const temp = new Vec3();
@@ -203,7 +203,7 @@ class TestTrain extends Entity {
 	/**
 	 * Locomotive detects if it is on a track when idling.
 	 */
-	detectOnTrack(): void {
+	idleDetectOnTrack(): void {
 		this.wasOnTrack = this.onTrack;
 
 		const [id] = core.get_node_raw(
