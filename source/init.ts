@@ -67,6 +67,10 @@ class TestTrain extends Entity {
 		this.object.set_armor_groups({ punch_operable: 1 });
 	}
 
+	on_rightclick(clicker: ObjectRef): void {
+		this.reverseDirection();
+	}
+
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		for (const ent of core.get_objects_inside_radius(
 			this.object.get_pos(),
@@ -82,6 +86,15 @@ class TestTrain extends Entity {
 			}
 
 			print(luaEnt.name);
+		}
+	}
+
+	reverseDirection(): void {
+		if (this.state == State.idle) {
+			return;
+		}
+
+		for (const i of $range(1, 4)) {
 		}
 	}
 }
