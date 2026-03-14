@@ -38,7 +38,20 @@ const turn_skip_dir = {
 };
 
 class TestTrain extends Entity {
+	position: Vec3 = new Vec3();
+	oldPosition: Vec3 = new Vec3();
+	forwardPosition: Vec3 = new Vec3();
+
+	onTrack: boolean = false;
+	wasOnTrack: boolean = false;
 	state: State = State.idle;
+
+	idleTimer: number = 0;
+	direction: Direction = Direction.null;
+	rollingTimer: number = 0;
+	movementLerp: number = 0;
+
+	speed: number = 0;
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		for (const ent of core.get_objects_inside_radius(
