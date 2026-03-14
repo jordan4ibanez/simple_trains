@@ -33,7 +33,7 @@ export class Vec3 implements ShallowVector3 {
 		return this;
 	}
 
-	setVec(other: Vec3): Vec3 {
+	setVec(other: ShallowVector3): Vec3 {
 		this.x = other.x;
 		this.y = other.y;
 		this.z = other.z;
