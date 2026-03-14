@@ -107,6 +107,25 @@ class TestTrain extends Entity {
 		}
 	}
 
+	updatePosition(): void {
+		this.oldPosition.setVec(this.position);
+		this.position.setVec(this.object.get_pos()).round();
+
+		core.add_particle({
+			pos: this.position,
+			velocity: new Vec3(0, 2, 0),
+			size: 1,
+			texture: "default_stone.png",
+		});
+
+		core.add_particle({
+			pos: this.forwardPosition,
+			velocity: new Vec3(0, 2, 0),
+			size: 1,
+			texture: "default_dirt.png",
+		});
+	}
+
 	reverseDirection(): void {
 		if (this.state == State.idle) {
 			return;
