@@ -130,6 +130,10 @@ class TestTrain extends Entity {
 		}
 	}
 
+	//? ******************
+	//? * IDLING METHODS *
+	//? ******************
+
 	/**
 	 * Locomotive idle behavior.
 	 * Sits there and waits for a track update to be able to move to.
