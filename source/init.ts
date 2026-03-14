@@ -175,8 +175,10 @@ class TestTrain extends Entity {
 
 		this.movementLerp += delta;
 
-		if (this.movementLerp >= 1.0) {
-			this.movementLerp = 1.0;
+		if (this.movementLerp >= 1) {
+			this.movementLerp = 1;
+		} else if (this.movementLerp <= -1) {
+			this.movementLerp = 1;
 		}
 
 		if (this.movementLerp == 0) {
@@ -203,6 +205,13 @@ class TestTrain extends Entity {
 		}
 
 		this.debugPositionsVisual();
+
+		// Only traverse to new node when new interpolation is completed.
+		if (math.abs(this.movementLerp) != 1) {
+			return;
+		}
+
+		const backward = this.movementLerp == -1;
 	}
 
 	/**
