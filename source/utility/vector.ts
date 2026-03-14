@@ -234,6 +234,20 @@ export class Vec3 implements ShallowVector3 {
 		);
 	}
 
+	/**
+	 * Linear interpolate a vector to another vector by an amount.
+	 * @param other Other Vector.
+	 * @param amount 0.0 - 1.0
+	 * @returns A new Vec3 lerped to other vector by amount.
+	 */
+	lerpImmutable(other: Vec3, amount: number): Vec3 {
+		return new Vec3(
+			this.x * (1 - amount) + other.x * amount,
+			this.y * (1 - amount) + other.y * amount,
+			this.z * (1 - amount) + other.z * amount,
+		);
+	}
+
 	toString(): string {
 		return (
 			"(" +
