@@ -150,7 +150,7 @@ class TestTrain extends Entity {
 			}
 		} else if (this.direction == DIRECTION.null) {
 			// Allows you to change the locomotive initial direction.
-			this.searchIdle();
+			this.idleSearch();
 		} else {
 			// This also makes sure the locomotive can move at least 1 node forward.
 			// Also allows you to change the initial direction.
@@ -182,7 +182,7 @@ class TestTrain extends Entity {
 	/**
 	 * Locomotive searches around itself for a node it can face towards.
 	 */
-	searchIdle(): void {
+	idleSearch(): void {
 		const temp = new Vec3();
 		let index = 0;
 		for (const dir of dirs) {
