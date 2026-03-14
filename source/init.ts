@@ -210,6 +210,9 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Locomotive gets it's rounded node positioning when idle.
+	 */
 	updatePosition(): void {
 		this.oldPosition.setVec(this.position);
 		this.position.setVec(this.object.get_pos()).round();
