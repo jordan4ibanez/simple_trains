@@ -142,7 +142,7 @@ class TestTrain extends Entity {
 	//? *******************
 
 	roll(delta: number): void {
-		const [id] = core.get_node_raw(
+		let [id] = core.get_node_raw(
 			this.forwardPosition.x,
 			this.forwardPosition.y,
 			this.forwardPosition.z,
@@ -171,13 +171,37 @@ class TestTrain extends Entity {
 			.lerp(this.forwardPosition, this.movementLerp);
 		this.object.move_to(this.movementVec);
 
-		// Tick forward and reset interpolation.
+		// If not done lerping forward then stop here or reset interpolation.
 		if (this.movementLerp < 1) {
 			return;
 		}
 		this.movementLerp = 0;
 
-		
+		// Attempt to move forward or turn.
+
+		this.position.setVec(this.forwardPosition);
+
+		this.forwardPosition.add(dirs[this.direction]);
+
+		[id] = core.get_node_raw(
+			this.forwardPosition.x,
+			this.forwardPosition.y,
+			this.forwardPosition.z,
+		);
+
+		// Hit the end of the straight path, try to turn.
+		if (id != trackID) {
+			const turnSuccess = this.turn();
+
+			if (turnSuccess) {
+				this.forwardPosition
+					.setVec(this.position)
+					.add(dirs[this.direction]);
+			} else {
+				// Locomotive hit the end of a path. Stop.
+				this.state = STATE.halted;
+			}
+		}
 	}
 
 	//? ******************
