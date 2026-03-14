@@ -130,6 +130,8 @@ class TestTrain extends Entity {
 				this.detectForward();
 				this.detectBackward();
 			}
+		} else if (this.state == STATE.rolling) {
+			this.debugRolling(delta);
 		}
 	}
 
@@ -146,8 +148,14 @@ class TestTrain extends Entity {
 		dir: Vec3 | null,
 		damage: number,
 	): void {
-		this.state = STATE.rolling;
+		if (this.state == STATE.idle) {
+			this.state = STATE.rolling;
+		} else {
+			this.state = STATE.idle;
+		}
 	}
+
+	debugRolling(delta: number): void {}
 
 	/**
 	 * Set the locomotive's rotation.
