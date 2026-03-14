@@ -92,6 +92,11 @@ class TestTrain extends Entity {
 	idleTimer: number = 0;
 	direction: DIRECTION = DIRECTION.null;
 	rollingTimer: number = 0;
+
+	/**
+	 * Lerp forward to backward.
+	 * -1.0 - 1.0
+	 */
 	movementLerp: number = 0;
 	movementVec: Vec3 = new Vec3();
 
