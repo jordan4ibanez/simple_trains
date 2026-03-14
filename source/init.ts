@@ -102,6 +102,8 @@ class TestTrain extends Entity {
 
 	speed: number = 0;
 
+	up: boolean = true;
+
 	initial_properties: ObjectProperties = {
 		visual: EntityVisual.mesh,
 		mesh: "test_train.gltf",
@@ -155,7 +157,22 @@ class TestTrain extends Entity {
 		}
 	}
 
-	debugRolling(delta: number): void {}
+	debugRolling(delta: number): void {
+		if (this.up) {
+			this.movementLerp += delta;
+			if (this.movementLerp >= 1) {
+				this.movementLerp = 1;
+				this.up = false;
+			}
+		} else {
+			this.movementLerp -= delta;
+			if (this.movementLerp <= -1) {
+				this.movementLerp = -1;
+				this.up = true;
+			}
+		}
+		print(this.movementLerp);
+	}
 
 	/**
 	 * Set the locomotive's rotation.
