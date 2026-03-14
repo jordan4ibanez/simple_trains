@@ -94,12 +94,15 @@ class TestTrain extends Entity {
 		switch (this.state) {
 			case STATE.idle: {
 				this.state = STATE.rolling;
+				break;
 			}
 			case STATE.rolling: {
 				this.state = STATE.idle;
+				break;
 			}
 			case STATE.halted: {
 				this.state = STATE.rolling;
+				break;
 			}
 		}
 	}
