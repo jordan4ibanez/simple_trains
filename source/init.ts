@@ -111,6 +111,9 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Set the locomotive's rotation.
+	 */
 	setRotation(): void {
 		if (this.direction == DIRECTION.null) {
 			this.object.set_yaw((DIRECTION.north * -90 + 90) * degToRad);
@@ -212,6 +215,9 @@ class TestTrain extends Entity {
 		});
 	}
 
+	/**
+	 * Attempt to turn the locomotive around.
+	 */
 	reverseDirection(): void {
 		if (this.state != STATE.idle) {
 			return;
