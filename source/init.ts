@@ -133,6 +133,12 @@ class TestTrain extends Entity {
 		}
 	}
 
+	on_activate(staticData: string, delta: number): void {
+		this.object.set_armor_groups({
+			punch_operable: 1,
+		});
+	}
+
 	/**
 	 * Set the locomotive's rotation.
 	 */
