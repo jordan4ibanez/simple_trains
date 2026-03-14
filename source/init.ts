@@ -54,12 +54,12 @@ const reverseLookupEnum = [
 /**
  * This is set up so the train doesn't turn backwards when turning.
  */
-const turn_skip_dir: Dictionary<DIRECTION, DIRECTION> = {
-	[DIRECTION.north]: DIRECTION.south, // 0 - 2
-	[DIRECTION.east]: DIRECTION.west, //   1 - 3
-	[DIRECTION.south]: DIRECTION.north, // 2 - 0
-	[DIRECTION.west]: DIRECTION.east, //   3 - 1
-};
+const directionInversion: DIRECTION[] = [
+	DIRECTION.south, // 0 - 2
+	DIRECTION.west, //   1 - 3
+	DIRECTION.north, // 2 - 0
+	DIRECTION.east, //   3 - 1
+];
 
 /**
  * Check if a position is track.
