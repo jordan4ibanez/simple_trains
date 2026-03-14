@@ -10,7 +10,7 @@ enum State {
 	rolling = 1,
 	halted = 2,
 }
-enum Direction {
+enum DIRECTION {
 	null = 0,
 	north = 1,
 	east = 2,
@@ -26,19 +26,19 @@ const dirs = [
 ];
 
 const reverse_lookup_enum = [
-	Direction.north,
-	Direction.east,
-	Direction.south,
-	Direction.west,
+	DIRECTION.north,
+	DIRECTION.east,
+	DIRECTION.south,
+	DIRECTION.west,
 ];
 
 /// This is set up so the train doesn't turn backwards.
 const turn_skip_dir = {
-	[Direction.north]: Direction.south,
-	[Direction.south]: Direction.north,
+	[DIRECTION.north]: DIRECTION.south,
+	[DIRECTION.south]: DIRECTION.north,
 
-	[Direction.east]: Direction.west,
-	[Direction.west]: Direction.east,
+	[DIRECTION.east]: DIRECTION.west,
+	[DIRECTION.west]: DIRECTION.east,
 };
 
 class TestTrain extends Entity {
@@ -51,7 +51,7 @@ class TestTrain extends Entity {
 	state: State = State.idle;
 
 	idleTimer: number = 0;
-	direction: Direction = Direction.null;
+	direction: DIRECTION = DIRECTION.null;
 	rollingTimer: number = 0;
 	movementLerp: number = 0;
 
@@ -121,7 +121,7 @@ class TestTrain extends Entity {
 
 		this.onTrack = id == trackID;
 		if (!this.onTrack) {
-			this.direction = Direction.null;
+			this.direction = DIRECTION.null;
 		}
 	}
 
