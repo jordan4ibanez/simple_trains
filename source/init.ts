@@ -21,6 +21,22 @@ const dirs = [
 	new Vec3(-1, 0, 0), // West.
 ];
 
+const reverse_lookup_enum = [
+	Direction.north,
+	Direction.east,
+	Direction.south,
+	Direction.west,
+];
+
+/// This is set up so the train doesn't turn backwards.
+const turn_skip_dir = {
+	[Direction.north]: Direction.south,
+	[Direction.south]: Direction.north,
+
+	[Direction.east]: Direction.west,
+	[Direction.west]: Direction.east,
+};
+
 class TestTrain extends Entity {
 	state: State = State.idle;
 
