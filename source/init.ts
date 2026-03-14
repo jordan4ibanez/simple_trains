@@ -148,6 +148,9 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Detect the forward position. (Priority)
+	 */
 	detectForward(): void {
 		if (isTrack(this.forwardPosition)) {
 			this.forwardValid = true;
