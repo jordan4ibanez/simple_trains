@@ -111,7 +111,18 @@ class TestTrain extends Entity {
 	}
 
 	detectOnTrack(): void {
-		
+		this.wasOnTrack = this.onTrack;
+
+		const [id] = core.get_node_raw(
+			this.position.x,
+			this.position.y,
+			this.position.z,
+		);
+
+		this.onTrack = id == trackID;
+		if (!this.onTrack) {
+			this.direction = Direction.null;
+		}
 	}
 
 	updatePosition(): void {
