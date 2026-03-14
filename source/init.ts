@@ -1,4 +1,5 @@
 import { Entity, registerEntity } from "./utility/entity";
+import { EntityVisual } from "./utility/enums";
 import { Vec3 } from "./utility/vector";
 
 enum State {
@@ -52,6 +53,15 @@ class TestTrain extends Entity {
 	movementLerp: number = 0;
 
 	speed: number = 0;
+
+	initial_properties: ObjectProperties = {
+		visual: EntityVisual.mesh,
+		mesh: "test_train.gltf",
+		textures: ["test_train.png"],
+		physical: false,
+		collide_with_objects: false,
+		selectionbox: [-0.2, -0.4, -0.2, 0.2, 0.4, 0.2],
+	};
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		for (const ent of core.get_objects_inside_radius(
