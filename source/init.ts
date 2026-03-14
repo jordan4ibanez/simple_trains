@@ -192,6 +192,9 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Locomotive detects if it is on a track when idling.
+	 */
 	detectOnTrack(): void {
 		this.wasOnTrack = this.onTrack;
 
