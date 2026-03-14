@@ -124,6 +124,7 @@ class TestTrain extends Entity {
 
 	/**
 	 * Locomotive idle behavior.
+	 * Sits there and waits for a track update to be able to move to.
 	 * @param delta Time between server ticks.
 	 */
 	idle(delta: number): void {
