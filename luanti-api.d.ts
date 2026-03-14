@@ -1504,9 +1504,9 @@ declare global {
 	}
 
 	/** @noSelf **/ interface ChatCommandDefinition {
-		params: string;
-		description: string;
-		privs: Dictionary<string, boolean>;
+		params?: string;
+		description?: string;
+		privs?: Dictionary<string, boolean>;
 		func(
 			name: string,
 			param: string,
