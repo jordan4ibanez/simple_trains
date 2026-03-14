@@ -146,6 +146,12 @@ class TestTrain extends Entity {
 	}
 
 	detectForward(): void {
+		if (isTrack(this.forwardPosition)) {
+			this.forwardValid = true;
+			return;
+		} else {
+			this.forwardValid = false;
+		}
 		let index = 0;
 		for (const dir of dirs) {
 			temp.setVec(this.position).add(dir);
@@ -167,6 +173,12 @@ class TestTrain extends Entity {
 	}
 
 	detectBackward(): void {
+		if (isTrack(this.backwardPosition)) {
+			this.backwardValid = true;
+			return;
+		} else {
+			this.backwardValid = false;
+		}
 		let index = 0;
 		for (const dir of dirs) {
 			temp.setVec(this.position).add(dir);
