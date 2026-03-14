@@ -213,12 +213,25 @@ class TestTrain extends Entity {
 	}
 
 	reverseDirection(): void {
-		if (this.state == STATE.idle) {
+		if (this.state != STATE.idle) {
 			return;
 		}
 
-		for (const i of $range(1, 4)) {
-			print("implement reverseDirection");
+		const temp = new Vec3();
+
+		for (const i of $range(0, 3)) {
+			const o = (i + this.direction) % 4;
+
+			temp.setVec(this.position).add(dirs[o]);
+
+			const [id] = core.get_node_raw(temp.x, temp.y, temp.z);
+
+			if (id == trackID) {
+				this.direction = reverseLookupEnum[o];
+				this.setRotation();
+				this.forwardPosition.setVec(temp);
+				break;
+			}
 		}
 	}
 }
