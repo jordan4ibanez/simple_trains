@@ -63,6 +63,10 @@ class TestTrain extends Entity {
 		selectionbox: [-0.2, -0.4, -0.2, 0.2, 0.4, 0.2],
 	};
 
+	on_activate(staticData: string, delta: number): void {
+		this.object.set_armor_groups({ punch_operable: 1 });
+	}
+
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		for (const ent of core.get_objects_inside_radius(
 			this.object.get_pos(),
