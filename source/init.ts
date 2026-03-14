@@ -92,7 +92,19 @@ class TestTrain extends Entity {
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
-		
+		switch (this.state) {
+			case State.idle: {
+				this.updatePosition()
+				this.detectOnTrack();
+				this.idleTimer(delta);
+			}
+			case State.rolling: {
+				// this.roll(delta);
+			}
+			case State.halted: {
+				// Does nothing.
+			}
+		}
 	}
 
 	reverseDirection(): void {
