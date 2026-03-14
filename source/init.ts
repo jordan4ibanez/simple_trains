@@ -111,7 +111,7 @@ class TestTrain extends Entity {
 				this.idle(delta);
 			}
 			case STATE.rolling: {
-				// this.roll(delta); // todo
+				this.roll(delta);
 			}
 			case STATE.halted: {
 				// Does nothing.
@@ -128,6 +128,10 @@ class TestTrain extends Entity {
 		} else {
 			this.object.set_yaw((this.direction * -90 + 90) * degToRad);
 		}
+	}
+
+	roll(delta: number): void {
+		
 	}
 
 	//? ******************
