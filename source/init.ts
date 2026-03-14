@@ -33,7 +33,9 @@ const reverseLookupEnum = [
 	DIRECTION.west,
 ];
 
-/// This is set up so the train doesn't turn backwards.
+/**
+ * This is set up so the train doesn't turn backwards when turning.
+ */
 const turn_skip_dir = {
 	[DIRECTION.north]: DIRECTION.south,
 	[DIRECTION.south]: DIRECTION.north,
