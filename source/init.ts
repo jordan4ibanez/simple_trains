@@ -171,6 +171,9 @@ class TestTrain extends Entity {
 		this.setRotation();
 	}
 
+	/**
+	 * Locomotive searches around itself for a node it can face towards.
+	 */
 	searchIdle(): void {
 		const temp = new Vec3();
 		let index = 0;
