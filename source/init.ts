@@ -131,6 +131,23 @@ class TestTrain extends Entity {
 	}
 
 	roll(delta: number): void {
+		const [id] = core.get_node_raw(
+			this.forwardPosition.x,
+			this.forwardPosition.y,
+			this.forwardPosition.z,
+		);
+
+		if (id != trackID) {
+			this.state = STATE.halted;
+			return;
+		}
+
+		//! Debugging !
+		this.speed += delta * 0.5;
+		if (this.speed > 10) {
+			this.speed = 0;
+		}
+
 		
 	}
 
