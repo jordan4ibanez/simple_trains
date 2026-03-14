@@ -136,7 +136,18 @@ class TestTrain extends Entity {
 			// Allows you to change the locomotive initial direction.
 			this.searchIdle();
 		} else {
+			// This also makes sure the locomotive can move at least 1 node forward.
+			// Also allows you to change the initial direction.
+			this.checkForward();
 		}
+	}
+
+	checkForward(): void {
+		const [id] = core.get_node_raw(
+			this.forwardPosition.x,
+			this.forwardPosition.y,
+			this.forwardPosition.z,
+		);
 	}
 
 	searchIdle(): void {
