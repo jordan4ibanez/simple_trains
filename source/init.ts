@@ -111,8 +111,9 @@ class TestTrain extends Entity {
 				this.magnetizeTrack();
 			}
 
-			if (!this.forwardValid) {
+			if (this.onTrack) {
 				this.detectForward();
+				this.detectBackward();
 			}
 		}
 	}
@@ -158,6 +159,28 @@ class TestTrain extends Entity {
 				this.setRotation();
 				this.forwardPosition.setVec(temp);
 				this.forwardValid = true;
+				break;
+			}
+			index++;
+		}
+	}
+
+	detectBackward(): void {
+		const temp = new Vec3();
+		let index = 0;
+		for (const dir of dirs) {
+			temp.setVec(this.position).add(dir);
+
+			// Don't try to steer into itself.
+			if (this.forwardValid && temp.equals(this.forwardPosition)) {
+				continue;
+			}
+
+			const [id] = core.get_node_raw(temp.x, temp.y, temp.z);
+
+			if (id == trackID) {
+				this.backwardPosition.setVec(temp);
+				this.backwardValid = true;
 				break;
 			}
 			index++;
