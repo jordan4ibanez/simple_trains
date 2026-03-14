@@ -68,7 +68,6 @@ function isTrack(pos: Vec3): boolean {
 
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
-	oldPosition: Vec3 = new Vec3();
 
 	forwardPosition: Vec3 = new Vec3();
 	forwardValid: boolean = false;
