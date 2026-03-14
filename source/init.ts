@@ -1,6 +1,29 @@
 import { Entity, registerEntity } from "./utility/entity";
+import { Vec3 } from "./utility/vector";
+
+enum State {
+	idle = 0,
+	rolling = 1,
+	halted = 2,
+}
+enum Direction {
+	null = 0,
+	north = 1,
+	east = 2,
+	south = 3,
+	west = 4,
+}
+
+const dirs = [
+	new Vec3(0, 0, 1), //  North.
+	new Vec3(1, 0, 0), //  East.
+	new Vec3(0, 0, -1), // South.
+	new Vec3(-1, 0, 0), // West.
+];
 
 class TestTrain extends Entity {
+	state: State = State.idle;
+
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		for (const ent of core.get_objects_inside_radius(
 			this.object.get_pos(),
