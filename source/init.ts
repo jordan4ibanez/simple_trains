@@ -98,7 +98,7 @@ class TestTrain extends Entity {
 	 * -1.0 - 1.0
 	 */
 	movementLerp: number = 0;
-	movementVec: Vec3 = new Vec3();
+	vecMovement: Vec3 = new Vec3();
 
 	speed: number = 0;
 
@@ -172,6 +172,18 @@ class TestTrain extends Entity {
 			}
 		}
 		print(this.movementLerp);
+
+		if (this.movementLerp == 0) {
+			this.object.move_to(this.position);
+		} else if (this.movementLerp > 0) {
+			this.object.move_to(
+				this.vecMovement
+					.setVec(this.position)
+					.lerp(this.forwardPosition, this.movementLerp),
+			);
+		}
+
+		this.debugPositionsVisual();
 	}
 
 	/**
