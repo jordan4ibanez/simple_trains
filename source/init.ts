@@ -178,6 +178,9 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Detect the backward position. (Forward takes priority)
+	 */
 	detectBackward(): void {
 		if (isTrack(this.backwardPosition)) {
 			this.backwardValid = true;
