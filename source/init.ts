@@ -15,11 +15,11 @@ enum STATE {
 	halted = 2,
 }
 enum DIRECTION {
-	null = 0,
-	north = 1,
-	east = 2,
-	south = 3,
-	west = 4,
+	null = -1,
+	north = 0, // +Z
+	east = 1, //  +X
+	south = 2, // -Z
+	west = 3, //  -X
 }
 
 const dirs = [
@@ -43,11 +43,10 @@ const reverseLookupEnum = [
  * This is set up so the train doesn't turn backwards when turning.
  */
 const turn_skip_dir: Dictionary<DIRECTION, DIRECTION> = {
-	[DIRECTION.north]: DIRECTION.south,
-	[DIRECTION.south]: DIRECTION.north,
-
-	[DIRECTION.east]: DIRECTION.west,
-	[DIRECTION.west]: DIRECTION.east,
+	[DIRECTION.north]: DIRECTION.south, // 0 - 2
+	[DIRECTION.east]: DIRECTION.west, //   1 - 3
+	[DIRECTION.south]: DIRECTION.north, // 2 - 0
+	[DIRECTION.west]: DIRECTION.east, //   3 - 1
 };
 
 class TestTrain extends Entity {
@@ -101,7 +100,7 @@ class TestTrain extends Entity {
 				break;
 			}
 			case STATE.halted: {
-				this.state = STATE.rolling;
+				this.state = STATE.idle;
 				break;
 			}
 		}
@@ -141,7 +140,25 @@ class TestTrain extends Entity {
 	//? * ROLLING METHODS *
 	//? *******************
 
+	debugRoll(): void {
+		core.add_particle({
+			pos: this.position,
+			velocity: new Vec3(0, 2, 0),
+			size: 1,
+			texture: "default_stone.png",
+		});
+
+		core.add_particle({
+			pos: this.forwardPosition,
+			velocity: new Vec3(0, 2, 0),
+			size: 1,
+			texture: "default_dirt.png",
+		});
+	}
+
 	roll(delta: number): void {
+		this.debugRoll();
+
 		let [id] = core.get_node_raw(
 			this.forwardPosition.x,
 			this.forwardPosition.y,
@@ -158,6 +175,7 @@ class TestTrain extends Entity {
 		if (this.speed > 10) {
 			this.speed = 0;
 		}
+		this.speed = 5;
 
 		this.movementLerp += delta * this.speed;
 
@@ -205,8 +223,35 @@ class TestTrain extends Entity {
 	}
 
 	turn(): boolean {
-		const avoid = turn_skip_dir[this.direction];
+		const avoid: DIRECTION | undefined = turn_skip_dir[this.direction];
+		if (avoid == null) {
+			throw new Error("DIRECTION was null in turn() method.");
+		}
 
+		let index = -1;
+		for (const dir of dirs) {
+			index++;
+
+			if (index == avoid) {
+				continue;
+			}
+
+			this.forwardPosition.setVec(this.position).add(dir);
+
+			const [id] = core.get_node_raw(
+				this.forwardPosition.x,
+				this.forwardPosition.y,
+				this.forwardPosition.z,
+			);
+
+			if (id == trackID) {
+				this.direction = reverseLookupEnum[index];
+				this.setRotation();
+				return true;
+			}
+		}
+
+		this.forwardPosition.set(0, 0, 0);
 		return false;
 	}
 
