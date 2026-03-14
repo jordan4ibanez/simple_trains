@@ -99,7 +99,7 @@ class TestTrain extends Entity {
 			case STATE.idle: {
 				this.updatePosition();
 				this.detectOnTrack();
-				// this.idleTimer(delta); // todo
+				this.idle(delta);
 			}
 			case STATE.rolling: {
 				// this.roll(delta); // todo
@@ -108,6 +108,10 @@ class TestTrain extends Entity {
 				// Does nothing.
 			}
 		}
+	}
+
+	idle(delta: number): void {
+		
 	}
 
 	detectOnTrack(): void {
