@@ -159,6 +159,9 @@ class TestTrain extends Entity {
 
 	debugRolling(delta: number): void {
 		//! This was debug.
+
+		// const wasMovementLerp = this.movementLerp;
+
 		// if (this.up) {
 		// 	this.movementLerp += delta;
 		// 	if (this.movementLerp >= 1) {
@@ -173,7 +176,9 @@ class TestTrain extends Entity {
 		// 	}
 		// }
 
-		this.movementLerp += delta;
+		if (this.forwardValid) {
+			this.movementLerp += delta;
+		}
 
 		if (this.movementLerp >= 1) {
 			this.movementLerp = 1;
