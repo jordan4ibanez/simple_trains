@@ -61,11 +61,19 @@ const turn_skip_dir: Dictionary<DIRECTION, DIRECTION> = {
 	[DIRECTION.west]: DIRECTION.east, //   3 - 1
 };
 
+/**
+ * Check if a position is track.
+ * @param pos A position.
+ * @returns If it is track.
+ */
 function isTrack(pos: Vec3): boolean {
 	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
 	return id == trackID;
 }
 
+/**
+ * A temporary vector reserved to reduce GC footprint.
+ */
 const temp: Vec3 = new Vec3();
 
 class TestTrain extends Entity {
