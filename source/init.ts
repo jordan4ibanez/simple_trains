@@ -251,7 +251,7 @@ class TestTrain extends Entity {
 		const temp = new Vec3();
 
 		for (const i of $range(0, 3)) {
-			const o = (i + this.direction) % 4;
+			const o = (i + this.direction + 1) % 4;
 
 			temp.setVec(this.position).add(dirs[o]);
 
