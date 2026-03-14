@@ -273,6 +273,10 @@ export class Vec3 implements ShallowVector3 {
 			")"
 		);
 	}
+
+	explode(): [number, number, number] {
+		return [this.x, this.y, this.z];
+	}
 }
 
 export class Vec2 implements ShallowVector2 {
