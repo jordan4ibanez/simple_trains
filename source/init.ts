@@ -99,7 +99,7 @@ class TestTrain extends Entity {
 				// this.idleTimer(delta); // todo
 			}
 			case State.rolling: {
-				// this.roll(delta);
+				// this.roll(delta); // todo
 			}
 			case State.halted: {
 				// Does nothing.
