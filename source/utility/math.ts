@@ -67,3 +67,12 @@ export function safeAsin(r: number): number {
 export function normalize(min: number, max: number, value: number): number {
 	return value * (max - min) + min;
 }
+
+export function sign(number: number): number {
+	if (number > 0) {
+		return 1;
+	} else if (number < 0) {
+		return -1;
+	}
+	return 0;
+}
