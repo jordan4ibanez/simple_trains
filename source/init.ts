@@ -26,6 +26,9 @@ const dirs = [
 	new Vec3(-1, 0, 0), // West.
 ];
 
+/**
+ * Convert a direction index into an enum.
+ */
 const reverseLookupEnum = [
 	DIRECTION.north,
 	DIRECTION.east,
