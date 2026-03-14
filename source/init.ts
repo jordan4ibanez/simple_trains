@@ -137,6 +137,10 @@ class TestTrain extends Entity {
 		}
 	}
 
+	//? *******************
+	//? * ROLLING METHODS *
+	//? *******************
+
 	roll(delta: number): void {
 		const [id] = core.get_node_raw(
 			this.forwardPosition.x,
