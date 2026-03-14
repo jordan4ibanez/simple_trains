@@ -174,9 +174,7 @@ class TestTrain extends Entity {
 				continue;
 			}
 
-			const [id] = core.get_node_raw(temp.x, temp.y, temp.z);
-
-			if (id == trackID) {
+			if (isTrack(temp)) {
 				this.backwardPosition.setVec(temp);
 				this.backwardValid = true;
 				break;
