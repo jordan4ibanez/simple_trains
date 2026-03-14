@@ -217,6 +217,28 @@ class TestTrain extends Entity {
 		}
 
 		const backward = this.movementLerp == -1;
+
+		this.traverseTrack(backward);
+	}
+
+	traverseTrack(backward: boolean): void {
+		const direction: DIRECTION = (() => {
+			if (backward) {
+				return directionInversion[this.direction];
+			} else {
+				return this.direction;
+			}
+		})();
+		const rootPosition: Vec3 = (() => {
+			if (backward) {
+				return this.backwardPosition;
+			} else {
+				return this.forwardPosition;
+			}
+		})();
+
+		print(backward);
+		print(direction);
 	}
 
 	/**
