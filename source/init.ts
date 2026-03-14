@@ -157,12 +157,17 @@ class TestTrain extends Entity {
 	 * Detect the forward position. (Priority)
 	 */
 	detectForward(): void {
-		if (isTrack(this.forwardPosition)) {
+		// Do not overlap positions.
+		if (
+			!isTrack(this.forwardPosition) ||
+			this.forwardPosition.equals(this.position)
+		) {
+			this.forwardValid = false;
+		} else {
 			this.forwardValid = true;
 			return;
-		} else {
-			this.forwardValid = false;
 		}
+
 		let index = 0;
 		for (const dir of dirs) {
 			temp.setVec(this.position).add(dir);
@@ -187,12 +192,18 @@ class TestTrain extends Entity {
 	 * Detect the backward position. (Forward takes priority)
 	 */
 	detectBackward(): void {
-		if (isTrack(this.backwardPosition)) {
+		// Do not overlap positions. Forward takes priority.
+		if (
+			!isTrack(this.backwardPosition) ||
+			this.backwardPosition.equals(this.forwardPosition) ||
+			this.backwardPosition.equals(this.position)
+		) {
+			this.backwardValid = false;
+		} else {
 			this.backwardValid = true;
 			return;
-		} else {
-			this.backwardValid = false;
 		}
+
 		let index = 0;
 		for (const dir of dirs) {
 			temp.setVec(this.position).add(dir);
