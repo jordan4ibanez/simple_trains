@@ -131,7 +131,21 @@ class TestTrain extends Entity {
 	}
 
 	searchIdle(): void {
-		
+		const temp = new Vec3();
+		let index = 0;
+		for (const dir of dirs) {
+			temp.setVec(this.position).add(dir);
+
+			const [id] = core.get_node_raw(temp.x, temp.y, temp.z);
+
+			if (id == trackID) {
+				this.direction = reverse_lookup_enum[index];
+				this.setRotation();
+				this.forwardPosition.setVec(temp);
+				break;
+			}
+			index++;
+		}
 	}
 
 	detectOnTrack(): void {
