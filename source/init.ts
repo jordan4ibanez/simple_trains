@@ -139,6 +139,9 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Snaps the locomotive to it's current track.
+	 */
 	magnetizeTrack(): void {
 		if (isTrack(this.position)) {
 			this.object.move_to(this.position);
