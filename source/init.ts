@@ -290,10 +290,11 @@ class TestTrain extends Entity {
 			return;
 		}
 
-		this.state = STATE.idle;
-
 		print(backward);
 		print(direction);
+
+		// Failure, go back to idling.
+		this.state = STATE.idle;
 	}
 
 	/**
