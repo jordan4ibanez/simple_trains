@@ -183,7 +183,7 @@ class TestTrain extends Entity {
 		if (this.movementLerp >= 1) {
 			this.movementLerp = 1;
 		} else if (this.movementLerp <= -1) {
-			this.movementLerp = 1;
+			this.movementLerp = -1;
 		}
 
 		if (this.movementLerp == 0) {
