@@ -221,6 +221,10 @@ class TestTrain extends Entity {
 		this.traverseTrack(backward);
 	}
 
+	/**
+	 * Locomotive traverses into a new node.
+	 * @param backward If the locomotive is traveling backwards.
+	 */
 	traverseTrack(backward: boolean): void {
 		const direction: DIRECTION = (() => {
 			if (backward) {
