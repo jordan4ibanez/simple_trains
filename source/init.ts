@@ -241,6 +241,24 @@ class TestTrain extends Entity {
 			}
 		})();
 
+		// First reset all settings related to movement. It has stepped into a new node.
+		this.movementLerp = 0;
+
+		// Can continue in a straight line.
+		let canContinue = false;
+
+		if (backward) {
+			this.forwardPosition.setVec(this.position);
+			this.position.setVec(this.backwardPosition);
+			this.backwardPosition.add(dirs[direction]);
+			canContinue = isTrack(this.backwardPosition);
+		} else {
+			this.backwardPosition.setVec(this.position);
+			this.position.setVec(this.forwardPosition);
+			this.forwardPosition.add(dirs[direction]);
+			canContinue = isTrack(this.forwardPosition);
+		}
+
 		print(backward);
 		print(direction);
 	}
