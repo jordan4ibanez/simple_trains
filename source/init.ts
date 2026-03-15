@@ -35,10 +35,10 @@ enum DIRECTION {
 }
 
 const dirs = [
-	new Vec3(0, 0, 1), //  North.
-	new Vec3(1, 0, 0), //  East.
-	new Vec3(0, 0, -1), // South.
-	new Vec3(-1, 0, 0), // West.
+	new Vec3(0, 0, 1), //  0 - North.
+	new Vec3(1, 0, 0), //  1 - East.
+	new Vec3(0, 0, -1), // 2 - South.
+	new Vec3(-1, 0, 0), // 3 - West.
 ];
 
 /**
