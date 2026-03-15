@@ -250,7 +250,7 @@ class TestTrain extends Entity {
 		if (backward) {
 			this.forwardPosition.setVec(this.position);
 			this.position.setVec(this.backwardPosition);
-			this.backwardPosition.add(dirs[direction]);
+			this.backwardPosition.setVec(this.position).add(dirs[direction]);
 
 			this.forwardValid = isTrack(this.forwardPosition);
 			this.backwardValid = isTrack(this.backwardPosition);
@@ -259,7 +259,7 @@ class TestTrain extends Entity {
 		} else {
 			this.backwardPosition.setVec(this.position);
 			this.position.setVec(this.forwardPosition);
-			this.forwardPosition.add(dirs[direction]);
+			this.forwardPosition.setVec(this.position).add(dirs[direction]);
 
 			this.backwardValid = isTrack(this.backwardPosition);
 			this.forwardValid = isTrack(this.forwardPosition);
