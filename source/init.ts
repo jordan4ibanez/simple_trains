@@ -176,8 +176,16 @@ class TestTrain extends Entity {
 		// 	}
 		// }
 
-		if (this.forwardValid) {
-			this.movementLerp += delta;
+		const accelerate = true;
+
+		if (accelerate) {
+			if (this.forwardValid) {
+				this.movementLerp += delta;
+			}
+		} else {
+			if (this.backwardValid) {
+				this.movementLerp -= delta;
+			}
 		}
 
 		if (this.movementLerp >= 1) {
