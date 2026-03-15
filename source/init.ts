@@ -252,12 +252,23 @@ class TestTrain extends Entity {
 			this.position.setVec(this.backwardPosition);
 			this.backwardPosition.add(dirs[direction]);
 			canContinue = isTrack(this.backwardPosition);
+
+			this.forwardValid = isTrack(this.forwardPosition);
 		} else {
 			this.backwardPosition.setVec(this.position);
 			this.position.setVec(this.forwardPosition);
 			this.forwardPosition.add(dirs[direction]);
 			canContinue = isTrack(this.forwardPosition);
+
+			this.backwardValid = isTrack(this.backwardPosition);
 		}
+
+		// If it can keep going then keep on going!
+		if (canContinue) {
+			return;
+		}
+
+		this.state = STATE.idle;
 
 		print(backward);
 		print(direction);
