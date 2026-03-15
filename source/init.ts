@@ -181,10 +181,14 @@ class TestTrain extends Entity {
 		if (accelerate) {
 			if (this.forwardValid) {
 				this.movementLerp += delta;
+			} else {
+				this.forwardValid = isTrack(this.forwardPosition);
 			}
 		} else {
 			if (this.backwardValid) {
 				this.movementLerp -= delta;
+			} else {
+				this.backwardValid = isTrack(this.backwardPosition);
 			}
 		}
 
@@ -280,7 +284,7 @@ class TestTrain extends Entity {
 			return;
 		}
 
-		this.state = STATE.idle;
+		// this.state = STATE.idle;
 
 		print(backward);
 		print(direction);
