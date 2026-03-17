@@ -117,6 +117,7 @@ class TestTrain extends Entity {
 		// todo: this is debug and can cause issues with trains that already exist.
 
 		this.position = new Vec3();
+		this.vecMovement = new Vec3();
 
 		// Position calibration of initial data.
 		// Literally nothing else can be done without this, or it may be extremely glitchy and convuluted.
@@ -183,6 +184,20 @@ class TestTrain extends Entity {
 		}
 
 		//* Movement debug.
+		this.movementLerp += this.speed * (delta * 0.1);
+
+		const lerpVec = new Vec3(
+			this.movementLerp,
+			this.movementLerp,
+			this.movementLerp,
+		);
+
+		const tempVec = new Vec3()
+			.setVec(dirToVector[this.direction])
+			.multiply(lerpVec);
+
+		this.vecMovement.setVec(this.position).add(tempVec);
+		this.object.set_pos(this.vecMovement);
 	}
 }
 
