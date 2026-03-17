@@ -17,3 +17,7 @@ core.register_node("simple_trains:track_straight", {
 		fixed: [-0.5, -0.5, -0.5, 0.5, -0.3, 0.5],
 	},
 });
+
+export const trackStraightID = core.get_content_id(
+	"simple_trains:track_straight",
+);
