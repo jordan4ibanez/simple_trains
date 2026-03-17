@@ -1,8 +1,11 @@
 import { track } from "./game_detection";
+import { trackRegistration } from "./track";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual } from "./utility/enums";
 import { degToRad } from "./utility/math";
 import { Vec3 } from "./utility/vector";
+
+trackRegistration();
 
 core.register_chatcommand("t", {
 	func: (name: string) => {
