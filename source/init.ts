@@ -225,6 +225,7 @@ class TestTrain extends Entity {
 
 		this.movementLerp += delta * this.speed;
 
+		// Backward.
 		if (this.movementLerp <= -0.5) {
 			this.movementLerp = 0.5;
 
@@ -234,6 +235,22 @@ class TestTrain extends Entity {
 				if (!this.canContinue(temp)) {
 					// Hold position.
 					this.movementLerp = -0.5;
+					this.speed = 0;
+				} else {
+					// Move backward.
+					this.position.setVec(temp);
+				}
+			}
+		} else if (this.movementLerp > 0.5) {
+			// Forward.
+			this.movementLerp = -0.5;
+
+			const dirVec = dirToVector[this.direction];
+			if (dirVec != null) {
+				temp.setVec(this.position).add(dirVec);
+				if (!this.canContinue(temp)) {
+					// Hold position.
+					this.movementLerp = 0.5;
 					this.speed = 0;
 				} else {
 					// Move forward.
