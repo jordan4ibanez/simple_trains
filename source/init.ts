@@ -150,6 +150,12 @@ class TestTrain extends Entity {
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
+		core.add_particle({
+			pos: this.position,
+			velocity: new Vec3(0, 2, 0),
+			size: 1,
+			texture: "default_stone.png",
+		});
 		const [id, param1, param2] = core.get_node_raw(
 			this.position.x,
 			this.position.y,
@@ -160,18 +166,23 @@ class TestTrain extends Entity {
 			// Try to configure an initial direction.
 			if (this.direction == DIRECTION.null) {
 				const axis = STRAIGHT_TRACK_DIR_TO_AXIS[param2];
+
 				if (axis == STRAIGHT_TRACK_AXIS.X) {
 					this.direction = DIRECTION.east;
 				} else {
 					this.direction = DIRECTION.north;
 				}
+
+				this.setRotation();
 			}
+		} else {
+			this.direction = DIRECTION.null;
 		}
 	}
 }
 
 registerEntity("simple_trains:train", TestTrain);
 
-core.register_on_punchnode((pos: ShallowVector3, node: NodeTable) => {
-	print(dump(node));
-});
+// core.register_on_punchnode((pos: ShallowVector3, node: NodeTable) => {
+// 	print(dump(node));
+// });
