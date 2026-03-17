@@ -16,6 +16,9 @@ core.register_node("simple_trains:track_straight", {
 		type: Nodeboxtype.fixed,
 		fixed: [-0.5, -0.5, -0.5, 0.5, -0.3, 0.5],
 	},
+	groups: {
+		oddly_breakable_by_hand: 1,
+	},
 });
 
 export const trackStraightID = core.get_content_id(
