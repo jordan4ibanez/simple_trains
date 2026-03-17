@@ -24,11 +24,6 @@ core.register_chatcommand("t", {
 	},
 });
 
-/**
- * A game agnostic way to have rails function faster.
- */
-const trackID: number = core.get_content_id(track);
-
 enum STATE {
 	idle = 0,
 	rolling = 1,
@@ -76,7 +71,7 @@ const directionInversion: DIRECTION[] = [
  */
 function isTrack(pos: Vec3): boolean {
 	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
-	return id == trackID;
+	return id == trackStraightID; // todo: || id == trackTurnID || id == trackSwitchID;
 }
 
 /**
@@ -120,6 +115,14 @@ class TestTrain extends Entity {
 		collide_with_objects: false,
 		selectionbox: [-0.2, -0.4, -0.2, 0.2, 0.4, 0.2],
 	};
+
+	on_activate(staticData: string, delta: number): void {
+		// Position calibration of initial data.
+		// Literally nothing else can be done without this, or it may be extremely glitchy and convuluted.
+		this.position.setVec(this.object.get_pos()).round();
+	}
+
+	on_step(delta: number, moveResult: MoveResult | null): void {}
 }
 
 registerEntity("simple_trains:train", TestTrain);
