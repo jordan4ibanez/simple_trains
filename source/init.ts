@@ -89,6 +89,9 @@ function isTrack(pos: Vec3): boolean {
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.null;
+	speed: number = 1;
+
+	up: boolean = true;
 
 	onTrack: boolean = false;
 	wasOnTrack: boolean = false;
@@ -99,10 +102,6 @@ class TestTrain extends Entity {
 	 */
 	movementLerp: number = 0;
 	vecMovement: Vec3 = new Vec3();
-
-	speed: number = 0;
-
-	up: boolean = true;
 
 	initial_properties: ObjectProperties = {
 		visual: EntityVisual.mesh,
@@ -140,7 +139,19 @@ class TestTrain extends Entity {
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
-		this.speed += delta;
+		if (this.up) {
+			this.speed += delta;
+			if (this.speed >= 1) {
+				this.speed = 1;
+				this.up = false;
+			}
+		} else {
+			this.speed -= delta;
+			if (this.speed <= -1) {
+				this.speed = -1;
+				this.up = true;
+			}
+		}
 
 		core.add_particle({
 			pos: this.position,
@@ -170,6 +181,8 @@ class TestTrain extends Entity {
 		} else {
 			this.direction = DIRECTION.null;
 		}
+
+		//* Movement debug.
 	}
 }
 
