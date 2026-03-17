@@ -128,6 +128,18 @@ class TestTrain extends Entity {
 		if (isTrack(this.position)) {
 			this.object.move_to(this.position);
 		}
+
+		this.object.set_armor_groups({ punch_activated: 1 });
+	}
+
+	on_punch(
+		puncher: ObjectRef | null,
+		timeFromLastPunch: number | null,
+		toolCapabilities: ToolCapabilities | null,
+		dir: Vec3 | null,
+		damage: number,
+	): void {
+		this.up = !this.up;
 	}
 
 	/**
