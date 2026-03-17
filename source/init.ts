@@ -148,9 +148,10 @@ class TestTrain extends Entity {
 			return false;
 		}
 
-		const axis = STRAIGHT_TRACK_AXIS[this.direction];
+		const currentAxis = STRAIGHT_TRACK_DIR_TO_AXIS[this.direction];
+		const trackAxis = STRAIGHT_TRACK_DIR_TO_AXIS[param2];
 
-		return false;
+		return currentAxis == trackAxis;
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
@@ -205,6 +206,8 @@ class TestTrain extends Entity {
 			this.movementLerp = 0.5;
 			temp.setVec(this.position).subtract(dirToVector[this.direction]);
 			const continuing = this.canContinue(temp);
+
+			print(continuing);
 		}
 
 		// if (this.up) {
@@ -227,10 +230,14 @@ class TestTrain extends Entity {
 			this.movementLerp,
 		);
 
-		temp.setVec(dirToVector[this.direction]).multiply(lerpVec);
+		const dirVec = dirToVector[this.direction];
 
-		this.vecMovement.setVec(this.position).add(temp);
-		this.object.set_pos(this.vecMovement);
+		if (dirVec != null) {
+			temp.setVec(dirVec).multiply(lerpVec);
+
+			this.vecMovement.setVec(this.position).add(temp);
+			this.object.set_pos(this.vecMovement);
+		}
 	}
 }
 /**
