@@ -98,7 +98,7 @@ class TestTrain extends Entity {
 
 	/**
 	 * Lerp forward to backward.
-	 * -1.0 - 1.0
+	 * -0.5 - 0.5
 	 */
 	movementLerp: number = 0;
 	vecMovement: Vec3 = new Vec3();
@@ -140,20 +140,6 @@ class TestTrain extends Entity {
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
-		if (this.up) {
-			this.speed += delta;
-			if (this.speed >= 1) {
-				this.speed = 1;
-				this.up = false;
-			}
-		} else {
-			this.speed -= delta;
-			if (this.speed <= -1) {
-				this.speed = -1;
-				this.up = true;
-			}
-		}
-
 		core.add_particle({
 			pos: this.position,
 			velocity: new Vec3(0, 2, 0),
@@ -184,6 +170,21 @@ class TestTrain extends Entity {
 		}
 
 		//* Movement debug.
+
+		if (this.up) {
+			this.speed += delta;
+			if (this.speed >= 1) {
+				this.speed = 1;
+				this.up = false;
+			}
+		} else {
+			this.speed -= delta;
+			if (this.speed <= -1) {
+				this.speed = -1;
+				this.up = true;
+			}
+		}
+
 		this.movementLerp += this.speed * (delta * 0.1);
 
 		const lerpVec = new Vec3(
