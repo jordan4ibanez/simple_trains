@@ -322,6 +322,9 @@ interface core {
 	swap_node(position: ShallowVector3, nodeTable: NodeTable): void;
 	remove_node(position: ShallowVector3): void;
 	get_node(position: ShallowVector3): NodeTable;
+	/**
+	 * @returns content_id, param1, param2, pos_ok
+	 */
 	get_node_raw(
 		x: number,
 		y: number,
