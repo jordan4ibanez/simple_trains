@@ -86,23 +86,18 @@ function isTrack(pos: Vec3): boolean {
 	return id == trackStraightID; // todo: || id == trackTurnID || id == trackSwitchID;
 }
 
-/**
- * A temporary vector reserved to reduce GC footprint.
- */
-const temp: Vec3 = new Vec3();
-
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 
-	forwardPosition: Vec3 = new Vec3();
-	forwardValid: boolean = false;
+	// forwardPosition: Vec3 = new Vec3();
+	// forwardValid: boolean = false;
 
-	backwardPosition: Vec3 = new Vec3();
-	backwardValid: boolean = false;
+	// backwardPosition: Vec3 = new Vec3();
+	// backwardValid: boolean = false;
 
 	onTrack: boolean = false;
 	wasOnTrack: boolean = false;
-	state: STATE = STATE.idle;
+	// state: STATE = STATE.idle;
 
 	idleTimer: number = 0;
 	direction: DIRECTION = DIRECTION.null;
