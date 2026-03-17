@@ -129,12 +129,31 @@ class TestTrain extends Entity {
 	};
 
 	on_activate(staticData: string, delta: number): void {
+		// todo: check if static data is null.
+		// todo: this is debug and can cause issues with trains that already exist.
+
 		// Position calibration of initial data.
 		// Literally nothing else can be done without this, or it may be extremely glitchy and convuluted.
 		this.position.setVec(this.object.get_pos()).round();
+
+		if (isTrack(this.position)) {
+			this.object.move_to(this.position);
+		}
 	}
 
-	on_step(delta: number, moveResult: MoveResult | null): void {}
+	on_step(delta: number, moveResult: MoveResult | null): void {
+		const [id] = core.get_node_raw(
+			this.position.x,
+			this.position.y,
+			this.position.z,
+		);
+
+		if (id == trackStraightID) {
+			// Try to configure an initial direction.
+			if (this.direction == DIRECTION.null) {
+			}
+		}
+	}
 }
 
 registerEntity("simple_trains:train", TestTrain);
