@@ -140,6 +140,10 @@ class TestTrain extends Entity {
 		damage: number,
 	): void {
 		this.up = !this.up;
+
+		if (puncher?.is_player() && puncher.get_player_control().sneak) {
+			this.object.remove();
+		}
 	}
 
 	/**
