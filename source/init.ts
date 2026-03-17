@@ -215,6 +215,9 @@ class TestTrain extends Entity {
 		this.object.set_pos(this.vecMovement);
 	}
 }
+/**
+ * todo: Check turn input using vector direction. If current vector matches that vector then train can go to it.
+ */
 
 registerEntity("simple_trains:train", TestTrain);
 
