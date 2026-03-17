@@ -89,7 +89,7 @@ function isTrack(pos: Vec3): boolean {
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.null;
-	speed: number = 1;
+	speed: number = -0.5;
 
 	up: boolean = true;
 
@@ -139,6 +139,10 @@ class TestTrain extends Entity {
 		}
 	}
 
+	canContinue(): boolean {
+		return false;
+	}
+
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		core.add_particle({
 			pos: this.position,
@@ -185,21 +189,26 @@ class TestTrain extends Entity {
 		// 	}
 		// }
 
-		// this.movementLerp += this.speed * (delta * 0.1);
+		this.movementLerp += delta * this.speed;
 
-		if (this.up) {
-			this.movementLerp += delta;
-			if (this.movementLerp >= 0.5) {
-				this.movementLerp = 0.5;
-				this.up = false;
-			}
-		} else {
-			this.movementLerp -= delta;
-			if (this.movementLerp <= -0.5) {
-				this.movementLerp = -0.5;
-				this.up = true;
-			}
+		if (this.movementLerp <= -0.5) {
+			this.movementLerp = 0.5;
+			this.position.subtract(dirToVector[this.direction]);
 		}
+
+		// if (this.up) {
+		// 	this.movementLerp += delta;
+		// 	if (this.movementLerp >= 0.5) {
+		// 		this.movementLerp = 0.5;
+		// 		this.up = false;
+		// 	}
+		// } else {
+		// 	this.movementLerp -= delta;
+		// 	if (this.movementLerp <= -0.5) {
+		// 		this.movementLerp = -0.5;
+		// 		this.up = true;
+		// 	}
+		// }
 
 		const lerpVec = new Vec3(
 			this.movementLerp,
