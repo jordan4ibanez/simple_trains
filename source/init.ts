@@ -88,11 +88,10 @@ function isTrack(pos: Vec3): boolean {
 
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
+	direction: DIRECTION = DIRECTION.null;
 
 	onTrack: boolean = false;
 	wasOnTrack: boolean = false;
-
-	direction: DIRECTION = DIRECTION.null;
 
 	/**
 	 * Lerp forward to backward.
@@ -141,7 +140,6 @@ class TestTrain extends Entity {
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
-
 		this.speed += delta;
 
 		core.add_particle({
