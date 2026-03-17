@@ -1,5 +1,5 @@
 import { track } from "./game_detection";
-import { trackRegistration } from "./track";
+import { trackRegistration, trackStraightID } from "./track";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual } from "./utility/enums";
 import { degToRad } from "./utility/math";
@@ -15,7 +15,12 @@ core.register_chatcommand("t", {
 		}
 		const pos = player.get_pos();
 		pos.y += 0.5;
-		core.add_entity(pos, "simple_trains:train");
+
+		const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
+
+		if (id == trackStraightID) {
+			core.add_entity(pos, "simple_trains:train");
+		}
 	},
 });
 
