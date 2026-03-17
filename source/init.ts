@@ -42,14 +42,14 @@ enum STRAIGHT_TRACK_AXIS {
 	X = 0,
 	Z = 1,
 }
-const STRAIGHT_TRACK_DIR_TO_AXIS: STRAIGHT_TRACK_AXIS[] = [
+const STRAIGHT_TRACK_DIR_TO_AXIS: STRAIGHT_TRACK_AXIS[] | null[] = [
 	STRAIGHT_TRACK_AXIS.Z,
 	STRAIGHT_TRACK_AXIS.X,
 	STRAIGHT_TRACK_AXIS.Z,
 	STRAIGHT_TRACK_AXIS.X,
 ];
 
-const dirToVector: Vec3[] = [
+const dirToVector: Vec3[] | null[] = [
 	new Vec3(0, 0, 1), //  0 - North.
 	new Vec3(1, 0, 0), //  1 - East.
 	new Vec3(0, 0, -1), // 2 - South.
