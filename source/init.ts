@@ -218,9 +218,9 @@ class TestTrain extends Entity {
 
 		//! Debug
 		if (this.up) {
-			this.speed = 100;
+			this.speed = 0.5;
 		} else {
-			this.speed = -100;
+			this.speed = -0.5;
 		}
 
 		this.movementLerp += delta * this.speed;
