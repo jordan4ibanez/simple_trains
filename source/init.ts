@@ -141,7 +141,15 @@ class TestTrain extends Entity {
 		}
 	}
 
-	canContinue(): boolean {
+	canContinue(pos: Vec3): boolean {
+		const [id, _, param2] = core.get_node_raw(pos.x, pos.y, pos.z);
+
+		if (id != trackStraightID) {
+			return false;
+		}
+
+		const axis = STRAIGHT_TRACK_AXIS[this.direction];
+
 		return false;
 	}
 
@@ -195,7 +203,8 @@ class TestTrain extends Entity {
 
 		if (this.movementLerp <= -0.5) {
 			this.movementLerp = 0.5;
-			this.position.subtract(dirToVector[this.direction]);
+			temp.setVec(this.position).subtract(dirToVector[this.direction]);
+			const continuing = this.canContinue(temp);
 		}
 
 		// if (this.up) {
