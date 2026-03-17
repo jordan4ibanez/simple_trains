@@ -42,7 +42,7 @@ enum STRAIGHT_TRACK_AXIS {
 	X = 0,
 	Z = 1,
 }
-const STRAIGHT_TRACK_DIR: STRAIGHT_TRACK_AXIS[] = [
+const STRAIGHT_TRACK_DIR_TO_AXIS: STRAIGHT_TRACK_AXIS[] = [
 	STRAIGHT_TRACK_AXIS.Z,
 	STRAIGHT_TRACK_AXIS.X,
 	STRAIGHT_TRACK_AXIS.Z,
@@ -141,8 +141,19 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * Set the locomotive's rotation.
+	 */
+	setRotation(): void {
+		if (this.direction == DIRECTION.null) {
+			this.object.set_yaw(DIRECTION.north * -90 * degToRad);
+		} else {
+			this.object.set_yaw(this.direction * -90 * degToRad);
+		}
+	}
+
 	on_step(delta: number, moveResult: MoveResult | null): void {
-		const [id] = core.get_node_raw(
+		const [id, param1, param2] = core.get_node_raw(
 			this.position.x,
 			this.position.y,
 			this.position.z,
@@ -151,6 +162,12 @@ class TestTrain extends Entity {
 		if (id == trackStraightID) {
 			// Try to configure an initial direction.
 			if (this.direction == DIRECTION.null) {
+				const axis = STRAIGHT_TRACK_DIR_TO_AXIS[param2];
+				if (axis == STRAIGHT_TRACK_AXIS.X) {
+					this.direction = DIRECTION.east;
+				} else {
+					this.direction = DIRECTION.north;
+				}
 			}
 		}
 	}
