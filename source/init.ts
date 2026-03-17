@@ -48,7 +48,8 @@ const STRAIGHT_TRACK_DIR: STRAIGHT_TRACK_AXIS[] = [
 	STRAIGHT_TRACK_AXIS.Z,
 	STRAIGHT_TRACK_AXIS.X,
 ];
-const dirs = [
+
+const dirToVector: Vec3[] = [
 	new Vec3(0, 0, 1), //  0 - North.
 	new Vec3(1, 0, 0), //  1 - East.
 	new Vec3(0, 0, -1), // 2 - South.
@@ -137,3 +138,7 @@ class TestTrain extends Entity {
 }
 
 registerEntity("simple_trains:train", TestTrain);
+
+core.register_on_punchnode((pos: ShallowVector3, node: NodeTable) => {
+	print(dump(node));
+});
