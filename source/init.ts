@@ -156,7 +156,7 @@ class TestTrain extends Entity {
 			size: 1,
 			texture: "default_stone.png",
 		});
-		const [id, param1, param2] = core.get_node_raw(
+		const [id, _, param2] = core.get_node_raw(
 			this.position.x,
 			this.position.y,
 			this.position.z,
