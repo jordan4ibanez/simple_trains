@@ -93,7 +93,7 @@ class TestTrain extends Entity {
 	direction: DIRECTION = DIRECTION.null;
 	speed: number = -0.5;
 
-	up: boolean = true;
+	up: boolean = false;
 
 	onTrack: boolean = false;
 	wasOnTrack: boolean = false;
@@ -200,14 +200,30 @@ class TestTrain extends Entity {
 		// 	}
 		// }
 
+		//! Debug
+		if (this.up) {
+			this.speed = 0.5;
+		} else {
+			this.speed = -0.5;
+		}
+
 		this.movementLerp += delta * this.speed;
 
 		if (this.movementLerp <= -0.5) {
 			this.movementLerp = 0.5;
-			temp.setVec(this.position).subtract(dirToVector[this.direction]);
-			const continuing = this.canContinue(temp);
 
-			print(continuing);
+			const dirVec = dirToVector[this.direction];
+			if (dirVec != null) {
+				temp.setVec(this.position).subtract(dirVec);
+				if (!this.canContinue(temp)) {
+					// Hold position.
+					this.movementLerp = -0.5;
+					this.speed = 0;
+				} else {
+					// Move forward.
+					this.position.setVec(temp);
+				}
+			}
 		}
 
 		// if (this.up) {
