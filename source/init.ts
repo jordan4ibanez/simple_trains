@@ -171,21 +171,35 @@ class TestTrain extends Entity {
 
 		//* Movement debug.
 
+		// if (this.up) {
+		// 	this.speed += delta;
+		// 	if (this.speed >= 1) {
+		// 		this.speed = 1;
+		// 		this.up = false;
+		// 	}
+		// } else {
+		// 	this.speed -= delta;
+		// 	if (this.speed <= -1) {
+		// 		this.speed = -1;
+		// 		this.up = true;
+		// 	}
+		// }
+
+		// this.movementLerp += this.speed * (delta * 0.1);
+
 		if (this.up) {
-			this.speed += delta;
-			if (this.speed >= 1) {
-				this.speed = 1;
+			this.movementLerp += delta;
+			if (this.movementLerp >= 0.5) {
+				this.movementLerp = 0.5;
 				this.up = false;
 			}
 		} else {
-			this.speed -= delta;
-			if (this.speed <= -1) {
-				this.speed = -1;
+			this.movementLerp -= delta;
+			if (this.movementLerp <= -0.5) {
+				this.movementLerp = -0.5;
 				this.up = true;
 			}
 		}
-
-		this.movementLerp += this.speed * (delta * 0.1);
 
 		const lerpVec = new Vec3(
 			this.movementLerp,
