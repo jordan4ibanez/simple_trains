@@ -86,6 +86,8 @@ function isTrack(pos: Vec3): boolean {
 	return id == trackStraightID; // todo: || id == trackTurnID || id == trackSwitchID;
 }
 
+const temp = new Vec3();
+
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.null;
@@ -216,11 +218,9 @@ class TestTrain extends Entity {
 			this.movementLerp,
 		);
 
-		const tempVec = new Vec3()
-			.setVec(dirToVector[this.direction])
-			.multiply(lerpVec);
+		temp.setVec(dirToVector[this.direction]).multiply(lerpVec);
 
-		this.vecMovement.setVec(this.position).add(tempVec);
+		this.vecMovement.setVec(this.position).add(temp);
 		this.object.set_pos(this.vecMovement);
 	}
 }
