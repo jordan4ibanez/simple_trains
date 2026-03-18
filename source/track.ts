@@ -43,3 +43,5 @@ core.register_node("simple_trains:track_turn", {
 export const trackStraightID = core.get_content_id(
 	"simple_trains:track_straight",
 );
+
+export const trackTurnID = core.get_content_id("simple_trains:track_turn");
