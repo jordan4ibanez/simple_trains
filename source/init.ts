@@ -1,6 +1,6 @@
 import { ShallowVector3 } from "../luanti-api";
 import { track } from "./game_detection";
-import { trackRegistration, trackStraightID } from "./track";
+import { trackRegistration, trackStraightID, trackTurnID } from "./track";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual } from "./utility/enums";
 import { degToRad } from "./utility/math";
@@ -98,6 +98,7 @@ class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.null;
 	speed: number = -0.5;
+	trackStyle: TRACK_STYLE = TRACK_STYLE.straight;
 
 	up: boolean = false;
 
@@ -119,6 +120,17 @@ class TestTrain extends Entity {
 		collide_with_objects: false,
 		selectionbox: [-0.2, -0.4, -0.2, 0.2, 0.4, 0.2],
 	};
+
+	detectTrackStyle(pos: Vec3): void {
+		const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
+		if (id == trackStraightID) {
+			this.trackStyle = TRACK_STYLE.straight;
+		} else if (id == trackTurnID) {
+			this.trackStyle = TRACK_STYLE.turn;
+		}
+
+		// todo: || id == trackTurnID || id == trackSwitchID;
+	}
 
 	on_activate(staticData: string, delta: number): void {
 		// todo: check if static data is null.
