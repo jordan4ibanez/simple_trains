@@ -38,6 +38,12 @@ enum DIRECTION {
 	west = 3, //  -X
 }
 
+enum TRACK_STYLE {
+	straight = 0,
+	turn = 1,
+	incline = 2,
+}
+
 enum STRAIGHT_TRACK_AXIS {
 	X = 0,
 	Z = 1,
