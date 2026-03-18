@@ -182,6 +182,10 @@ class TestTrain extends Entity {
 			return false;
 		}
 
+		// Todo: detect if the inlet or outlet is in line with the current track when leaving the turn.
+		// todo: detect if the inlet or outlet is in line with current track when going from straight to turn.
+		// todo: can use the current direction to calculate this combined with the param2 of the turn.
+
 		const currentAxis = STRAIGHT_TRACK_DIR_TO_AXIS[this.direction];
 		const trackAxis = STRAIGHT_TRACK_DIR_TO_AXIS[param2];
 
