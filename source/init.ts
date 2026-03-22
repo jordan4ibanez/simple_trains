@@ -371,6 +371,8 @@ class TestTrain extends Entity {
 						this.updateTrackStyle(this.position);
 					}
 				}
+			} else if (this.trackStyle == TRACK_STYLE.turn) {
+				print("output turn backwards");
 			}
 		} else if (this.movementLerp > 0.5) {
 			// Forward.
@@ -390,6 +392,8 @@ class TestTrain extends Entity {
 						this.updateTrackStyle(this.position);
 					}
 				}
+			} else if (this.trackStyle == TRACK_STYLE.turn) {
+				print("output turn forwards");
 			}
 		}
 
