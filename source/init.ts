@@ -242,13 +242,24 @@ class TestTrain extends Entity {
 	}
 
 	/**
-	 * Set the locomotive's rotation.
+	 * Set the locomotive's rotation. Used for straight.
 	 */
 	setRotation(): void {
 		if (this.direction == DIRECTION.null) {
 			this.object.set_yaw(DIRECTION.north * -90 * degToRad);
 		} else {
 			this.object.set_yaw(this.direction * -90 * degToRad);
+		}
+	}
+
+	/**
+	 * Set the locomotive's rotation. Used for turns.
+	 */
+	setRotationTurn(dir: DIRECTION): void {
+		if (dir == DIRECTION.null) {
+			this.object.set_yaw(DIRECTION.north * -90 * degToRad);
+		} else {
+			this.object.set_yaw(dir * -90 * degToRad);
 		}
 	}
 
@@ -418,6 +429,8 @@ class TestTrain extends Entity {
 
 					this.vecMovement.setVec(this.position).add(temp);
 					this.object.set_pos(this.vecMovement);
+
+					this.setRotationTurn(this.direction);
 				}
 			} else {
 				const [_, __, param2] = core.get_node_raw(
@@ -426,16 +439,17 @@ class TestTrain extends Entity {
 					this.position.z,
 				);
 
-				const dirVec =
-					dirToVector[turnIoCalculation(this.direction, param2)];
+				const outputDir = turnIoCalculation(this.direction, param2);
+
+				const dirVec = dirToVector[outputDir];
 
 				if (dirVec != null) {
-					print("test2");
-
 					temp.setVec(dirVec).multiply(lerpVec);
 
 					this.vecMovement.setVec(this.position).add(temp);
 					this.object.set_pos(this.vecMovement);
+
+					this.setRotationTurn(outputDir);
 				}
 			}
 		}
