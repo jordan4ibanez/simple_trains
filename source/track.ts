@@ -19,6 +19,10 @@ core.register_node("simple_trains:track_straight", {
 	groups: {
 		oddly_breakable_by_hand: 1,
 	},
+	on_construct(position) {
+		const it = core.get_node(position);
+		print(it.param2);
+	},
 });
 
 core.register_node("simple_trains:track_turn", {
@@ -37,6 +41,10 @@ core.register_node("simple_trains:track_turn", {
 	},
 	groups: {
 		oddly_breakable_by_hand: 1,
+	},
+	on_construct(position) {
+		const it = core.get_node(position);
+		print(it.param2);
 	},
 });
 

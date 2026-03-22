@@ -38,6 +38,17 @@ enum DIRECTION {
 	west = 3, //  -X
 }
 
+const __dirToString: string[] = ["north", "east", "south", "west"];
+function dirToString(input: DIRECTION): string {
+	if (input == DIRECTION.null) {
+		return "null";
+	}
+	return __dirToString[input];
+}
+
+/**
+ * Track style is what kind of track the locomotive is currently traversing.
+ */
 enum TRACK_STYLE {
 	straight = 0,
 	turn = 1,
@@ -73,6 +84,39 @@ const reverseLookupEnum = [
 ];
 
 /**
+ * Direction locomotive is facing.
+ * {
+ * 	Acceptable param2 outputs. // Direction output index.
+ * }
+ * If the locomotive does not encounter acceptable it cannot continue.
+ *! This is kept here for documentation.
+ */
+/*
+const directionToTurn = [
+	// 0 - North.
+	{
+		1: DIRECTION.east, // 1 - East.
+		2: DIRECTION.west, // 3 - West.
+	},
+	// 1 - East.
+	{
+		2: DIRECTION.south, // 2 - South.
+		3: DIRECTION.north, // 0 - North.
+	},
+	// 2 - South.
+	{
+		3: DIRECTION.west, // 3 - West.
+		0: DIRECTION.east, // 1 - East.
+	},
+	// 3 - West.
+	{
+		0: DIRECTION.north, // 0 - North.
+		1: DIRECTION.south, // 2 - South.
+	},
+];
+*/
+
+/**
  * This is set up so the train doesn't turn backwards when turning.
  */
 const directionInversion: DIRECTION[] = [
@@ -89,18 +133,51 @@ const directionInversion: DIRECTION[] = [
  */
 function isTrack(pos: Vec3): boolean {
 	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
-	return id == trackStraightID; // todo: || id == trackTurnID || id == trackSwitchID;
+	return id == trackStraightID || id == trackTurnID; // todo: || id == trackSwitchID;
 }
+
+/**
+ * Calculate the turn trajectory direction from a direction a vehicle is traveling.
+ * @param direction The direction the vehicle is traveling.
+ * @param trackParam2 The param2 of the track turn.
+ * @returns An output direction, or the null direction if failed.
+ */
+function turnIoCalculation(
+	direction: DIRECTION,
+	trackParam2: number,
+): DIRECTION {
+	if ((direction + 1) % 4 == trackParam2) {
+		// Right turn.
+		return reverseLookupEnum[trackParam2];
+	} else if ((direction + 2) % 4 == trackParam2) {
+		// Left turn.
+		return reverseLookupEnum[(trackParam2 + 1) % 4];
+	}
+
+	return DIRECTION.null;
+}
+
+//* Unit testing.
+// reverseLookupEnum.forEach((dir: DIRECTION) => {
+// 	print(dirToString(dir));
+
+// 	for (let i = 0; i < 4; i++) {
+// 		const output = turnIoCalculation(dir, i);
+// 		if (output != DIRECTION.null) {
+// 			print(i, dirToString(output));
+// 		}
+// 	}
+// });
 
 const temp = new Vec3();
 
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.null;
-	speed: number = -0.5;
+	speed: number = 0.5; // negative is backwards.
 	trackStyle: TRACK_STYLE = TRACK_STYLE.straight;
 
-	up: boolean = false;
+	up: boolean = true;
 
 	onTrack: boolean = false;
 	wasOnTrack: boolean = false;
@@ -129,7 +206,7 @@ class TestTrain extends Entity {
 			this.trackStyle = TRACK_STYLE.turn;
 		}
 
-		// todo: || id == trackTurnID || id == trackSwitchID;
+		// todo: || id == trackSwitchID;
 	}
 
 	on_activate(staticData: string, delta: number): void {
@@ -175,21 +252,35 @@ class TestTrain extends Entity {
 		}
 	}
 
+	updateTrackStyle(pos: Vec3): void {
+		const [id, _, param2] = core.get_node_raw(pos.x, pos.y, pos.z);
+
+		if (id == trackStraightID) {
+			this.trackStyle = TRACK_STYLE.straight;
+		} else if (id == trackTurnID) {
+			this.trackStyle = TRACK_STYLE.turn;
+		}
+		// todo: incline
+	}
+
 	canContinue(pos: Vec3): boolean {
 		const [id, _, param2] = core.get_node_raw(pos.x, pos.y, pos.z);
 
-		if (id != trackStraightID) {
-			return false;
+		if (id == trackStraightID) {
+			const currentAxis = STRAIGHT_TRACK_DIR_TO_AXIS[this.direction];
+			const trackAxis = STRAIGHT_TRACK_DIR_TO_AXIS[param2];
+
+			return currentAxis == trackAxis;
+		} else if (id == trackTurnID) {
+			// todo: this may need to calculate if the locomotive direction is backwards!
+			return turnIoCalculation(this.direction, param2) != DIRECTION.null;
 		}
 
 		// Todo: detect if the inlet or outlet is in line with the current track when leaving the turn.
 		// todo: detect if the inlet or outlet is in line with current track when going from straight to turn.
 		// todo: can use the current direction to calculate this combined with the param2 of the turn.
 
-		const currentAxis = STRAIGHT_TRACK_DIR_TO_AXIS[this.direction];
-		const trackAxis = STRAIGHT_TRACK_DIR_TO_AXIS[param2];
-
-		return currentAxis == trackAxis;
+		return false;
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
@@ -247,6 +338,8 @@ class TestTrain extends Entity {
 
 		this.movementLerp += delta * this.speed;
 
+		//* This portion is node based environment traversal. (block by block)
+
 		// Backward.
 		if (this.movementLerp <= -0.5) {
 			this.movementLerp = 0.5;
@@ -261,6 +354,7 @@ class TestTrain extends Entity {
 				} else {
 					// Move backward.
 					this.position.setVec(temp);
+					this.updateTrackStyle(this.position);
 				}
 			}
 		} else if (this.movementLerp > 0.5) {
@@ -277,6 +371,7 @@ class TestTrain extends Entity {
 				} else {
 					// Move forward.
 					this.position.setVec(temp);
+					this.updateTrackStyle(this.position);
 				}
 			}
 		}
@@ -295,19 +390,32 @@ class TestTrain extends Entity {
 		// 	}
 		// }
 
+		//* Smooth virtual terrain traversal. Makes it appear like it has velocity.
+
 		const lerpVec = new Vec3(
 			this.movementLerp,
 			this.movementLerp,
 			this.movementLerp,
 		);
 
-		const dirVec = dirToVector[this.direction];
+		if (this.trackStyle == TRACK_STYLE.straight) {
+			const dirVec = dirToVector[this.direction];
 
-		if (dirVec != null) {
-			temp.setVec(dirVec).multiply(lerpVec);
+			if (dirVec != null) {
+				temp.setVec(dirVec).multiply(lerpVec);
 
-			this.vecMovement.setVec(this.position).add(temp);
-			this.object.set_pos(this.vecMovement);
+				this.vecMovement.setVec(this.position).add(temp);
+				this.object.set_pos(this.vecMovement);
+			}
+		} else if (this.trackStyle == TRACK_STYLE.turn) {
+			const dirVec = dirToVector[this.direction];
+
+			if (dirVec != null) {
+				temp.setVec(dirVec).multiply(lerpVec);
+
+				this.vecMovement.setVec(this.position).add(temp);
+				this.object.set_pos(this.vecMovement);
+			}
 		}
 	}
 }
