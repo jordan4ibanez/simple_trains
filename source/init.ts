@@ -274,7 +274,7 @@ class TestTrain extends Entity {
 		// todo: incline
 	}
 
-	canContinue(pos: Vec3, direction: DIRECTION): boolean {
+	canContinue(pos: Vec3, direction: DIRECTION, backwards: boolean): boolean {
 		const [id, _, param2] = core.get_node_raw(pos.x, pos.y, pos.z);
 
 		if (id == trackStraightID) {
