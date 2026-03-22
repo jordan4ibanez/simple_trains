@@ -373,6 +373,29 @@ class TestTrain extends Entity {
 				}
 			} else if (this.trackStyle == TRACK_STYLE.turn) {
 				print("output turn backwards");
+				const [_, __, param2] = core.get_node_raw(
+					this.position.x,
+					this.position.y,
+					this.position.z,
+				);
+
+				const outputDir = turnIoCalculation(this.direction, param2);
+
+				const dirVec = dirToVector[outputDir];
+
+				if (dirVec != null) {
+					temp.setVec(this.position).subtract(dirVec);
+					if (!this.canContinue(temp, outputDir)) {
+						// Hold position.
+						this.movementLerp = -0.5;
+						this.speed = 0;
+					} else {
+						// Move backward.
+						this.direction = outputDir;
+						this.position.setVec(temp);
+						this.updateTrackStyle(this.position);
+					}
+				}
 			}
 		} else if (this.movementLerp > 0.5) {
 			// Forward.
