@@ -357,34 +357,38 @@ class TestTrain extends Entity {
 		if (this.movementLerp <= -0.5) {
 			this.movementLerp = 0.5;
 
-			const dirVec = dirToVector[this.direction];
-			if (dirVec != null) {
-				temp.setVec(this.position).subtract(dirVec);
-				if (!this.canContinue(temp)) {
-					// Hold position.
-					this.movementLerp = -0.5;
-					this.speed = 0;
-				} else {
-					// Move backward.
-					this.position.setVec(temp);
-					this.updateTrackStyle(this.position);
+			if (this.trackStyle == TRACK_STYLE.straight) {
+				const dirVec = dirToVector[this.direction];
+				if (dirVec != null) {
+					temp.setVec(this.position).subtract(dirVec);
+					if (!this.canContinue(temp)) {
+						// Hold position.
+						this.movementLerp = -0.5;
+						this.speed = 0;
+					} else {
+						// Move backward.
+						this.position.setVec(temp);
+						this.updateTrackStyle(this.position);
+					}
 				}
 			}
 		} else if (this.movementLerp > 0.5) {
 			// Forward.
 			this.movementLerp = -0.5;
 
-			const dirVec = dirToVector[this.direction];
-			if (dirVec != null) {
-				temp.setVec(this.position).add(dirVec);
-				if (!this.canContinue(temp)) {
-					// Hold position.
-					this.movementLerp = 0.5;
-					this.speed = 0;
-				} else {
-					// Move forward.
-					this.position.setVec(temp);
-					this.updateTrackStyle(this.position);
+			if (this.trackStyle == TRACK_STYLE.straight) {
+				const dirVec = dirToVector[this.direction];
+				if (dirVec != null) {
+					temp.setVec(this.position).add(dirVec);
+					if (!this.canContinue(temp)) {
+						// Hold position.
+						this.movementLerp = 0.5;
+						this.speed = 0;
+					} else {
+						// Move forward.
+						this.position.setVec(temp);
+						this.updateTrackStyle(this.position);
+					}
 				}
 			}
 		}
