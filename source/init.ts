@@ -283,7 +283,7 @@ class TestTrain extends Entity {
 
 			return currentAxis == trackAxis;
 		} else if (id == trackTurnID) {
-			// todo: this may need to calculate if the locomotive direction is backwards!
+			// todo: this needs to reverse direction if the locomotive direction is backwards!
 			return turnIoCalculation(direction, param2) != DIRECTION.null;
 		}
 
