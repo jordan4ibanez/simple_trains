@@ -410,13 +410,26 @@ class TestTrain extends Entity {
 				this.object.set_pos(this.vecMovement);
 			}
 		} else if (this.trackStyle == TRACK_STYLE.turn) {
-			const dirVec = dirToVector[this.direction];
+			if (this.movementLerp < 0) {
+				const dirVec = dirToVector[this.direction];
 
-			if (dirVec != null) {
-				temp.setVec(dirVec).multiply(lerpVec);
+				if (dirVec != null) {
+					print("test2");
 
-				this.vecMovement.setVec(this.position).add(temp);
-				this.object.set_pos(this.vecMovement);
+					temp.setVec(dirVec).multiply(lerpVec);
+
+					this.vecMovement.setVec(this.position).add(temp);
+					this.object.set_pos(this.vecMovement);
+				}
+			} else {
+				const [_, __, param2] = core.get_node_raw(
+					this.position.x,
+					this.position.y,
+					this.position.z,
+				);
+
+				const dirVec =
+					dirToVector[turnIoCalculation(this.direction, param2)];
 			}
 		}
 	}
