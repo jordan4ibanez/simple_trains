@@ -138,18 +138,15 @@ function isTrack(pos: Vec3): boolean {
 
 /**
  * Calculate the turn trajectory direction from a direction a vehicle is traveling.
- * @param direction The direction the vehicle is traveling.
+ * @param dir The direction the vehicle is traveling.
  * @param trackParam2 The param2 of the track turn.
  * @returns An output direction, or the null direction if failed.
  */
-function turnIoCalculation(
-	direction: DIRECTION,
-	trackParam2: number,
-): DIRECTION {
-	if ((direction + 1) % 4 == trackParam2) {
+function turnOutputCalculation(dir: DIRECTION, trackParam2: number): DIRECTION {
+	if ((dir + 1) % 4 == trackParam2) {
 		// Right turn.
 		return reverseLookupEnum[trackParam2];
-	} else if ((direction + 2) % 4 == trackParam2) {
+	} else if ((dir + 2) % 4 == trackParam2) {
 		// Left turn.
 		return reverseLookupEnum[(trackParam2 + 1) % 4];
 	}
@@ -225,6 +222,8 @@ class TestTrain extends Entity {
 		}
 
 		this.object.set_armor_groups({ punch_activated: 1 });
+
+		this.updateTrackStyle(this.position);
 	}
 
 	on_punch(
@@ -283,8 +282,13 @@ class TestTrain extends Entity {
 
 			return currentAxis == trackAxis;
 		} else if (id == trackTurnID) {
-			// todo: this needs to reverse direction if the locomotive direction is backwards!
-			return turnIoCalculation(direction, param2) != DIRECTION.null;
+			if (this.speed < 0) {
+				return (
+					turnOutputCalculation((direction + 2) % 4, param2) !=
+					DIRECTION.null
+				);
+			}
+			return turnOutputCalculation(direction, param2) != DIRECTION.null;
 		}
 
 		// Todo: detect if the inlet or outlet is in line with the current track when leaving the turn.
@@ -361,7 +365,7 @@ class TestTrain extends Entity {
 				const dirVec = dirToVector[this.direction];
 				if (dirVec != null) {
 					temp.setVec(this.position).subtract(dirVec);
-					if (!this.canContinue(temp, this.direction)) {
+					if (!this.canContinue(temp, this.direction, true)) {
 						// Hold position.
 						this.movementLerp = -0.5;
 						this.speed = 0;
@@ -379,13 +383,13 @@ class TestTrain extends Entity {
 					this.position.z,
 				);
 
-				const outputDir = turnIoCalculation(this.direction, param2);
+				const outputDir = turnOutputCalculation(this.direction, param2);
 
 				const dirVec = dirToVector[outputDir];
 
 				if (dirVec != null) {
 					temp.setVec(this.position).subtract(dirVec);
-					if (!this.canContinue(temp, outputDir)) {
+					if (!this.canContinue(temp, outputDir, true)) {
 						// Hold position.
 						this.movementLerp = -0.5;
 						this.speed = 0;
@@ -398,14 +402,14 @@ class TestTrain extends Entity {
 				}
 			}
 		} else if (this.movementLerp > 0.5) {
-			// Forward.
+			//* Forward.
 			this.movementLerp = -0.5;
 
 			if (this.trackStyle == TRACK_STYLE.straight) {
 				const dirVec = dirToVector[this.direction];
 				if (dirVec != null) {
 					temp.setVec(this.position).add(dirVec);
-					if (!this.canContinue(temp, this.direction)) {
+					if (!this.canContinue(temp, this.direction, false)) {
 						// Hold position.
 						this.movementLerp = 0.5;
 						this.speed = 0;
@@ -423,13 +427,13 @@ class TestTrain extends Entity {
 					this.position.z,
 				);
 
-				const outputDir = turnIoCalculation(this.direction, param2);
+				const outputDir = turnOutputCalculation(this.direction, param2);
 
 				const dirVec = dirToVector[outputDir];
 
 				if (dirVec != null) {
 					temp.setVec(this.position).add(dirVec);
-					if (!this.canContinue(temp, outputDir)) {
+					if (!this.canContinue(temp, outputDir, false)) {
 						// Hold position.
 						this.movementLerp = 0.5;
 						this.speed = 0;
@@ -475,35 +479,73 @@ class TestTrain extends Entity {
 				this.object.set_pos(this.vecMovement);
 			}
 		} else if (this.trackStyle == TRACK_STYLE.turn) {
-			if (this.movementLerp < 0) {
-				const dirVec = dirToVector[this.direction];
+			const [_, __, param2] = core.get_node_raw(
+				this.position.x,
+				this.position.y,
+				this.position.z,
+			);
 
-				if (dirVec != null) {
-					temp.setVec(dirVec).multiply(lerpVec);
+			// Backwards.
+			if (this.speed < 0) {
+				if (this.movementLerp > 0) {
+					const dirVec = dirToVector[this.direction];
 
-					this.vecMovement.setVec(this.position).add(temp);
-					this.object.set_pos(this.vecMovement);
+					if (dirVec != null) {
+						temp.setVec(dirVec).multiply(lerpVec);
 
-					this.setRotationTurn(this.direction);
+						this.vecMovement.setVec(this.position).add(temp);
+						this.object.set_pos(this.vecMovement);
+
+						this.setRotationTurn(this.direction);
+					}
+				} else {
+					let outputDir = turnIoCalculation(
+						this.direction,
+						param2,
+						this.speed < 0,
+					);
+
+					const dirVec = dirToVector[outputDir];
+
+					if (dirVec != null) {
+						temp.setVec(dirVec).multiply(lerpVec);
+
+						this.vecMovement.setVec(this.position).add(temp);
+						this.object.set_pos(this.vecMovement);
+
+						this.setRotationTurn(outputDir);
+					}
 				}
 			} else {
-				const [_, __, param2] = core.get_node_raw(
-					this.position.x,
-					this.position.y,
-					this.position.z,
-				);
+				// Forwards
+				if (this.movementLerp < 0) {
+					const dirVec = dirToVector[this.direction];
 
-				const outputDir = turnIoCalculation(this.direction, param2);
+					if (dirVec != null) {
+						temp.setVec(dirVec).multiply(lerpVec);
 
-				const dirVec = dirToVector[outputDir];
+						this.vecMovement.setVec(this.position).add(temp);
+						this.object.set_pos(this.vecMovement);
 
-				if (dirVec != null) {
-					temp.setVec(dirVec).multiply(lerpVec);
+						this.setRotationTurn(this.direction);
+					}
+				} else {
+					let outputDir = turnIoCalculation(
+						this.direction,
+						param2,
+						this.speed < 0,
+					);
 
-					this.vecMovement.setVec(this.position).add(temp);
-					this.object.set_pos(this.vecMovement);
+					const dirVec = dirToVector[outputDir];
 
-					this.setRotationTurn(outputDir);
+					if (dirVec != null) {
+						temp.setVec(dirVec).multiply(lerpVec);
+
+						this.vecMovement.setVec(this.position).add(temp);
+						this.object.set_pos(this.vecMovement);
+
+						this.setRotationTurn(outputDir);
+					}
 				}
 			}
 		}
