@@ -274,17 +274,17 @@ class TestTrain extends Entity {
 		// todo: incline
 	}
 
-	canContinue(pos: Vec3): boolean {
+	canContinue(pos: Vec3, direction: DIRECTION): boolean {
 		const [id, _, param2] = core.get_node_raw(pos.x, pos.y, pos.z);
 
 		if (id == trackStraightID) {
-			const currentAxis = STRAIGHT_TRACK_DIR_TO_AXIS[this.direction];
+			const currentAxis = STRAIGHT_TRACK_DIR_TO_AXIS[direction];
 			const trackAxis = STRAIGHT_TRACK_DIR_TO_AXIS[param2];
 
 			return currentAxis == trackAxis;
 		} else if (id == trackTurnID) {
 			// todo: this may need to calculate if the locomotive direction is backwards!
-			return turnIoCalculation(this.direction, param2) != DIRECTION.null;
+			return turnIoCalculation(direction, param2) != DIRECTION.null;
 		}
 
 		// Todo: detect if the inlet or outlet is in line with the current track when leaving the turn.
@@ -361,7 +361,7 @@ class TestTrain extends Entity {
 				const dirVec = dirToVector[this.direction];
 				if (dirVec != null) {
 					temp.setVec(this.position).subtract(dirVec);
-					if (!this.canContinue(temp)) {
+					if (!this.canContinue(temp, this.direction)) {
 						// Hold position.
 						this.movementLerp = -0.5;
 						this.speed = 0;
@@ -382,7 +382,7 @@ class TestTrain extends Entity {
 				const dirVec = dirToVector[this.direction];
 				if (dirVec != null) {
 					temp.setVec(this.position).add(dirVec);
-					if (!this.canContinue(temp)) {
+					if (!this.canContinue(temp, this.direction)) {
 						// Hold position.
 						this.movementLerp = 0.5;
 						this.speed = 0;
@@ -394,6 +394,29 @@ class TestTrain extends Entity {
 				}
 			} else if (this.trackStyle == TRACK_STYLE.turn) {
 				print("output turn forwards");
+				const [_, __, param2] = core.get_node_raw(
+					this.position.x,
+					this.position.y,
+					this.position.z,
+				);
+
+				const outputDir = turnIoCalculation(this.direction, param2);
+
+				const dirVec = dirToVector[outputDir];
+
+				if (dirVec != null) {
+					temp.setVec(this.position).add(dirVec);
+					if (!this.canContinue(temp, outputDir)) {
+						// Hold position.
+						this.movementLerp = 0.5;
+						this.speed = 0;
+					} else {
+						// Move forward.
+						this.direction = outputDir;
+						this.position.setVec(temp);
+						this.updateTrackStyle(this.position);
+					}
+				}
 			}
 		}
 
