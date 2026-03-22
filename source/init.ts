@@ -309,6 +309,8 @@ class TestTrain extends Entity {
 
 				this.setRotation();
 			}
+		} else if (id == trackTurnID) {
+			// Do nothing.
 		} else {
 			this.direction = DIRECTION.null;
 		}
