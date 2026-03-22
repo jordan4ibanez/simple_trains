@@ -414,8 +414,6 @@ class TestTrain extends Entity {
 				const dirVec = dirToVector[this.direction];
 
 				if (dirVec != null) {
-					print("test2");
-
 					temp.setVec(dirVec).multiply(lerpVec);
 
 					this.vecMovement.setVec(this.position).add(temp);
@@ -430,6 +428,15 @@ class TestTrain extends Entity {
 
 				const dirVec =
 					dirToVector[turnIoCalculation(this.direction, param2)];
+
+				if (dirVec != null) {
+					print("test2");
+
+					temp.setVec(dirVec).multiply(lerpVec);
+
+					this.vecMovement.setVec(this.position).add(temp);
+					this.object.set_pos(this.vecMovement);
+				}
 			}
 		}
 	}
