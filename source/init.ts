@@ -173,6 +173,11 @@ class TestTrain extends Entity {
 		}
 
 		this.object.set_armor_groups({ punch_activated: 1 });
+		this.setRotation();
+	}
+
+	get_staticdata(): string {
+		return core.serialize({ direction: this.direction });
 	}
 
 	on_punch(
