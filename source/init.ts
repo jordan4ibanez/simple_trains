@@ -77,7 +77,7 @@ const reverseLookupEnum = [
 ];
 
 /**
- * This is set up so the train doesn't turn backwards when turning.
+ * Each direction's opposite.
  */
 const directionInversion: DIRECTION[] = [
 	DIRECTION.south, // 0 - 2
