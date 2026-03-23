@@ -99,6 +99,9 @@ class TestTrain extends Entity {
 
 	speed: number = 0.5; // negative is backwards.
 
+	debugTimer = 0;
+	debugStep = 0.5;
+
 	up: boolean = true;
 
 	driver: ObjectRef | null = null;
@@ -208,6 +211,26 @@ class TestTrain extends Entity {
 			size: 1,
 			texture: "default_stone.png",
 		});
+
+		this.drive();
+
+		if (this.debugTimer == this.debugStep) {
+			print("drive!");
+		}
+		this.debugTimer -= delta;
+	}
+
+	drive(): void {
+		if (this.driver == null) {
+			return;
+		}
+		if (this.debugTimer > 0) {
+			return;
+		}
+
+		if (this.driver.get_player_control().up) {
+			this.debugTimer = this.debugStep;
+		}
 	}
 }
 
