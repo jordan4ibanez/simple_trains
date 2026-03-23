@@ -269,12 +269,12 @@ class TestTrain extends Entity {
 		this.debugTimer -= delta;
 	}
 
-	continueStraight(backward: boolean): boolean {
+	continueStraight(backward: boolean): StraightResult {
 		const dirVector = backward
 			? dirToVector[directionInversion[this.direction]]
 			: dirToVector[this.direction];
 		const forward = new Vec3().setVec(this.position).add(dirVector);
-		return isTrack(forward);
+		return new StraightResult(isTrack(forward), forward);
 	}
 
 	/**
