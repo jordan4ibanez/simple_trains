@@ -46,19 +46,11 @@ function dirToString(input: DIRECTION): string {
 	return __dirToString[input];
 }
 
-/**
- * Track style is what kind of track the locomotive is currently traversing.
- */
-enum TRACK_STYLE {
-	straight = 0,
-	turn = 1,
-	incline = 2,
-}
-
 enum STRAIGHT_TRACK_AXIS {
 	X = 0,
 	Z = 1,
 }
+
 const STRAIGHT_TRACK_DIR_TO_AXIS: STRAIGHT_TRACK_AXIS[] | null[] = [
 	STRAIGHT_TRACK_AXIS.Z,
 	STRAIGHT_TRACK_AXIS.X,
@@ -84,39 +76,6 @@ const reverseLookupEnum = [
 ];
 
 /**
- * Direction locomotive is facing.
- * {
- * 	Acceptable param2 outputs. // Direction output index.
- * }
- * If the locomotive does not encounter acceptable it cannot continue.
- *! This is kept here for documentation.
- */
-/*
-const directionToTurn = [
-	// 0 - North.
-	{
-		1: DIRECTION.east, // 1 - East.
-		2: DIRECTION.west, // 3 - West.
-	},
-	// 1 - East.
-	{
-		2: DIRECTION.south, // 2 - South.
-		3: DIRECTION.north, // 0 - North.
-	},
-	// 2 - South.
-	{
-		3: DIRECTION.west, // 3 - West.
-		0: DIRECTION.east, // 1 - East.
-	},
-	// 3 - West.
-	{
-		0: DIRECTION.north, // 0 - North.
-		1: DIRECTION.south, // 2 - South.
-	},
-];
-*/
-
-/**
  * This is set up so the train doesn't turn backwards when turning.
  */
 const directionInversion: DIRECTION[] = [
@@ -135,36 +94,6 @@ function isTrack(pos: Vec3): boolean {
 	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
 	return id == trackID;
 }
-
-// /**
-//  * Calculate the turn trajectory direction from a direction a vehicle is traveling.
-//  * @param dir The direction the vehicle is traveling.
-//  * @param trackParam2 The param2 of the track turn.
-//  * @returns An output direction, or the null direction if failed.
-//  */
-// function turnOutputCalculation(dir: DIRECTION, trackParam2: number): DIRECTION {
-// 	if ((dir + 1) % 4 == trackParam2) {
-// 		// Right turn.
-// 		return reverseLookupEnum[trackParam2];
-// 	} else if ((dir + 2) % 4 == trackParam2) {
-// 		// Left turn.
-// 		return reverseLookupEnum[(trackParam2 + 1) % 4];
-// 	}
-
-// 	return DIRECTION.null;
-// }
-
-//* Unit testing.
-// reverseLookupEnum.forEach((dir: DIRECTION) => {
-// 	print(dirToString(dir));
-
-// 	for (let i = 0; i < 4; i++) {
-// 		const output = turnIoCalculation(dir, i);
-// 		if (output != DIRECTION.null) {
-// 			print(i, dirToString(output));
-// 		}
-// 	}
-// });
 
 const temp = new Vec3();
 
