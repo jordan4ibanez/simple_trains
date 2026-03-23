@@ -1,6 +1,6 @@
 import { ShallowVector3 } from "../luanti-api";
 import { track } from "./game_detection";
-import { trackRegistration, trackStraightID, trackTurnID } from "./track";
+import { trackID, trackRegistration } from "./track";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual } from "./utility/enums";
 import { degToRad } from "./utility/math";
@@ -19,7 +19,7 @@ core.register_chatcommand("t", {
 
 		const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
 
-		if (id == trackStraightID) {
+		if (id == trackID) {
 			core.add_entity(pos, "simple_trains:train");
 		}
 	},
@@ -133,7 +133,7 @@ const directionInversion: DIRECTION[] = [
  */
 function isTrack(pos: Vec3): boolean {
 	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
-	return id == trackStraightID || id == trackTurnID; // todo: || id == trackSwitchID;
+	return id == trackID;
 }
 
 /**
