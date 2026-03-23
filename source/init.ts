@@ -118,18 +118,13 @@ class TestTrain extends Entity {
 	debugForward = 0.5;
 	debugBackward = 0.6;
 
-	up: boolean = true;
-
 	driver: ObjectRef | null = null;
-
-	// onTrack: boolean = false;
-	// wasOnTrack: boolean = false;
 
 	/**
 	 * Lerp forward to backward. (node center to node center)
 	 * -1.0 - 1.0
 	 */
-	// movementLerp: number = 0;
+	movement: number = 0;
 	// vecMovement: Vec3 = new Vec3();
 
 	initial_properties: ObjectProperties = {
@@ -206,8 +201,6 @@ class TestTrain extends Entity {
 		dir: Vec3 | null,
 		damage: number,
 	): void {
-		this.up = !this.up;
-
 		if (puncher?.is_player() && puncher.get_player_control().sneak) {
 			this.object.remove();
 		}
