@@ -254,6 +254,34 @@ class TestTrain extends Entity {
 	turn(): TurnResult {
 		const avoid = this.direction;
 
+		const avoidAxis = DIR_TO_AXIS[avoid];
+
+		// todo: This can detect if there's a switch lever ahead.
+
+		const temp = new Vec3().setVec(this.position);
+
+		if (avoidAxis == AXIS.X) {
+			// Try to go north or south.
+			temp.add(dirToVector[DIRECTION.north]);
+			if (isTrack(temp)) {
+				return new TurnResult(true, DIRECTION.north);
+			}
+			temp.setVec(this.position).add(dirToVector[DIRECTION.south]);
+			if (isTrack(temp)) {
+				return new TurnResult(true, DIRECTION.south);
+			}
+		} else {
+			// Try to go east or west.
+			temp.add(dirToVector[DIRECTION.east]);
+			if (isTrack(temp)) {
+				return new TurnResult(true, DIRECTION.east);
+			}
+			temp.setVec(this.position).add(dirToVector[DIRECTION.west]);
+			if (isTrack(temp)) {
+				return new TurnResult(true, DIRECTION.west);
+			}
+		}
+
 		//! note: This will try to pick a direction to head into.
 		//! Can probably just use the current axis and pick 2 other directions from the other axis.
 
