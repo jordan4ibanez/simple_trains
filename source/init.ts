@@ -107,8 +107,8 @@ class TestTrain extends Entity {
 	// wasOnTrack: boolean = false;
 
 	/**
-	 * Lerp forward to backward. (node to node)
-	 * -0.5 - 0.5
+	 * Lerp forward to backward. (node center to node center)
+	 * -1.0 - 1.0
 	 */
 	// movementLerp: number = 0;
 	// vecMovement: Vec3 = new Vec3();
