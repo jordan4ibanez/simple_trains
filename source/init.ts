@@ -136,23 +136,23 @@ function isTrack(pos: Vec3): boolean {
 	return id == trackID;
 }
 
-/**
- * Calculate the turn trajectory direction from a direction a vehicle is traveling.
- * @param dir The direction the vehicle is traveling.
- * @param trackParam2 The param2 of the track turn.
- * @returns An output direction, or the null direction if failed.
- */
-function turnOutputCalculation(dir: DIRECTION, trackParam2: number): DIRECTION {
-	if ((dir + 1) % 4 == trackParam2) {
-		// Right turn.
-		return reverseLookupEnum[trackParam2];
-	} else if ((dir + 2) % 4 == trackParam2) {
-		// Left turn.
-		return reverseLookupEnum[(trackParam2 + 1) % 4];
-	}
+// /**
+//  * Calculate the turn trajectory direction from a direction a vehicle is traveling.
+//  * @param dir The direction the vehicle is traveling.
+//  * @param trackParam2 The param2 of the track turn.
+//  * @returns An output direction, or the null direction if failed.
+//  */
+// function turnOutputCalculation(dir: DIRECTION, trackParam2: number): DIRECTION {
+// 	if ((dir + 1) % 4 == trackParam2) {
+// 		// Right turn.
+// 		return reverseLookupEnum[trackParam2];
+// 	} else if ((dir + 2) % 4 == trackParam2) {
+// 		// Left turn.
+// 		return reverseLookupEnum[(trackParam2 + 1) % 4];
+// 	}
 
-	return DIRECTION.null;
-}
+// 	return DIRECTION.null;
+// }
 
 //* Unit testing.
 // reverseLookupEnum.forEach((dir: DIRECTION) => {
@@ -171,20 +171,20 @@ const temp = new Vec3();
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.null;
+
 	speed: number = 0.5; // negative is backwards.
-	trackStyle: TRACK_STYLE = TRACK_STYLE.straight;
 
 	up: boolean = true;
 
-	onTrack: boolean = false;
-	wasOnTrack: boolean = false;
+	// onTrack: boolean = false;
+	// wasOnTrack: boolean = false;
 
 	/**
 	 * Lerp forward to backward.
 	 * -0.5 - 0.5
 	 */
-	movementLerp: number = 0;
-	vecMovement: Vec3 = new Vec3();
+	// movementLerp: number = 0;
+	// vecMovement: Vec3 = new Vec3();
 
 	initial_properties: ObjectProperties = {
 		visual: EntityVisual.mesh,
@@ -194,17 +194,6 @@ class TestTrain extends Entity {
 		collide_with_objects: false,
 		selectionbox: [-0.2, -0.4, -0.2, 0.2, 0.4, 0.2],
 	};
-
-	detectTrackStyle(pos: Vec3): void {
-		const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
-		if (id == trackStraightID) {
-			this.trackStyle = TRACK_STYLE.straight;
-		} else if (id == trackTurnID) {
-			this.trackStyle = TRACK_STYLE.turn;
-		}
-
-		// todo: || id == trackSwitchID;
-	}
 
 	on_activate(staticData: string, delta: number): void {
 		// todo: check if static data is null.
