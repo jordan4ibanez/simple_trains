@@ -232,11 +232,10 @@ class TestTrain extends Entity {
 
 		if (this.debugTimer == this.debugForward) {
 			print("drive forward!");
-			const forward = new Vec3()
-				.setVec(this.position)
-				.add(dirToVector[this.direction]);
-			if (isTrack(forward)) {
-				this.position.setVec(forward);
+			const straightRes = this.continueStraight(false);
+
+			if (straightRes.success) {
+				this.position.setVec(straightRes.position);
 				this.object.move_to(this.position);
 			} else {
 				const result = this.turn();
