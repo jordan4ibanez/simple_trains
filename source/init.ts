@@ -176,6 +176,8 @@ class TestTrain extends Entity {
 
 	up: boolean = true;
 
+	driver: ObjectRef | null = null;
+
 	// onTrack: boolean = false;
 	// wasOnTrack: boolean = false;
 
@@ -194,6 +196,30 @@ class TestTrain extends Entity {
 		collide_with_objects: false,
 		selectionbox: [-0.2, -0.4, -0.2, 0.2, 0.4, 0.2],
 	};
+
+	on_rightclick(clicker: ObjectRef): void {
+		if (!clicker.is_player()) {
+			return;
+		}
+
+		const data = this.object.get_children();
+
+		if (data.length > 0) {
+			this.driver = null;
+			data.forEach((thing) => {
+				thing.set_detach();
+			});
+			return;
+		}
+
+		this.driver = clicker;
+		clicker.set_attach(
+			this.object,
+			"",
+			new Vec3(0, 0, 0),
+			new Vec3(0, 0, 0),
+		);
+	}
 
 	on_activate(staticData: string, delta: number): void {
 		// todo: check if static data is null.
