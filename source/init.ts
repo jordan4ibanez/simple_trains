@@ -27,9 +27,9 @@ core.register_chatcommand("t", {
 
 class TurnResult {
 	success: boolean;
-	direction: DIRECTION | null;
+	direction: DIRECTION;
 
-	constructor(suc: boolean, dir: DIRECTION | null) {
+	constructor(suc: boolean, dir: DIRECTION) {
 		this.success = suc;
 		this.direction = dir;
 	}
