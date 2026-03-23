@@ -216,7 +216,7 @@ class TestTrain extends Entity {
 		this.drive();
 
 		if (this.debugTimer == this.debugForward) {
-			print("drive!");
+			print("drive forward!");
 			const forward = new Vec3()
 				.setVec(this.position)
 				.add(dirToVector[this.direction]!);
@@ -224,7 +224,18 @@ class TestTrain extends Entity {
 				this.position.setVec(forward);
 				this.object.move_to(this.position);
 			} else {
-				print("todo: try to turn!");
+				print("todo: try to turn 1!");
+			}
+		} else if (this.debugTimer == this.debugBackward) {
+			print("drive backward!");
+			const backward = new Vec3()
+				.setVec(this.position)
+				.subtract(dirToVector[this.direction]!);
+			if (isTrack(backward)) {
+				this.position.setVec(backward);
+				this.object.move_to(this.position);
+			} else {
+				print("todo: try to turn 2!");
 			}
 		}
 		this.debugTimer -= delta;
