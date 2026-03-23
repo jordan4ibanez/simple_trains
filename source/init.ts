@@ -229,7 +229,7 @@ class TestTrain extends Entity {
 			this.movement = -1;
 		}
 
-		print(this.movement);
+		print("Move:", this.movement);
 
 		if (this.movement == 1) {
 			this.movement = 0;
