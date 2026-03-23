@@ -52,16 +52,16 @@ function dirToString(input: DIRECTION): string {
 	return __dirToString[input];
 }
 
-enum STRAIGHT_TRACK_AXIS {
+enum AXIS {
 	X = 0,
 	Z = 1,
 }
 
-const STRAIGHT_TRACK_DIR_TO_AXIS: STRAIGHT_TRACK_AXIS[] | null[] = [
-	STRAIGHT_TRACK_AXIS.Z,
-	STRAIGHT_TRACK_AXIS.X,
-	STRAIGHT_TRACK_AXIS.Z,
-	STRAIGHT_TRACK_AXIS.X,
+const DIR_TO_AXIS: AXIS[] | null[] = [
+	AXIS.Z,
+	AXIS.X,
+	AXIS.Z,
+	AXIS.X,
 ];
 
 const dirToVector: Vec3[] | null[] = [
