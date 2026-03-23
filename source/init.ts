@@ -57,9 +57,9 @@ enum AXIS {
 	Z = 1,
 }
 
-const DIR_TO_AXIS: AXIS[] | null[] = [AXIS.Z, AXIS.X, AXIS.Z, AXIS.X];
+const DIR_TO_AXIS: AXIS[] = [AXIS.Z, AXIS.X, AXIS.Z, AXIS.X];
 
-const dirToVector: Vec3[] | null[] = [
+const dirToVector: Vec3[] = [
 	new Vec3(0, 0, 1), //  0 - North.
 	new Vec3(1, 0, 0), //  1 - East.
 	new Vec3(0, 0, -1), // 2 - South.
