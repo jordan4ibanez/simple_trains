@@ -224,7 +224,7 @@ class TestTrain extends Entity {
 			print("drive forward!");
 			const forward = new Vec3()
 				.setVec(this.position)
-				.add(dirToVector[this.direction]!);
+				.add(dirToVector[this.direction]);
 			if (isTrack(forward)) {
 				this.position.setVec(forward);
 				this.object.move_to(this.position);
@@ -240,7 +240,7 @@ class TestTrain extends Entity {
 			print("drive backward!");
 			const backward = new Vec3()
 				.setVec(this.position)
-				.subtract(dirToVector[this.direction]!);
+				.subtract(dirToVector[this.direction]);
 			if (isTrack(backward)) {
 				this.position.setVec(backward);
 				this.object.move_to(this.position);
