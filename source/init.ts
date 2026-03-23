@@ -229,7 +229,11 @@ class TestTrain extends Entity {
 				this.position.setVec(forward);
 				this.object.move_to(this.position);
 			} else {
-				print("todo: try to turn 1!");
+				const result = this.turn();
+
+				if (result.success) {
+					this.direction = result.direction;
+				}
 			}
 		} else if (this.debugTimer == this.debugBackward) {
 			print("drive backward!");
