@@ -195,7 +195,7 @@ class TestTrain extends Entity {
 	}
 
 	/**
-	 * Set the locomotive's rotation. Used for straight.
+	 * Set the locomotive's rotation.
 	 */
 	setRotation(): void {
 		this.object.set_yaw(this.direction * -90 * degToRad);
@@ -210,14 +210,5 @@ class TestTrain extends Entity {
 		});
 	}
 }
-/**
- * todo: Check turn input using vector direction. If current vector matches that vector then train can go to it.
- * todo: Locomotive's direction can be used to automatically calculate the rotation around a turn based on the param2 of the turn.
- * 0.0 movement lerp in turn would be 45 degrees
- */
 
 registerEntity("simple_trains:train", TestTrain);
-
-// core.register_on_punchnode((pos: ShallowVector3, node: NodeTable) => {
-// 	print(dump(node));
-// });
