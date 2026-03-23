@@ -239,6 +239,14 @@ class TestTrain extends Entity {
 			if (straightRes.success) {
 				this.position.setVec(straightRes.position);
 				this.object.move_to(this.position);
+
+				if (!this.continueStraight(false).success) {
+					const result = this.turn();
+					if (result.success) {
+						this.direction = result.direction;
+						this.setRotation();
+					}
+				}
 			} else {
 				const result = this.turn();
 				if (result.success) {
