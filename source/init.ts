@@ -154,6 +154,15 @@ class TestTrain extends Entity {
 	}
 
 	on_activate(staticData: string, delta: number): void {
+		if (staticData.length > 0) {
+			const data = core.deserialize(staticData);
+
+			if (typeof data.direction == "number") {
+				this.direction = data.direction;
+				print("direction restored");
+			}
+		}
+
 		this.position = new Vec3();
 		// this.vecMovement = new Vec3();
 
