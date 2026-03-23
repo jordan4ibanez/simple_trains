@@ -230,6 +230,9 @@ class TestTrain extends Entity {
 
 		this.drive();
 
+		// Todo: use this same logic when the locomotive goes past the 0 point.
+		// if was 0.1 and now -0.1 or vice versa.
+
 		if (this.debugTimer == this.debugForward) {
 			print("drive forward!");
 			const straightRes = this.continueStraight(false);
