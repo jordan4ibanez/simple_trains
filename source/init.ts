@@ -239,7 +239,6 @@ class TestTrain extends Entity {
 				this.object.move_to(this.position);
 			} else {
 				const result = this.turn();
-
 				if (result.success) {
 					this.direction = result.direction;
 					this.setRotation();
@@ -253,9 +252,6 @@ class TestTrain extends Entity {
 				this.position.setVec(straightRes.position);
 				this.object.move_to(this.position);
 			} else {
-				print("todo: try to turn 2!");
-				//! Note: This should just take the direction and apply it backwards!
-
 				const result = this.turn();
 
 				if (result.success) {
