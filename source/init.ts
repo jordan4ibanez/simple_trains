@@ -227,12 +227,21 @@ class TestTrain extends Entity {
 
 		const newMove = sign(this.movement);
 
-		const updateCheck = oldMove != newMove;
+		// Do center pass checks for turns.
+		// This is in case you change forward to backward (and vice versa) in turns.
+		// It gets cancelled out by oldMove != 0 because that's an actual movement
+		// and not a turn check.
+		// This is basically dependant on floating point imprecision.
+		let updateCheck = oldMove != newMove && oldMove != 0;
 
 		if (this.movement >= 1) {
 			this.movement = 1;
 		} else if (this.movement <= -1) {
 			this.movement = -1;
+		}
+
+		if (updateCheck) {
+			print("update check");
 		}
 
 		// print("Move:", this.movement);
