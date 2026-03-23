@@ -31,7 +31,6 @@ enum STATE {
 	halted = 2,
 }
 enum DIRECTION {
-	null = -1,
 	north = 0, // +Z
 	east = 1, //  +X
 	south = 2, // -Z
@@ -40,9 +39,6 @@ enum DIRECTION {
 
 const __dirToString: string[] = ["north", "east", "south", "west"];
 function dirToString(input: DIRECTION): string {
-	if (input == DIRECTION.null) {
-		return "null";
-	}
 	return __dirToString[input];
 }
 
@@ -99,7 +95,7 @@ const temp = new Vec3();
 
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
-	direction: DIRECTION = DIRECTION.null;
+	direction: DIRECTION = DIRECTION.north;
 
 	speed: number = 0.5; // negative is backwards.
 
@@ -151,14 +147,9 @@ class TestTrain extends Entity {
 	}
 
 	on_activate(staticData: string, delta: number): void {
-		// todo: check if static data is null.
-		// todo: this is debug and can cause issues with trains that already exist.
-
 		this.position = new Vec3();
 		// this.vecMovement = new Vec3();
 
-		// Position calibration of initial data.
-		// Literally nothing else can be done without this, or it may be extremely glitchy and convuluted.
 		this.position.setVec(this.object.get_pos()).round();
 
 		if (isTrack(this.position)) {
@@ -186,11 +177,7 @@ class TestTrain extends Entity {
 	 * Set the locomotive's rotation. Used for straight.
 	 */
 	setRotation(): void {
-		if (this.direction == DIRECTION.null) {
-			this.object.set_yaw(DIRECTION.north * -90 * degToRad);
-		} else {
-			this.object.set_yaw(this.direction * -90 * degToRad);
-		}
+		this.object.set_yaw(this.direction * -90 * degToRad);
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
