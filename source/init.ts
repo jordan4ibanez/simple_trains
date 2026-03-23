@@ -229,7 +229,10 @@ class TestTrain extends Entity {
 			this.movement = -1;
 		}
 
+		print(this.movement);
+
 		if (this.movement == 1) {
+			this.movement = 0;
 			print("drive forward!");
 			const straightRes = this.continueStraight(false);
 
@@ -244,6 +247,7 @@ class TestTrain extends Entity {
 				}
 			}
 		} else if (this.movement == -1) {
+			this.movement = 0;
 			print("drive backward!");
 			const straightRes = this.continueStraight(true);
 
