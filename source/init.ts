@@ -3,7 +3,7 @@ import { track } from "./game_detection";
 import { trackID, trackRegistration } from "./track";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual } from "./utility/enums";
-import { degToRad } from "./utility/math";
+import { degToRad, sign } from "./utility/math";
 import { Vec3 } from "./utility/vector";
 
 trackRegistration();
@@ -221,7 +221,13 @@ class TestTrain extends Entity {
 		// Todo: use this same logic when the locomotive goes past the 0 point.
 		// if was 0.1 and now -0.1 or vice versa.
 
+		const oldMove = sign(this.movement);
+
 		this.movement += delta * this.speed;
+
+		const newMove = sign(this.movement);
+
+		const updateCheck = oldMove != newMove;
 
 		if (this.movement >= 1) {
 			this.movement = 1;
@@ -229,7 +235,7 @@ class TestTrain extends Entity {
 			this.movement = -1;
 		}
 
-		print("Move:", this.movement);
+		// print("Move:", this.movement);
 
 		if (this.movement == 1) {
 			this.movement = 0;
