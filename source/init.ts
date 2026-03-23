@@ -111,13 +111,8 @@ const temp = new Vec3();
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.north;
-
+	
 	speed: number = 0.5; // negative is backwards.
-
-	debugTimer = 0;
-	debugForward = 0.5;
-	debugBackward = 0.6;
-
 	driver: ObjectRef | null = null;
 
 	/**
@@ -226,7 +221,15 @@ class TestTrain extends Entity {
 		// Todo: use this same logic when the locomotive goes past the 0 point.
 		// if was 0.1 and now -0.1 or vice versa.
 
-		if (this.debugTimer == this.debugForward) {
+		this.movement += delta * this.speed;
+
+		if (this.movement >= 1) {
+			this.movement = 1;
+		} else if (this.movement <= -1) {
+			this.movement = -1;
+		}
+
+		if (this.movement == 1) {
 			print("drive forward!");
 			const straightRes = this.continueStraight(false);
 
@@ -240,7 +243,7 @@ class TestTrain extends Entity {
 					this.setRotation();
 				}
 			}
-		} else if (this.debugTimer == this.debugBackward) {
+		} else if (this.movement == -1) {
 			print("drive backward!");
 			const straightRes = this.continueStraight(true);
 
