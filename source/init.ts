@@ -242,6 +242,23 @@ class TestTrain extends Entity {
 
 		if (updateCheck) {
 			print("update check");
+			if (this.movement > 0) {
+				if (!this.continueStraight(false).success) {
+					const result = this.turn();
+					if (result.success) {
+						this.direction = result.direction;
+						this.setRotation();
+					}
+				}
+			} else {
+				if (!this.continueStraight(true).success) {
+					const result = this.turn();
+					if (result.success) {
+						this.direction = directionInversion[result.direction];
+						this.setRotation();
+					}
+				}
+			}
 		}
 
 		// print("Move:", this.movement);
