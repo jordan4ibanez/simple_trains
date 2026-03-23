@@ -163,21 +163,16 @@ class TestTrain extends Entity {
 	}
 
 	on_activate(staticData: string, delta: number): void {
-		if (staticData.length > 0) {
-			const data = core.deserialize(staticData);
+		const data = core.deserialize(staticData);
 
-			if (typeof data.direction == "number") {
-				this.direction = data.direction;
-				print("direction restored");
-			}
-		}
+		this.direction = data.direction || DIRECTION.north;
+		this.movement = data.movement || 0;
+		this.speed = data.speed || 0;
+		this.position =
+			new Vec3().setVec(data.position) ||
+			new Vec3().setVec(this.object.get_pos()).round();
 
-		this.position = new Vec3();
-		// this.vecMovement = new Vec3();
-
-		this.position.setVec(this.object.get_pos()).round();
-
-		if (isTrack(this.position)) {
+		if (data.position == null && isTrack(this.position)) {
 			this.object.move_to(this.position);
 		}
 
@@ -186,7 +181,12 @@ class TestTrain extends Entity {
 	}
 
 	get_staticdata(): string {
-		return core.serialize({ direction: this.direction });
+		return core.serialize({
+			direction: this.direction,
+			movement: this.movement,
+			speed: this.speed,
+			position: this.position,
+		});
 	}
 
 	on_punch(
