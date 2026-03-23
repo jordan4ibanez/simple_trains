@@ -488,6 +488,7 @@ class TestTrain extends Entity {
 			// Backwards.
 			if (this.speed < 0) {
 				if (this.movementLerp > 0) {
+					print("> 0");
 					const dirVec = dirToVector[this.direction];
 
 					if (dirVec != null) {
@@ -499,10 +500,10 @@ class TestTrain extends Entity {
 						this.setRotationTurn(this.direction);
 					}
 				} else {
-					let outputDir = turnIoCalculation(
+					print("<= 0");
+					let outputDir = turnOutputCalculation(
 						this.direction,
 						param2,
-						this.speed < 0,
 					);
 
 					const dirVec = dirToVector[outputDir];
@@ -530,10 +531,9 @@ class TestTrain extends Entity {
 						this.setRotationTurn(this.direction);
 					}
 				} else {
-					let outputDir = turnIoCalculation(
+					let outputDir = turnOutputCalculation(
 						this.direction,
 						param2,
-						this.speed < 0,
 					);
 
 					const dirVec = dirToVector[outputDir];
