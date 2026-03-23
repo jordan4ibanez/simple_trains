@@ -247,11 +247,10 @@ class TestTrain extends Entity {
 			}
 		} else if (this.debugTimer == this.debugBackward) {
 			print("drive backward!");
-			const backward = new Vec3()
-				.setVec(this.position)
-				.subtract(dirToVector[this.direction]);
-			if (isTrack(backward)) {
-				this.position.setVec(backward);
+			const straightRes = this.continueStraight(true);
+
+			if (straightRes.success) {
+				this.position.setVec(straightRes.position);
 				this.object.move_to(this.position);
 			} else {
 				print("todo: try to turn 2!");
