@@ -25,6 +25,16 @@ core.register_chatcommand("t", {
 	},
 });
 
+class StraightResult {
+	success: boolean;
+	position: Vec3;
+
+	constructor(suc: boolean, pos: Vec3) {
+		this.success = suc;
+		this.position = pos;
+	}
+}
+
 class TurnResult {
 	success: boolean;
 	direction: DIRECTION;
