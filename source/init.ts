@@ -25,6 +25,16 @@ core.register_chatcommand("t", {
 	},
 });
 
+class TurnResult {
+	success: boolean;
+	direction: DIRECTION | null;
+
+	constructor(suc: boolean, dir: DIRECTION | null) {
+		this.success = suc;
+		this.direction = dir;
+	}
+}
+
 enum STATE {
 	idle = 0,
 	rolling = 1,
@@ -236,9 +246,23 @@ class TestTrain extends Entity {
 				this.object.move_to(this.position);
 			} else {
 				print("todo: try to turn 2!");
+				//! Note: This should just take the direction and apply it backwards!
 			}
 		}
 		this.debugTimer -= delta;
+	}
+
+	/**
+	 * Train tries to turn.
+	 * @returns Success.
+	 */
+	turn(): TurnResult {
+		const avoid = this.direction;
+
+		//! note: This will try to pick a direction to head into.
+		//! Can probably just use the current axis and pick 2 other directions from the other axis.
+
+		return new TurnResult(false, null);
 	}
 
 	drive(): void {
