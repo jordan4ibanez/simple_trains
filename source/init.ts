@@ -308,9 +308,6 @@ class TestTrain extends Entity {
 			}
 		}
 
-		//! note: This will try to pick a direction to head into.
-		//! Can probably just use the current axis and pick 2 other directions from the other axis.
-
 		return new TurnResult(false, DIRECTION.north);
 	}
 
