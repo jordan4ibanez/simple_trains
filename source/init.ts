@@ -263,6 +263,18 @@ class TestTrain extends Entity {
 				}
 			}
 		}
+
+		this.smoothMove();
+	}
+
+	smoothMove(): void {
+		const temp = new Vec3().setVec(this.position);
+		const dir = new Vec3()
+			.setVec(dirToVector[this.direction])
+			.multiply(new Vec3(this.movement, this.movement, this.movement));
+
+		temp.add(dir);
+		this.object.set_pos(temp);
 	}
 
 	continueStraight(backward: boolean): StraightResult {
