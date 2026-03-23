@@ -100,7 +100,8 @@ class TestTrain extends Entity {
 	speed: number = 0.5; // negative is backwards.
 
 	debugTimer = 0;
-	debugStep = 0.5;
+	debugForward = 0.5;
+	debugBackward = 0.6;
 
 	up: boolean = true;
 
@@ -214,7 +215,7 @@ class TestTrain extends Entity {
 
 		this.drive();
 
-		if (this.debugTimer == this.debugStep) {
+		if (this.debugTimer == this.debugForward) {
 			print("drive!");
 			const forward = new Vec3()
 				.setVec(this.position)
@@ -238,7 +239,9 @@ class TestTrain extends Entity {
 		}
 
 		if (this.driver.get_player_control().up) {
-			this.debugTimer = this.debugStep;
+			this.debugTimer = this.debugForward;
+		} else if (this.driver.get_player_control().down) {
+			this.debugTimer = this.debugBackward;
 		}
 	}
 }
