@@ -315,6 +315,10 @@ class TestTrain extends Entity {
 			return;
 		}
 
+		if (this.driver.get_player_control().sneak) {
+			print(this.speed);
+		}
+
 		if (this.driver.get_player_control().up) {
 			if (this.speed < 5) {
 				this.speed += delta;
