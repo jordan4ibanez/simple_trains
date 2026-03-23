@@ -216,7 +216,7 @@ class TestTrain extends Entity {
 			texture: "default_stone.png",
 		});
 
-		this.drive();
+		this.drive(delta);
 
 		// Todo: use this same logic when the locomotive goes past the 0 point.
 		// if was 0.1 and now -0.1 or vice versa.
@@ -259,7 +259,6 @@ class TestTrain extends Entity {
 				}
 			}
 		}
-		this.debugTimer -= delta;
 	}
 
 	continueStraight(backward: boolean): StraightResult {
@@ -311,18 +310,19 @@ class TestTrain extends Entity {
 		return new TurnResult(false, DIRECTION.north);
 	}
 
-	drive(): void {
+	drive(delta: number): void {
 		if (this.driver == null) {
-			return;
-		}
-		if (this.debugTimer > 0) {
 			return;
 		}
 
 		if (this.driver.get_player_control().up) {
-			this.debugTimer = this.debugForward;
+			if (this.speed < 5) {
+				this.speed += delta;
+			}
 		} else if (this.driver.get_player_control().down) {
-			this.debugTimer = this.debugBackward;
+			if (this.speed > -5) {
+				this.speed -= delta;
+			}
 		}
 	}
 }
