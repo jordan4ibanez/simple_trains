@@ -233,6 +233,7 @@ class TestTrain extends Entity {
 
 				if (result.success) {
 					this.direction = result.direction;
+					this.setRotation();
 				}
 			}
 		} else if (this.debugTimer == this.debugBackward) {
