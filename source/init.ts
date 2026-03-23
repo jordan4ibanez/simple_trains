@@ -247,6 +247,13 @@ class TestTrain extends Entity {
 			} else {
 				print("todo: try to turn 2!");
 				//! Note: This should just take the direction and apply it backwards!
+
+				const result = this.turn();
+
+				if (result.success) {
+					this.direction = directionInversion[result.direction];
+					this.setRotation();
+				}
 			}
 		}
 		this.debugTimer -= delta;
