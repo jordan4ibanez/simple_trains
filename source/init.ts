@@ -112,7 +112,7 @@ class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.north;
 
-	speed: number = 0.5; // negative is backwards.
+	speed: number = 0; // negative is backwards.
 	driver: ObjectRef | null = null;
 
 	/**
