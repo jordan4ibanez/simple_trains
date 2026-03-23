@@ -236,11 +236,9 @@ class TestTrain extends Entity {
 			print("drive forward!");
 			// Train tries to move forwards.
 			const straightRes = this.continueStraight(false);
-
 			if (straightRes.success) {
 				this.position.setVec(straightRes.position);
 				this.object.move_to(this.position);
-
 				// Train moved forwards, but now has to check if it needs to turn.
 				if (!this.continueStraight(false).success) {
 					const result = this.turn();
@@ -262,11 +260,9 @@ class TestTrain extends Entity {
 			print("drive backward!");
 			// Train tries to move backwards.
 			const straightRes = this.continueStraight(true);
-
 			if (straightRes.success) {
 				this.position.setVec(straightRes.position);
 				this.object.move_to(this.position);
-
 				// Train moved forwards, but now has to check if it needs to turn.
 				if (!this.continueStraight(true).success) {
 					const result = this.turn();
@@ -278,7 +274,6 @@ class TestTrain extends Entity {
 			} else {
 				// A backup check in the turn logic.
 				const result = this.turn();
-
 				if (result.success) {
 					this.direction = directionInversion[result.direction];
 					this.setRotation();
