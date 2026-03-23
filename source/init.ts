@@ -216,6 +216,15 @@ class TestTrain extends Entity {
 
 		if (this.debugTimer == this.debugStep) {
 			print("drive!");
+			const forward = new Vec3()
+				.setVec(this.position)
+				.add(dirToVector[this.direction]!);
+			if (isTrack(forward)) {
+				this.position.setVec(forward);
+				this.object.move_to(this.position);
+			} else {
+				print("todo: try to turn!");
+			}
 		}
 		this.debugTimer -= delta;
 	}
