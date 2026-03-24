@@ -248,9 +248,13 @@ class TestTrain extends Entity {
 
 		// Trigger incline checks.
 		if (oldMove < 0.5 && newMove >= 0.5) {
-			print("forward");
+			print("forward (moving forward)");
+		} else if (oldMove > 0.5 && newMove <= 0.5) {
+			print("forward (moving backward)");
 		} else if (oldMove > -0.5 && newMove <= -0.5) {
-			print("backward");
+			print("backward (moving backward)");
+		} else if (oldMove < -0.5 && newMove >= -0.5) {
+			print("backward (moving forward)");
 		}
 
 		if (updateCheck) {
