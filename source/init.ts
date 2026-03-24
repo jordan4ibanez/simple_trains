@@ -248,16 +248,26 @@ class TestTrain extends Entity {
 				if (!this.continueStraight(false).success) {
 					const result = this.turn();
 					if (result.success) {
+						// The train can continue.
 						this.direction = result.direction;
 						this.setRotation();
+					} else {
+						// The train has hit a path end.
+						this.movement = 0;
+						this.speed = 0;
 					}
 				}
 			} else {
 				if (!this.continueStraight(true).success) {
 					const result = this.turn();
 					if (result.success) {
+						// The train can continue.
 						this.direction = directionInversion[result.direction];
 						this.setRotation();
+					} else {
+						// The train has hit a path end.
+						this.movement = 0;
+						this.speed = 0;
 					}
 				}
 			}
