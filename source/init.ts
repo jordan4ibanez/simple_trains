@@ -228,10 +228,12 @@ class TestTrain extends Entity {
 		// if was 0.1 and now -0.1 or vice versa.
 
 		const oldSign = sign(this.movement);
+		const oldMove = this.movement;
 
 		this.movement += delta * this.speed;
 
 		const newSign = sign(this.movement);
+		const newMove = this.movement;
 
 		// Do center pass checks for turns.
 		// This is in case you change forward to backward (and vice versa) in turns.
@@ -242,6 +244,13 @@ class TestTrain extends Entity {
 			this.movement = 1;
 		} else if (this.movement <= -1) {
 			this.movement = -1;
+		}
+
+		// Trigger incline checks.
+		if (oldMove < 0.5 && newMove >= 0.5) {
+			print("forward");
+		} else if (oldMove > -0.5 && newMove <= -0.5) {
+			print("backward");
 		}
 
 		if (updateCheck) {
