@@ -45,6 +45,22 @@ class TurnResult {
 	}
 }
 
+enum SLOP_CLINATION {
+	up = 0,
+	down = 1,
+}
+class SlopeResult {
+	success: boolean;
+	direction: DIRECTION;
+	clination: SLOP_CLINATION;
+
+	constructor(suc: boolean, dir: DIRECTION, cli: SLOP_CLINATION) {
+		this.success = suc;
+		this.direction = dir;
+		this.clination = cli;
+	}
+}
+
 enum STATE {
 	idle = 0,
 	rolling = 1,
