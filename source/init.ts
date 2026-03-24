@@ -218,6 +218,10 @@ class TestTrain extends Entity {
 
 		this.drive(delta);
 
+		if (!isTrack(this.position)) {
+			this.speed = 0;
+		}
+
 		// Todo: use this same logic when the locomotive goes past the 0 point.
 		// if was 0.1 and now -0.1 or vice versa.
 
@@ -285,6 +289,10 @@ class TestTrain extends Entity {
 				if (result.success) {
 					this.direction = result.direction;
 					this.setRotation();
+				} else {
+					// Train fell off track.
+					this.position.setVec(straightRes.position);
+					this.object.move_to(this.position);
 				}
 			}
 		} else if (this.movement == -1) {
@@ -309,6 +317,10 @@ class TestTrain extends Entity {
 				if (result.success) {
 					this.direction = directionInversion[result.direction];
 					this.setRotation();
+				} else {
+					// Train fell off track.
+					this.position.setVec(straightRes.position);
+					this.object.move_to(this.position);
 				}
 			}
 		}
