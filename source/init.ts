@@ -148,6 +148,8 @@ class TestTrain extends Entity {
 
 		// Rotate the locomotive with sneak rightclick.
 		if (clicker.get_player_control().sneak) {
+			this.movement = 0;
+			this.speed = 0;
 			this.direction = (this.direction + 1) % 4;
 			this.setRotation();
 			return;
