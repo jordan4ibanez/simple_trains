@@ -227,16 +227,16 @@ class TestTrain extends Entity {
 		// Todo: use this same logic when the locomotive goes past the 0 point.
 		// if was 0.1 and now -0.1 or vice versa.
 
-		const oldMove = sign(this.movement);
+		const oldSign = sign(this.movement);
 
 		this.movement += delta * this.speed;
 
-		const newMove = sign(this.movement);
+		const newSign = sign(this.movement);
 
 		// Do center pass checks for turns.
 		// This is in case you change forward to backward (and vice versa) in turns.
 		// This also checks to ensure the train doesn't fall off the rails.
-		let updateCheck = oldMove != newMove;
+		let updateCheck = oldSign != newSign;
 
 		if (this.movement >= 1) {
 			this.movement = 1;
