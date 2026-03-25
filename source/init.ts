@@ -359,38 +359,7 @@ class TestTrain extends Entity {
 
 		this.slopeCalculation(oldMove, newMove);
 
-		if (updateCheck) {
-			// print("update check");
-			if (this.movement > 0) {
-				if (!this.continueStraight(false).success) {
-					const result = this.turn();
-					if (result.success) {
-						// The train can continue.
-						this.direction = result.direction;
-						this.setRotation();
-					} else {
-						// The train has hit a path end.
-						this.movement = 0;
-						this.speed = 0;
-						// todo: reset the slope setting! If it hit a path end it cannot be on a slope
-					}
-				}
-			} else {
-				if (!this.continueStraight(true).success) {
-					const result = this.turn();
-					if (result.success) {
-						// The train can continue.
-						this.direction = directionInversion[result.direction];
-						this.setRotation();
-					} else {
-						// The train has hit a path end.
-						this.movement = 0;
-						this.speed = 0;
-						// todo: reset the slope setting! If it hit a path end it cannot be on a slope
-					}
-				}
-			}
-		}
+		this.update(updateCheck);
 
 		// print("Move:", this.movement);
 
@@ -530,6 +499,41 @@ class TestTrain extends Entity {
 				);
 			}
 			this.setSlope();
+		}
+	}
+
+	update(updateCheck: boolean): void {
+		if (updateCheck) {
+			// print("update check");
+			if (this.movement > 0) {
+				if (!this.continueStraight(false).success) {
+					const result = this.turn();
+					if (result.success) {
+						// The train can continue.
+						this.direction = result.direction;
+						this.setRotation();
+					} else {
+						// The train has hit a path end.
+						this.movement = 0;
+						this.speed = 0;
+						// todo: reset the slope setting! If it hit a path end it cannot be on a slope
+					}
+				}
+			} else {
+				if (!this.continueStraight(true).success) {
+					const result = this.turn();
+					if (result.success) {
+						// The train can continue.
+						this.direction = directionInversion[result.direction];
+						this.setRotation();
+					} else {
+						// The train has hit a path end.
+						this.movement = 0;
+						this.speed = 0;
+						// todo: reset the slope setting! If it hit a path end it cannot be on a slope
+					}
+				}
+			}
 		}
 	}
 
