@@ -311,12 +311,12 @@ class TestTrain extends Entity {
 	}
 
 	on_step(delta: number, moveResult: MoveResult | null): void {
-		// core.add_particle({
-		// 	pos: this.position,
-		// 	velocity: new Vec3(0, 2, 0),
-		// 	size: 1,
-		// 	texture: "default_stone.png",
-		// });
+		core.add_particle({
+			pos: this.position,
+			velocity: new Vec3(0, 2, 0),
+			size: 1,
+			texture: "default_stone.png",
+		});
 
 		this.drive(delta);
 
