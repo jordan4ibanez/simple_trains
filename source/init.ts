@@ -387,7 +387,6 @@ class TestTrain extends Entity {
 			this.slope = swapTrainSlope(
 				slopeCheck(checker, directionInversion[this.direction]),
 			);
-
 			this.setSlope();
 		}
 
