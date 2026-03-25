@@ -215,7 +215,11 @@ class TestTrain extends Entity {
 
 	checkEnvironmentTimer: number = 0;
 	front: TrackStatus = new TrackStatus();
+	// 2 nodes in front.
+	lookAhead: TrackStatus = new TrackStatus();
 	back: TrackStatus = new TrackStatus();
+	// 2 nodes behind.
+	lookBehind: TrackStatus = new TrackStatus();
 
 	speed: number = 0; // negative is backwards.
 	driver: ObjectRef | null = null;
