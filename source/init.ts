@@ -349,6 +349,13 @@ class TestTrain extends Entity {
 
 		this.drive(delta);
 
+		this.checkEnvironmentTimer += delta;
+
+		if (this.checkEnvironmentTimer > 0.25) {
+			this.checkEnvironmentTimer -= 0.25;
+			this.calculateFrontBackTrack();
+		}
+
 		if (!isTrack(this.position)) {
 			this.speed = 0;
 		}
