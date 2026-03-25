@@ -50,11 +50,11 @@ enum SLOPE_CLINATION {
 	down = 1,
 }
 class SlopeResult {
-	inSlop: boolean;
+	inSlope: boolean;
 	clination: SLOPE_CLINATION;
 
 	constructor(ins: boolean, cli: SLOPE_CLINATION) {
-		this.inSlop = ins;
+		this.inSlope = ins;
 		this.clination = cli;
 	}
 }
