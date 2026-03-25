@@ -52,6 +52,16 @@ class TurnResult {
 class TrackStatus {
 	valid: boolean = false;
 	position: Vec3 = new Vec3();
+
+	reset(): void {
+		this.valid = false;
+		this.position.set(0, 0, 0);
+	}
+
+	set(newValue: Vec3): void {
+		this.valid = true;
+		this.position.setVec(newValue);
+	}
 }
 
 enum TRAIN_SLOPE {
