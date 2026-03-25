@@ -444,6 +444,12 @@ class TestTrain extends Entity {
 
 		// print("Move:", this.movement);
 
+		this.nodeMove();
+
+		this.smoothMove();
+	}
+
+	nodeMove(): void {
 		if (this.movement == 1) {
 			this.movement = 0;
 			// print("drive forward!");
@@ -501,8 +507,6 @@ class TestTrain extends Entity {
 				}
 			}
 		}
-
-		this.smoothMove();
 	}
 
 	smoothMove(): void {
