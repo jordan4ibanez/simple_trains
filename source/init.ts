@@ -135,6 +135,13 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 
 	const flatCheck = new Vec3().setVec(current).add(dirToVector[dir]);
 
+	core.add_particle({
+		pos: flatCheck,
+		velocity: new Vec3(0, 2, 0),
+		size: 1,
+		texture: "default_wood.png",
+	});
+
 	// Train is traveling on flat land.
 	if (isTrack(flatCheck)) {
 		return TRAIN_SLOPE.none;
@@ -147,7 +154,7 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 		pos: upCheck,
 		velocity: new Vec3(0, 2, 0),
 		size: 1,
-		texture: "default_wood.png",
+		texture: "default_stone.png",
 	});
 
 	if (isTrack(upCheck)) {
