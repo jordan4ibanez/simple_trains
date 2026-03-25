@@ -357,7 +357,7 @@ class TestTrain extends Entity {
 		// Save the state.
 		this.oldSlope = this.slope;
 
-		this.slopeCalculation(oldMove, newMove);
+		// this.slopeCalculation(oldMove, newMove);
 
 		this.updateCalculation(updateCheck);
 
