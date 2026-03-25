@@ -45,16 +45,6 @@ class TurnResult {
 	}
 }
 
-class SlopeResult {
-	inSlope: boolean;
-	clination: TRAIN_SLOPE;
-
-	constructor(ins: boolean, cli: TRAIN_SLOPE) {
-		this.inSlope = ins;
-		this.clination = cli;
-	}
-}
-
 enum TRAIN_SLOPE {
 	none = 0,
 	up = 1,
