@@ -28,10 +28,12 @@ core.register_chatcommand("t", {
 class StraightResult {
 	success: boolean;
 	position: Vec3;
+	slope: TRAIN_SLOPE;
 
-	constructor(suc: boolean, pos: Vec3) {
+	constructor(suc: boolean, pos: Vec3, slo: TRAIN_SLOPE) {
 		this.success = suc;
 		this.position = pos;
+		this.slope = slo;
 	}
 }
 
