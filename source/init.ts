@@ -203,6 +203,9 @@ class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.north;
 
+	front: TrackStatus = new TrackStatus();
+	back: TrackStatus = new TrackStatus();
+
 	speed: number = 0; // negative is backwards.
 	driver: ObjectRef | null = null;
 
@@ -274,6 +277,9 @@ class TestTrain extends Entity {
 			this.object.move_to(this.position);
 		}
 
+		this.front = data?.front || new TrackStatus();
+		this.back = data?.back || new TrackStatus();
+
 		this.object.set_armor_groups({ punch_activated: 1 });
 		this.setRotation();
 	}
@@ -284,6 +290,8 @@ class TestTrain extends Entity {
 			movement: this.movement,
 			speed: this.speed,
 			position: this.position,
+			front: this.front,
+			back: this.back,
 		});
 	}
 
