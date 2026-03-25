@@ -365,6 +365,11 @@ class TestTrain extends Entity {
 			this.slope = swapTrainSlope(
 				slopeCheck(checker, directionInversion[this.direction]),
 			);
+			// If it fails, check in the other direction.
+			if (this.slope == TRAIN_SLOPE.none) {
+				this.slope = slopeCheck(checker, this.direction);
+			}
+
 			this.setSlope();
 		} else if (oldMove > -0.5 && newMove <= -0.5) {
 			// print("backward (moving backward)");
