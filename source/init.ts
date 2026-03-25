@@ -128,7 +128,7 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 	const upCheck = new Vec3().setVec(flatCheck).add(new Vec3(0, 1, 0));
 
 	if (isTrack(upCheck)) {
-		print("hit up");
+		// print("hit up");
 		return TRAIN_SLOPE.up;
 	}
 
@@ -147,10 +147,10 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 		continueUpCheck.add(dirToVector[dir]).add(new Vec3(0, 1, 0));
 
 		if (isTrack(continueUpCheck)) {
-			print("hit continue up");
+			// print("hit continue up");
 			return TRAIN_SLOPE.up;
 		} else {
-			print("back to flat");
+			// print("back to flat");
 			return TRAIN_SLOPE.none;
 		}
 	}
