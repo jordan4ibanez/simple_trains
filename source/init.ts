@@ -358,7 +358,7 @@ class TestTrain extends Entity {
 			this.slope = slopeCheck(checker, this.direction);
 			this.setSlope();
 		} else if (oldMove > 0.5 && newMove <= 0.5) {
-			print("forward (moving backward)");
+			// print("forward (moving backward)");
 			// In front of train position.
 			// Inverse of direction.
 			const checker = new Vec3().setVec(this.position);
