@@ -311,8 +311,8 @@ class TestTrain extends Entity {
 			movement: this.movement,
 			speed: this.speed,
 			position: this.position,
-			front: this.front,
-			back: this.back,
+			frontPosition: this.front.position,
+			backPosition: this.back.position,
 			checkEnvironmentTimer: this.checkEnvironmentTimer,
 		});
 	}
