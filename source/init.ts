@@ -620,13 +620,23 @@ class TestTrain extends Entity {
 			print(this.speed);
 		}
 
-		if (this.driver.get_player_control().up) {
-			if (this.speed < 5) {
-				this.speed += delta;
+		if (DEBUG_MODE) {
+			if (this.driver.get_player_control().up) {
+				this.speed = 2;
+			} else if (this.driver.get_player_control().down) {
+				this.speed = -2;
+			} else {
+				this.speed = 0;
 			}
-		} else if (this.driver.get_player_control().down) {
-			if (this.speed > -5) {
-				this.speed -= delta;
+		} else {
+			if (this.driver.get_player_control().up) {
+				if (this.speed < 5) {
+					this.speed += delta;
+				}
+			} else if (this.driver.get_player_control().down) {
+				if (this.speed > -5) {
+					this.speed -= delta;
+				}
 			}
 		}
 	}
