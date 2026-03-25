@@ -201,14 +201,15 @@ class TestTrain extends Entity {
 	on_activate(staticData: string, delta: number): void {
 		const data = core.deserialize(staticData);
 
-		this.direction = data.direction || DIRECTION.north;
-		this.movement = data.movement || 0;
-		this.speed = data.speed || 0;
-		this.position =
-			new Vec3().setVec(data.position) ||
-			new Vec3().setVec(this.object.get_pos()).round();
+		this.direction = data?.direction || DIRECTION.north;
+		this.movement = data?.movement || 0;
+		this.speed = data?.speed || 0;
 
-		if (data.position == null && isTrack(this.position)) {
+		this.position = new Vec3()
+			.setVec(data?.position || this.object.get_pos())
+			.round();
+
+		if (data?.position == null && isTrack(this.position)) {
 			this.object.move_to(this.position);
 		}
 
