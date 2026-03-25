@@ -252,6 +252,10 @@ class TestTrain extends Entity {
 			const old = this.object.get_rotation();
 			old.x = math.pi * 0.25;
 			this.object.set_rotation(old);
+		} else if (this.slope == TRAIN_SLOPE.down) {
+			const old = this.object.get_rotation();
+			old.x = -math.pi * 0.25;
+			this.object.set_rotation(old);
 		}
 	}
 
