@@ -276,21 +276,30 @@ class TestTrain extends Entity {
 	on_activate(staticData: string, delta: number): void {
 		const data = core.deserialize(staticData);
 
-		this.direction = data?.direction || DIRECTION.north;
-		this.movement = data?.movement || 0;
-		this.speed = data?.speed || 0;
+		if (data != null) {
+			this.direction = data.direction || DIRECTION.north;
+			this.movement = data.movement || 0;
+			this.speed = data.speed || 0;
 
-		this.position = new Vec3()
-			.setVec(data?.position || this.object.get_pos())
-			.round();
+			this.position = new Vec3()
+				.setVec(data.position || this.object.get_pos())
+				.round();
 
-		if (data?.position == null && isTrack(this.position)) {
-			this.object.move_to(this.position);
+			if (data.position == null && isTrack(this.position)) {
+				this.object.move_to(this.position);
+			}
+
+			this.front = new TrackStatus();
+			if (data.frontPosition != null) {
+				this.front.enable(data.frontPosition);
+			}
+			this.back = new TrackStatus();
+			if (data.backPosition != null) {
+				this.back.enable(data.backPosition);
+			}
+
+			this.checkEnvironmentTimer = data?.checkEnvironmentTimer || 0;
 		}
-
-		this.front = data?.front || new TrackStatus();
-		this.back = data?.back || new TrackStatus();
-		this.checkEnvironmentTimer = data?.checkEnvironmentTimer || 0;
 
 		this.object.set_armor_groups({ punch_activated: 1 });
 		this.setRotation();
