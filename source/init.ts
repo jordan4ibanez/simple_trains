@@ -53,6 +53,15 @@ enum TRAIN_SLOPE {
 	down = 2,
 }
 
+function swapTrainSlope(input: TRAIN_SLOPE) {
+	if (input == TRAIN_SLOPE.down) {
+		return TRAIN_SLOPE.up;
+	} else if (input == TRAIN_SLOPE.up) {
+		return TRAIN_SLOPE.down;
+	}
+	return TRAIN_SLOPE.none;
+}
+
 enum STATE {
 	idle = 0,
 	rolling = 1,
