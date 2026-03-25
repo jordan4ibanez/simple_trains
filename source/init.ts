@@ -372,8 +372,13 @@ class TestTrain extends Entity {
 		}
 	}
 
+	calculateFrontBackTrack(): void {
+		print("calculate!");
+	}
+
 	nodeMove(): void {
 		if (this.movement == 1) {
+			this.calculateFrontBackTrack();
 			this.movement = 0;
 			// print("drive forward!");
 			// Train tries to move forwards.
@@ -402,6 +407,7 @@ class TestTrain extends Entity {
 				}
 			}
 		} else if (this.movement == -1) {
+			this.calculateFrontBackTrack();
 			this.movement = 0;
 			// print("drive backward!");
 			// Train tries to move backwards.
