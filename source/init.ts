@@ -300,6 +300,12 @@ class TestTrain extends Entity {
 	}
 
 	setSlope(): void {
+		if (this.speed < 0) {
+			this.wasOnUphill = this.oldSlope == TRAIN_SLOPE.down;
+		} else if (this.speed > 0) {
+			this.wasOnUphill = this.oldSlope == TRAIN_SLOPE.up;
+		}
+
 		if (this.slope == TRAIN_SLOPE.none) {
 			const old = this.object.get_rotation();
 			old.x = 0;
@@ -508,6 +514,11 @@ class TestTrain extends Entity {
 		if (this.slope != TRAIN_SLOPE.none) {
 			const i = this.slope == TRAIN_SLOPE.up ? 1 : -1;
 			dir.y += i * this.movement + 0.7;
+		}
+
+		// todo: figure out why this is so glitchy
+		if (this.slope == TRAIN_SLOPE.none && this.wasOnUphill) {
+			dir.y += 1;
 		}
 
 		temp.add(dir);
