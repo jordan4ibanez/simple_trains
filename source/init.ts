@@ -357,57 +357,7 @@ class TestTrain extends Entity {
 		// Save the state.
 		this.oldSlope = this.slope;
 
-		// Trigger incline checks.
-		if (oldMove < 0.5 && newMove >= 0.5) {
-			// print("forward (moving forward)");
-			// In front of train position.
-			// Direction.
-			const checker = new Vec3()
-				.setVec(this.position)
-				.add(dirToVector[this.direction]);
-
-			this.slope = slopeCheck(checker, this.direction);
-			this.setSlope();
-		} else if (oldMove > 0.5 && newMove <= 0.5) {
-			// print("forward (moving backward)");
-			// In front of train position.
-			// Inverse of direction.
-			const checker = new Vec3().setVec(this.position);
-			this.slope = swapTrainSlope(
-				slopeCheck(checker, directionInversion[this.direction]),
-			);
-			// If it fails, check in the other direction.
-			if (this.slope == TRAIN_SLOPE.none) {
-				this.slope = slopeCheck(checker, this.direction);
-			}
-
-			this.setSlope();
-		} else if (oldMove > -0.5 && newMove <= -0.5) {
-			// print("backward (moving backward)");
-			// Behind train position.
-			// Inverse of direction.
-			const checker = new Vec3()
-				.setVec(this.position)
-				.add(dirToVector[directionInversion[this.direction]]);
-
-			this.slope = swapTrainSlope(
-				slopeCheck(checker, directionInversion[this.direction]),
-			);
-			this.setSlope();
-		} else if (oldMove < -0.5 && newMove >= -0.5) {
-			// print("backward (moving forward)");
-			// Behind train position.
-			// Direction.
-			const checker = new Vec3().setVec(this.position);
-			this.slope = slopeCheck(checker, this.direction);
-			// If it fails, check in the other direction.
-			if (this.slope == TRAIN_SLOPE.none) {
-				this.slope = swapTrainSlope(
-					slopeCheck(checker, directionInversion[this.direction]),
-				);
-			}
-			this.setSlope();
-		}
+		this.slopeCalculation(oldMove, newMove);
 
 		if (updateCheck) {
 			// print("update check");
@@ -527,6 +477,60 @@ class TestTrain extends Entity {
 
 		temp.add(dir);
 		this.object.set_pos(temp);
+	}
+
+	slopeCalculation(oldMove: number, newMove: number): void {
+		// Trigger incline checks.
+		if (oldMove < 0.5 && newMove >= 0.5) {
+			// print("forward (moving forward)");
+			// In front of train position.
+			// Direction.
+			const checker = new Vec3()
+				.setVec(this.position)
+				.add(dirToVector[this.direction]);
+
+			this.slope = slopeCheck(checker, this.direction);
+			this.setSlope();
+		} else if (oldMove > 0.5 && newMove <= 0.5) {
+			// print("forward (moving backward)");
+			// In front of train position.
+			// Inverse of direction.
+			const checker = new Vec3().setVec(this.position);
+			this.slope = swapTrainSlope(
+				slopeCheck(checker, directionInversion[this.direction]),
+			);
+			// If it fails, check in the other direction.
+			if (this.slope == TRAIN_SLOPE.none) {
+				this.slope = slopeCheck(checker, this.direction);
+			}
+
+			this.setSlope();
+		} else if (oldMove > -0.5 && newMove <= -0.5) {
+			// print("backward (moving backward)");
+			// Behind train position.
+			// Inverse of direction.
+			const checker = new Vec3()
+				.setVec(this.position)
+				.add(dirToVector[directionInversion[this.direction]]);
+
+			this.slope = swapTrainSlope(
+				slopeCheck(checker, directionInversion[this.direction]),
+			);
+			this.setSlope();
+		} else if (oldMove < -0.5 && newMove >= -0.5) {
+			// print("backward (moving forward)");
+			// Behind train position.
+			// Direction.
+			const checker = new Vec3().setVec(this.position);
+			this.slope = slopeCheck(checker, this.direction);
+			// If it fails, check in the other direction.
+			if (this.slope == TRAIN_SLOPE.none) {
+				this.slope = swapTrainSlope(
+					slopeCheck(checker, directionInversion[this.direction]),
+				);
+			}
+			this.setSlope();
+		}
 	}
 
 	continueStraight(backward: boolean): StraightResult {
