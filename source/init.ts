@@ -8,6 +8,8 @@ import { Vec3 } from "./utility/vector";
 
 trackRegistration();
 
+const DEBUG_MODE = true;
+
 core.register_chatcommand("t", {
 	func: (name: string) => {
 		const player = core.get_player_by_name(name);
@@ -357,13 +359,17 @@ class TestTrain extends Entity {
 		// Save the state.
 		this.oldSlope = this.slope;
 
-		// this.slopeCalculation(oldMove, newMove);
+		if (!DEBUG_MODE) {
+			this.slopeCalculation(oldMove, newMove);
+		}
 
 		this.updateCalculation(updateCheck);
 
 		this.nodeMove();
 
-		// this.smoothMove();
+		if (!DEBUG_MODE) {
+			this.smoothMove();
+		}
 	}
 
 	nodeMove(): void {
