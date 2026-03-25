@@ -459,13 +459,47 @@ class TestTrain extends Entity {
 			}
 		}
 
-		//! Debug.
+		//~ Back checks.
+
+		if (isTrack(back)) {
+			this.back.enable(back);
+		}
+
+		// Slope up.
+		if (!this.back.valid) {
+			back.add(new Vec3(0, 1, 0));
+
+			if (isTrack(back)) {
+				this.back.enable(back);
+			}
+		}
+
+		// Slope down.
+		if (!this.back.valid) {
+			back.subtract(new Vec3(0, 2, 0));
+
+			if (isTrack(back)) {
+				this.back.enable(back);
+			}
+		}
+
+		//! Debug front.
 		if (this.front.valid) {
 			core.add_particle({
 				pos: this.front.position,
 				velocity: new Vec3(0, 2, 0),
 				size: 1,
 				texture: "default_stone.png",
+			});
+		}
+
+		//! Debug back.
+		if (this.back.valid) {
+			core.add_particle({
+				pos: this.back.position,
+				velocity: new Vec3(0, 2, 0),
+				size: 1,
+				texture: "default_wood.png",
 			});
 		}
 
