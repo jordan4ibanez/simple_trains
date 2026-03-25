@@ -499,6 +499,11 @@ class TestTrain extends Entity {
 			.setVec(dirToVector[this.direction])
 			.multiply(new Vec3(this.movement, this.movement, this.movement));
 
+		if (this.slope != TRAIN_SLOPE.none) {
+			const i = this.slope == TRAIN_SLOPE.up ? 1 : -1;
+			dir.y += i * this.movement + 0.7;
+		}
+
 		temp.add(dir);
 		this.object.set_pos(temp);
 	}
