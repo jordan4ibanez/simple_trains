@@ -142,6 +142,7 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.north;
+	slope: TRAIN_SLOPE = TRAIN_SLOPE.none;
 
 	speed: number = 0; // negative is backwards.
 	driver: ObjectRef | null = null;
