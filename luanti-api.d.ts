@@ -676,7 +676,7 @@ interface core {
 	parse_json(string: string, nullValue?: any): any;
 	write_json(data: any[], styled: boolean): string | null;
 	serialize(any: any): string;
-	deserialize(string: string, safe?: boolean): LuaTable | null;
+	deserialize(string: string, safe?: boolean): Dictionary<string, any> | null;
 	compress(data: string, method: CompressionMethod, ...any: any): string;
 	decompress(data: string, method: CompressionMethod, ...any: any): string;
 	rgba(red: number, green: number, blue: number, alpha: number): string;
