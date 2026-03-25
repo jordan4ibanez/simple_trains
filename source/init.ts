@@ -120,6 +120,33 @@ function isTrack(pos: Vec3): boolean {
 	return id == trackID;
 }
 
+function slopeCheck(pos: Vec3, dir: DIRECTION): SlopeResult {
+	const current = new Vec3().setVec(pos);
+
+	const flatCheck = new Vec3().setVec(current).add(dirToVector[dir]);
+
+	// Train is traveling on flat land.
+	if (isTrack(flatCheck)) {
+		return new SlopeResult(false, SLOPE_CLINATION.up);
+	}
+
+	// Train prefers to go up instead of down.
+	const upCheck = new Vec3().setVec(flatCheck).add(new Vec3(0, 1, 0));
+
+	if (isTrack(upCheck)) {
+		return new SlopeResult(true, SLOPE_CLINATION.up);
+	}
+
+	// Train then checks if going down.
+	const downCheck = new Vec3().setVec(flatCheck).subtract(new Vec3(0, 1, 0));
+	if (isTrack(downCheck)) {
+		return new SlopeResult(true, SLOPE_CLINATION.down);
+	}
+
+	core.log(LogLevel.warning, "Train hit an invalid slope check!");
+	return new SlopeResult(false, SLOPE_CLINATION.up);
+}
+
 const temp = new Vec3();
 
 class TestTrain extends Entity {
