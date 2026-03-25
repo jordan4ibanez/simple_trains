@@ -423,6 +423,52 @@ class TestTrain extends Entity {
 	 * ! Do not add turning to this !
 	 */
 	calculateFrontBackTrack(): void {
+		const front = new Vec3()
+			.setVec(this.position)
+			.add(dirToVector[this.direction]);
+
+		const back = new Vec3()
+			.setVec(this.position)
+			.subtract(dirToVector[this.direction]);
+
+		this.front.disable();
+		this.back.disable();
+
+		//~ Front checks.
+
+		// Flat land.
+		if (isTrack(front)) {
+			this.front.enable(front);
+		}
+
+		// Slope up.
+		if (!this.front.valid) {
+			front.add(new Vec3(0, 1, 0));
+
+			if (isTrack(front)) {
+				this.front.enable(front);
+			}
+		}
+
+		// Slope down.
+		if (!this.front.valid) {
+			front.subtract(new Vec3(0, 2, 0));
+
+			if (isTrack(front)) {
+				this.front.enable(front);
+			}
+		}
+
+		//! Debug.
+		if (this.front.valid) {
+			core.add_particle({
+				pos: this.front.position,
+				velocity: new Vec3(0, 2, 0),
+				size: 1,
+				texture: "default_stone.png",
+			});
+		}
+
 		print("calculate!");
 	}
 
