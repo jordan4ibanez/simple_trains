@@ -124,17 +124,35 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 		return TRAIN_SLOPE.none;
 	}
 
-	// Train prefers to go up instead of down.
+	// Train prefers to go up instead of down from flat.
 	const upCheck = new Vec3().setVec(flatCheck).add(new Vec3(0, 1, 0));
 
 	if (isTrack(upCheck)) {
+		print("hit up");
 		return TRAIN_SLOPE.up;
 	}
 
 	// Train then checks if going down.
-	const downCheck = new Vec3().setVec(flatCheck).subtract(new Vec3(0, 1, 0));
+	const downCheck = new Vec3().setVec(current).subtract(new Vec3(0, 1, 0));
 	if (isTrack(downCheck)) {
 		return TRAIN_SLOPE.down;
+	}
+
+	// Trains are on a slope and try to continue on the slope.
+
+	// Train was on a slope going up and continues to go up.
+	const continueUpCheck = new Vec3().setVec(current).add(new Vec3(0, 1, 0));
+	if (isTrack(continueUpCheck)) {
+		// Now check if another slope exists above that one, the track is flat if not.
+		continueUpCheck.add(dirToVector[dir]).add(new Vec3(0, 1, 0));
+
+		if (isTrack(continueUpCheck)) {
+			print("hit continue up");
+			return TRAIN_SLOPE.up;
+		} else {
+			print("back to flat");
+			return TRAIN_SLOPE.none;
+		}
 	}
 
 	core.log(LogLevel.warning, "Train hit an invalid slope check!");
@@ -444,7 +462,7 @@ class TestTrain extends Entity {
 			.add(dirVector)
 			.add(new Vec3(0, 1, 0));
 		if (isTrack(up)) {
-			print("hit up");
+			// print("hit up");
 			return new StraightResult(true, up, TRAIN_SLOPE.up);
 		}
 
@@ -453,7 +471,7 @@ class TestTrain extends Entity {
 			.add(dirVector)
 			.subtract(new Vec3(0, 1, 0));
 		if (isTrack(down)) {
-			print("hit down");
+			// print("hit down");
 			return new StraightResult(true, down, TRAIN_SLOPE.down);
 		}
 
