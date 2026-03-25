@@ -395,6 +395,14 @@ class TestTrain extends Entity {
 		}
 	}
 
+	/**
+	 * This is specifically designed only for moving forward and backward
+	 * in a straight line.
+	 * Turning is done as a failure of the ability to move in a straight line.
+	 * This is specifically for the ability to traverse up and down slopes
+	 * as a side effect.
+	 * ! Do not add turning to this !
+	 */
 	calculateFrontBackTrack(): void {
 		print("calculate!");
 	}
