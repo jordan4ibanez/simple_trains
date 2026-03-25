@@ -360,7 +360,7 @@ class TestTrain extends Entity {
 			);
 			this.setSlope();
 		} else if (oldMove > -0.5 && newMove <= -0.5) {
-			print("backward (moving backward)");
+			// print("backward (moving backward)");
 			// Behind train position.
 			// Inverse of direction.
 			const checker = new Vec3()
