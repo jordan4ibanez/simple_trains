@@ -389,6 +389,12 @@ class TestTrain extends Entity {
 			// Direction.
 			const checker = new Vec3().setVec(this.position);
 			this.slope = slopeCheck(checker, this.direction);
+			// If it fails, check in the other direction.
+			if (this.slope == TRAIN_SLOPE.none) {
+				this.slope = swapTrainSlope(
+					slopeCheck(checker, directionInversion[this.direction]),
+				);
+			}
 			this.setSlope();
 		}
 
