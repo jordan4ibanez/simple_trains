@@ -49,6 +49,11 @@ class TurnResult {
 	}
 }
 
+class TrackStatus {
+	valid: boolean = false;
+	position: Vec3 = new Vec3();
+}
+
 enum TRAIN_SLOPE {
 	none = 0,
 	up = 1,
