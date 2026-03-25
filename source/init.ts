@@ -203,6 +203,7 @@ class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.north;
 
+	checkEnvironmentTimer: number = 0;
 	front: TrackStatus = new TrackStatus();
 	back: TrackStatus = new TrackStatus();
 
@@ -279,6 +280,7 @@ class TestTrain extends Entity {
 
 		this.front = data?.front || new TrackStatus();
 		this.back = data?.back || new TrackStatus();
+		this.checkEnvironmentTimer = data?.checkEnvironmentTimer || 0;
 
 		this.object.set_armor_groups({ punch_activated: 1 });
 		this.setRotation();
@@ -292,6 +294,7 @@ class TestTrain extends Entity {
 			position: this.position,
 			front: this.front,
 			back: this.back,
+			checkEnvironmentTimer: this.checkEnvironmentTimer,
 		});
 	}
 
