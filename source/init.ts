@@ -126,6 +126,13 @@ function isTrack(pos: Vec3): boolean {
 function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 	const current = new Vec3().setVec(pos);
 
+	core.add_particle({
+		pos: current,
+		velocity: new Vec3(0, 2, 0),
+		size: 1,
+		texture: "default_dirt.png",
+	});
+
 	const flatCheck = new Vec3().setVec(current).add(dirToVector[dir]);
 
 	// Train is traveling on flat land.
@@ -135,6 +142,13 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 
 	// Train prefers to go up instead of down from flat.
 	const upCheck = new Vec3().setVec(flatCheck).add(new Vec3(0, 1, 0));
+
+	core.add_particle({
+		pos: upCheck,
+		velocity: new Vec3(0, 2, 0),
+		size: 1,
+		texture: "default_wood.png",
+	});
 
 	if (isTrack(upCheck)) {
 		// print("hit up");
@@ -164,7 +178,7 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 		}
 	}
 
-	core.log(LogLevel.warning, "Train hit an invalid slope check!");
+	// Train must not be on a slope.
 	return TRAIN_SLOPE.none;
 }
 
@@ -337,9 +351,14 @@ class TestTrain extends Entity {
 			this.slope = slopeCheck(checker, this.direction);
 			this.setSlope();
 		} else if (oldMove > 0.5 && newMove <= 0.5) {
-			print("forward (moving backward)");
+			// print("forward (moving backward)");
 			// In front of train position.
 			// Inverse of direction.
+			const checker = new Vec3().setVec(this.position);
+			this.slope = swapTrainSlope(
+				slopeCheck(checker, directionInversion[this.direction]),
+			);
+			this.setSlope();
 		} else if (oldMove > -0.5 && newMove <= -0.5) {
 			// print("backward (moving backward)");
 			// Behind train position.
