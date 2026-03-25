@@ -317,7 +317,7 @@ class TestTrain extends Entity {
 		}
 
 		if (updateCheck) {
-			print("update check");
+			// print("update check");
 			if (this.movement > 0) {
 				if (!this.continueStraight(false).success) {
 					const result = this.turn();
@@ -353,7 +353,7 @@ class TestTrain extends Entity {
 
 		if (this.movement == 1) {
 			this.movement = 0;
-			print("drive forward!");
+			// print("drive forward!");
 			// Train tries to move forwards.
 			const straightRes = this.continueStraight(false);
 			if (straightRes.success) {
@@ -381,7 +381,7 @@ class TestTrain extends Entity {
 			}
 		} else if (this.movement == -1) {
 			this.movement = 0;
-			print("drive backward!");
+			// print("drive backward!");
 			// Train tries to move backwards.
 			const straightRes = this.continueStraight(true);
 			if (straightRes.success) {
