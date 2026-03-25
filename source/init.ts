@@ -144,6 +144,7 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 
 	// Train is traveling on flat land.
 	if (isTrack(flatCheck)) {
+		// print("hit flat");
 		return TRAIN_SLOPE.none;
 	}
 
@@ -165,6 +166,7 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 	// Train then checks if going down.
 	const downCheck = new Vec3().setVec(current).subtract(new Vec3(0, 1, 0));
 	if (isTrack(downCheck)) {
+		// print("hit down");
 		return TRAIN_SLOPE.down;
 	}
 
@@ -186,6 +188,7 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 	}
 
 	// Train must not be on a slope.
+	// print("hit none");
 	return TRAIN_SLOPE.none;
 }
 
