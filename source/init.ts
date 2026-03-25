@@ -195,10 +195,13 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.north;
-	slope: TRAIN_SLOPE = TRAIN_SLOPE.none;
 
 	speed: number = 0; // negative is backwards.
 	driver: ObjectRef | null = null;
+
+	slope: TRAIN_SLOPE = TRAIN_SLOPE.none;
+	oldSlope: TRAIN_SLOPE = TRAIN_SLOPE.none;
+	wasOnUphill: boolean = false;
 
 	/**
 	 * Lerp forward to backward. (node center to node center)
@@ -344,6 +347,9 @@ class TestTrain extends Entity {
 		} else if (this.movement <= -1) {
 			this.movement = -1;
 		}
+
+		// Save the state.
+		this.oldSlope = this.slope;
 
 		// Trigger incline checks.
 		if (oldMove < 0.5 && newMove >= 0.5) {
