@@ -292,6 +292,7 @@ class TestTrain extends Entity {
 						// The train has hit a path end.
 						this.movement = 0;
 						this.speed = 0;
+						// todo: reset the slope setting! If it hit a path end it cannot be on a slope
 					}
 				}
 			} else {
@@ -305,6 +306,7 @@ class TestTrain extends Entity {
 						// The train has hit a path end.
 						this.movement = 0;
 						this.speed = 0;
+						// todo: reset the slope setting! If it hit a path end it cannot be on a slope
 					}
 				}
 			}
