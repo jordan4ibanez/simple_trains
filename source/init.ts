@@ -327,9 +327,6 @@ class TestTrain extends Entity {
 			this.speed = 0;
 		}
 
-		// Todo: use this same logic when the locomotive goes past the 0 point.
-		// if was 0.1 and now -0.1 or vice versa.
-
 		const oldSign = sign(this.movement);
 		const oldMove = this.movement;
 
