@@ -297,7 +297,6 @@ class TestTrain extends Entity {
 	}
 
 	setSlope(): void {
-		// todo: This is going to need some heavy improvement.
 		if (this.slope == TRAIN_SLOPE.none) {
 			const old = this.object.get_rotation();
 			old.x = 0;
