@@ -139,8 +139,6 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): TRAIN_SLOPE {
 	return TRAIN_SLOPE.none;
 }
 
-const temp = new Vec3();
-
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.north;
