@@ -2,7 +2,7 @@ import { ShallowVector3 } from "../luanti-api";
 import { track } from "./game_detection";
 import { trackID, trackRegistration } from "./track";
 import { Entity, registerEntity } from "./utility/entity";
-import { EntityVisual } from "./utility/enums";
+import { EntityVisual, LogLevel } from "./utility/enums";
 import { degToRad, sign } from "./utility/math";
 import { Vec3 } from "./utility/vector";
 
@@ -129,24 +129,24 @@ function slopeCheck(pos: Vec3, dir: DIRECTION): SlopeResult {
 
 	// Train is traveling on flat land.
 	if (isTrack(flatCheck)) {
-		return new SlopeResult(false, SLOPE_CLINATION.up);
+		return new SlopeResult(false, TRAIN_SLOPE.none);
 	}
 
 	// Train prefers to go up instead of down.
 	const upCheck = new Vec3().setVec(flatCheck).add(new Vec3(0, 1, 0));
 
 	if (isTrack(upCheck)) {
-		return new SlopeResult(true, SLOPE_CLINATION.up);
+		return new SlopeResult(true, TRAIN_SLOPE.up);
 	}
 
 	// Train then checks if going down.
 	const downCheck = new Vec3().setVec(flatCheck).subtract(new Vec3(0, 1, 0));
 	if (isTrack(downCheck)) {
-		return new SlopeResult(true, SLOPE_CLINATION.down);
+		return new SlopeResult(true, TRAIN_SLOPE.down);
 	}
 
 	core.log(LogLevel.warning, "Train hit an invalid slope check!");
-	return new SlopeResult(false, SLOPE_CLINATION.up);
+	return new SlopeResult(false, TRAIN_SLOPE.none);
 }
 
 const temp = new Vec3();
