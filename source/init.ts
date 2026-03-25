@@ -433,8 +433,31 @@ class TestTrain extends Entity {
 		const dirVector = backward
 			? dirToVector[directionInversion[this.direction]]
 			: dirToVector[this.direction];
+
 		const forward = new Vec3().setVec(this.position).add(dirVector);
-		return new StraightResult(isTrack(forward), forward);
+		if (isTrack(forward)) {
+			return new StraightResult(true, forward, TRAIN_SLOPE.none);
+		}
+
+		const up = new Vec3()
+			.setVec(this.position)
+			.add(dirVector)
+			.add(new Vec3(0, 1, 0));
+		if (isTrack(up)) {
+			print("hit up");
+			return new StraightResult(true, up, TRAIN_SLOPE.up);
+		}
+
+		const down = new Vec3()
+			.setVec(this.position)
+			.add(dirVector)
+			.subtract(new Vec3(0, 1, 0));
+		if (isTrack(down)) {
+			print("hit down");
+			return new StraightResult(true, down, TRAIN_SLOPE.down);
+		}
+
+		return new StraightResult(false, new Vec3(0, 0, 0), TRAIN_SLOPE.none);
 	}
 
 	/**
