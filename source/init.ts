@@ -359,13 +359,13 @@ class TestTrain extends Entity {
 
 		this.slopeCalculation(oldMove, newMove);
 
-		this.update(updateCheck);
+		this.updateCalculation(updateCheck);
 
 		// print("Move:", this.movement);
 
 		this.nodeMove();
 
-		this.smoothMove();
+		// this.smoothMove();
 	}
 
 	nodeMove(): void {
@@ -502,7 +502,7 @@ class TestTrain extends Entity {
 		}
 	}
 
-	update(updateCheck: boolean): void {
+	updateCalculation(updateCheck: boolean): void {
 		if (!updateCheck) {
 			return;
 		}
