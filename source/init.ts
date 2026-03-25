@@ -45,18 +45,20 @@ class TurnResult {
 	}
 }
 
-enum SLOPE_CLINATION {
-	up = 0,
-	down = 1,
-}
 class SlopeResult {
 	inSlope: boolean;
-	clination: SLOPE_CLINATION;
+	clination: TRAIN_SLOPE;
 
-	constructor(ins: boolean, cli: SLOPE_CLINATION) {
+	constructor(ins: boolean, cli: TRAIN_SLOPE) {
 		this.inSlope = ins;
 		this.clination = cli;
 	}
+}
+
+enum TRAIN_SLOPE {
+	none = 0,
+	up = 1,
+	down = 2,
 }
 
 enum STATE {
