@@ -361,8 +361,6 @@ class TestTrain extends Entity {
 
 		this.updateCalculation(updateCheck);
 
-		// print("Move:", this.movement);
-
 		this.nodeMove();
 
 		// this.smoothMove();
