@@ -242,6 +242,19 @@ class TestTrain extends Entity {
 		this.object.set_yaw(this.direction * -90 * degToRad);
 	}
 
+	setSlope(): void {
+		// todo: This is going to need some heavy improvement.
+		if (this.slope == TRAIN_SLOPE.none) {
+			const old = this.object.get_rotation();
+			old.x = 0;
+			this.object.set_rotation(old);
+		} else if (this.slope == TRAIN_SLOPE.up) {
+			const old = this.object.get_rotation();
+			old.x = math.pi * 0.25;
+			this.object.set_rotation(old);
+		}
+	}
+
 	on_step(delta: number, moveResult: MoveResult | null): void {
 		core.add_particle({
 			pos: this.position,
