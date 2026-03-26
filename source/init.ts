@@ -621,12 +621,6 @@ class TestTrain extends Entity {
 		this.object.set_pos(temp);
 	}
 
-	diff(front: boolean): void {
-		if (front) {
-		} else {
-		}
-	}
-
 	slopeCalculation(oldMove: number, newMove: number): void {
 		// Trigger incline checks.
 		if (oldMove < 0.5 && newMove >= 0.5) {
