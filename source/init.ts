@@ -307,12 +307,10 @@ class TestTrain extends Entity {
 		}
 
 		const oldSign = sign(this.movement);
-		const oldMove = this.movement;
 
 		this.movement += delta * this.speed;
 
 		const newSign = sign(this.movement);
-		const newMove = this.movement;
 
 		// Do center pass checks for turns.
 		// This is in case you change forward to backward (and vice versa) in turns.
@@ -325,7 +323,7 @@ class TestTrain extends Entity {
 			this.movement = -0.5;
 		}
 
-		this.slopeCalculation(oldMove, newMove);
+		this.slopeCalculation();
 
 		this.updateCalculation(updateCheck);
 
