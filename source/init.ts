@@ -65,7 +65,7 @@ class TrackStatus {
 }
 
 enum TRAIN_SLOPE {
-	none = 0,
+	flat = 0,
 	up = 1,
 	down = 2,
 	flat_to_up = 3,
@@ -78,7 +78,7 @@ function swapTrainSlope(input: TRAIN_SLOPE) {
 	} else if (input == TRAIN_SLOPE.up) {
 		return TRAIN_SLOPE.down;
 	}
-	return TRAIN_SLOPE.none;
+	return TRAIN_SLOPE.flat;
 }
 
 enum STATE {
@@ -160,7 +160,7 @@ class TestTrain extends Entity {
 	speed: number = 0; // negative is backwards.
 	driver: ObjectRef | null = null;
 
-	slope: TRAIN_SLOPE = TRAIN_SLOPE.none;
+	slope: TRAIN_SLOPE = TRAIN_SLOPE.flat;
 
 	/**
 	 * Lerp forward to backward. (node center to node center)
@@ -286,7 +286,7 @@ class TestTrain extends Entity {
 	}
 
 	setSlope(): void {
-		if (this.slope == TRAIN_SLOPE.none) {
+		if (this.slope == TRAIN_SLOPE.flat) {
 			const old = this.object.get_rotation();
 			old.x = 0;
 			this.object.set_rotation(old);
@@ -564,12 +564,12 @@ class TestTrain extends Entity {
 						} else {
 							print(2);
 							// Still on flat.
-							this.slope = TRAIN_SLOPE.none;
+							this.slope = TRAIN_SLOPE.flat;
 						}
 					} else {
 						print(3);
 						// Still on flat.
-						this.slope = TRAIN_SLOPE.none;
+						this.slope = TRAIN_SLOPE.flat;
 					}
 				} else if (this.front.position.y > this.position.y) {
 					if (this.lookAhead.valid) {
@@ -580,12 +580,12 @@ class TestTrain extends Entity {
 						} else {
 							print(5);
 							// Going from up to flat.
-							this.slope = TRAIN_SLOPE.none;
+							this.slope = TRAIN_SLOPE.flat;
 						}
 					} else {
 						print(6);
 						// Going from up to flat.
-						this.slope = TRAIN_SLOPE.none;
+						this.slope = TRAIN_SLOPE.flat;
 					}
 				} else if (this.front.position.y < this.position.y) {
 					print(7);
@@ -594,7 +594,7 @@ class TestTrain extends Entity {
 				}
 			} else {
 				print(8);
-				this.slope = TRAIN_SLOPE.none;
+				this.slope = TRAIN_SLOPE.flat;
 			}
 
 			// const checker = new Vec3()
