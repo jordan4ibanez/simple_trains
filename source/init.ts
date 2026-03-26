@@ -390,7 +390,7 @@ class TestTrain extends Entity {
 
 		if (this.checkEnvironmentTimer > 0.25) {
 			this.checkEnvironmentTimer -= 0.25;
-			this.calculateFrontBackTrack();
+			// this.calculateFrontBackTrack();
 		}
 
 		if (!isTrack(this.position)) {
@@ -540,12 +540,14 @@ class TestTrain extends Entity {
 			if (this.front.valid) {
 				this.position.setVec(this.front.position);
 				this.object.move_to(this.position);
+				this.calculateFrontBackTrack();
 				// Train moved forwards, but now has to check if it needs to turn.
 				if (!this.front.valid) {
 					const result = this.turn();
 					if (result.success) {
 						this.direction = result.direction;
 						this.setRotation();
+						this.calculateFrontBackTrack();
 					}
 				}
 			} else {
@@ -554,6 +556,7 @@ class TestTrain extends Entity {
 				if (result.success) {
 					this.direction = result.direction;
 					this.setRotation();
+					this.calculateFrontBackTrack();
 				} else {
 					// Train fell off track.
 					print("train fell off track forward?");
@@ -569,12 +572,14 @@ class TestTrain extends Entity {
 			if (this.back.valid) {
 				this.position.setVec(this.back.position);
 				this.object.move_to(this.position);
+				this.calculateFrontBackTrack();
 				// Train moved forwards, but now has to check if it needs to turn.
 				if (!this.back.valid) {
 					const result = this.turn();
 					if (result.success) {
 						this.direction = directionInversion[result.direction];
 						this.setRotation();
+						this.calculateFrontBackTrack();
 					}
 				}
 			} else {
@@ -583,6 +588,7 @@ class TestTrain extends Entity {
 				if (result.success) {
 					this.direction = directionInversion[result.direction];
 					this.setRotation();
+					this.calculateFrontBackTrack();
 				} else {
 					// Train fell off track.
 					print("train fell off the track backward?");
