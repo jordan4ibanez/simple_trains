@@ -450,7 +450,22 @@ class TestTrain extends Entity {
 
 	slopeCalculation(oldMove: number, newMove: number): void {
 		if (this.front.valid) {
+			if (this.front.position.y > this.position.y) {
+				this.slope = TRAIN_SLOPE.up;
+				this.setSlope();
+				return;
+			}
 		}
+		if (this.back.valid) {
+			if (this.back.position.y > this.position.y) {
+				this.slope = TRAIN_SLOPE.down;
+				this.setSlope();
+				return;
+			}
+		}
+
+		this.slope = TRAIN_SLOPE.flat;
+		this.setSlope();
 
 		// Trigger incline checks.
 		if (oldMove < 0.5 && newMove >= 0.5) {
