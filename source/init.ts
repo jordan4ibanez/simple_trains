@@ -359,18 +359,8 @@ class TestTrain extends Entity {
 			.setVec(this.position)
 			.add(dirToVector[this.direction]);
 
-		const lookAhead = new Vec3()
-			.setVec(this.position)
-			.add(dirToVector[this.direction])
-			.add(dirToVector[this.direction]);
-
 		const back = new Vec3()
 			.setVec(this.position)
-			.subtract(dirToVector[this.direction]);
-
-		const lookBehind = new Vec3()
-			.setVec(this.position)
-			.subtract(dirToVector[this.direction])
 			.subtract(dirToVector[this.direction]);
 
 		this.front.disable();
