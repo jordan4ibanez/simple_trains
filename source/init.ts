@@ -562,38 +562,38 @@ class TestTrain extends Entity {
 							print(1);
 							this.slope = TRAIN_SLOPE.flat_to_up;
 						} else {
-							print(2)
+							print(2);
 							// Still on flat.
 							this.slope = TRAIN_SLOPE.none;
 						}
 					} else {
-						print(2);
+						print(3);
 						// Still on flat.
 						this.slope = TRAIN_SLOPE.none;
 					}
 				} else if (this.front.position.y > this.position.y) {
 					if (this.lookAhead.valid) {
 						if (this.lookAhead.position.y > this.front.position.y) {
-							print(3);
+							print(4);
 							// Still on a slope.
 							this.slope = TRAIN_SLOPE.up;
 						} else {
-							print(4);
+							print(5);
 							// Going from up to flat.
 							this.slope = TRAIN_SLOPE.none;
 						}
 					} else {
-						print(5);
+						print(6);
 						// Going from up to flat.
 						this.slope = TRAIN_SLOPE.none;
 					}
 				} else if (this.front.position.y < this.position.y) {
-					print(5);
+					print(7);
 					// Going from flat to down.
 					this.slope = TRAIN_SLOPE.flat_to_down;
 				}
 			} else {
-				print(6);
+				print(8);
 				this.slope = TRAIN_SLOPE.none;
 			}
 
