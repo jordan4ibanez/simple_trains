@@ -323,8 +323,6 @@ class TestTrain extends Entity {
 			this.movement = -0.5;
 		}
 
-		this.slopeCalculation();
-
 		this.updateCalculation(updateCheck);
 
 		this.smoothMove();
@@ -404,6 +402,7 @@ class TestTrain extends Entity {
 				this.position.setVec(this.front.position);
 				this.calculateFrontBackTrack();
 			}
+			this.slopeCalculation();
 		} else if (this.movement == -0.5) {
 			this.calculateFrontBackTrack();
 			this.movement = 0.49;
@@ -413,6 +412,7 @@ class TestTrain extends Entity {
 				this.position.setVec(this.back.position);
 				this.calculateFrontBackTrack();
 			}
+			this.slopeCalculation();
 		}
 	}
 
@@ -469,7 +469,6 @@ class TestTrain extends Entity {
 					// The train has hit a path end.
 					this.movement = 0;
 					this.speed = 0;
-					// todo: reset the slope setting! If it hit a path end it cannot be on a slope
 				}
 			}
 		} else {
@@ -484,10 +483,10 @@ class TestTrain extends Entity {
 					// The train has hit a path end.
 					this.movement = 0;
 					this.speed = 0;
-					// todo: reset the slope setting! If it hit a path end it cannot be on a slope
 				}
 			}
 		}
+		this.slopeCalculation();
 	}
 
 	/**
