@@ -1,5 +1,3 @@
-import { ShallowVector3 } from "../luanti-api";
-import { track } from "./game_detection";
 import { trackID, trackRegistration } from "./track";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual, LogLevel } from "./utility/enums";
@@ -149,9 +147,11 @@ class TestTrain extends Entity {
 		// Rotate the locomotive with sneak rightclick.
 		if (clicker.get_player_control().sneak) {
 			this.movement = 0;
-			this.speed = 0;
 			this.direction = (this.direction + 1) % 4;
 			this.setRotation();
+			this.calculateFrontBackTrack();
+			this.slopeCalculation();
+			this.setSlope();
 			return;
 		}
 
