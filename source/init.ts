@@ -537,6 +537,9 @@ class TestTrain extends Entity {
 		// 	const i = this.slope == TRAIN_SLOPE.up ? 1 : -1;
 		// 	dir.y += i * this.movement + 0.7;
 		// }
+		if (this.slope == TRAIN_SLOPE.up) {
+			dir.y += this.movement + 0.7;
+		}
 
 		// todo: figure out why this is so glitchy
 		// if (this.slope == TRAIN_SLOPE.none && this.wasOnUphill) {
