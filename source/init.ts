@@ -607,15 +607,15 @@ class TestTrain extends Entity {
 			.setVec(dirToVector[this.direction])
 			.multiply(new Vec3(this.movement, this.movement, this.movement));
 
-		if (this.slope != TRAIN_SLOPE.none) {
-			const i = this.slope == TRAIN_SLOPE.up ? 1 : -1;
-			dir.y += i * this.movement + 0.7;
-		}
+		// if (this.slope != TRAIN_SLOPE.none) {
+		// 	const i = this.slope == TRAIN_SLOPE.up ? 1 : -1;
+		// 	dir.y += i * this.movement + 0.7;
+		// }
 
 		// todo: figure out why this is so glitchy
-		if (this.slope == TRAIN_SLOPE.none && this.wasOnUphill) {
-			dir.y += 1;
-		}
+		// if (this.slope == TRAIN_SLOPE.none && this.wasOnUphill) {
+		// 	dir.y += 1;
+		// }
 
 		temp.add(dir);
 		this.object.set_pos(temp);
@@ -693,6 +693,7 @@ class TestTrain extends Entity {
 			// }
 			// this.setSlope();
 		}
+		this.setSlope();
 	}
 
 	updateCalculation(updateCheck: boolean): void {
