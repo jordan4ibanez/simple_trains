@@ -517,7 +517,7 @@ class TestTrain extends Entity {
 			});
 		}
 
-		print("calculate!");
+		// print("calculate!");
 	}
 
 	nodeMove(): void {
