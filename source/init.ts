@@ -325,17 +325,13 @@ class TestTrain extends Entity {
 			this.movement = -0.5;
 		}
 
-		// if (!DEBUG_MODE) {
 		this.slopeCalculation(oldMove, newMove);
-		// }
 
 		this.updateCalculation(updateCheck);
 
 		this.nodeMove();
 
-		// if (!DEBUG_MODE) {
 		this.smoothMove();
-		// }
 	}
 
 	// This mutates pos as a result.
@@ -407,8 +403,6 @@ class TestTrain extends Entity {
 				texture: "default_wood.png",
 			});
 		}
-
-		// print("calculate!");
 	}
 
 	nodeMove(): void {
