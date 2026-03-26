@@ -384,7 +384,8 @@ class TestTrain extends Entity {
 			.setVec(dirToVector[this.direction])
 			.multiply(new Vec3(this.movement, this.movement, this.movement));
 
-		// This overshoots by 0.2. But I do not think it is fixable.
+		// This overshoots by 0.2 and makes a transition jolt.
+		// But I do not think it is fixable.
 
 		if (this.slope == TRAIN_SLOPE.up) {
 			dir.y += this.movement + 0.7;
