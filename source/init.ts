@@ -490,6 +490,14 @@ class TestTrain extends Entity {
 				texture: "default_stone.png",
 			});
 		}
+		if (this.lookAhead.valid) {
+			core.add_particle({
+				pos: this.lookAhead.position,
+				velocity: new Vec3(0, 2, 0),
+				size: 1,
+				texture: "default_stone.png",
+			});
+		}
 
 		//! Debug back.
 		if (this.back.valid) {
@@ -498,6 +506,14 @@ class TestTrain extends Entity {
 				velocity: new Vec3(0, 2, 0),
 				size: 1,
 				texture: "default_wood.png",
+			});
+		}
+		if (this.lookBehind.valid) {
+			core.add_particle({
+				pos: this.lookBehind.position,
+				velocity: new Vec3(0, 2, 0),
+				size: 1,
+				texture: "default_stone.png",
 			});
 		}
 
