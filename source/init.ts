@@ -300,9 +300,18 @@ class TestTrain extends Entity {
 			if (data.frontPosition != null) {
 				this.front.enable(data.frontPosition);
 			}
+			this.lookAhead = new TrackStatus();
+			if (data.lookAheadPosition != null) {
+				this.lookAhead.enable(data.lookAheadPosition);
+			}
+
 			this.back = new TrackStatus();
 			if (data.backPosition != null) {
 				this.back.enable(data.backPosition);
+			}
+			this.lookBehind = new TrackStatus();
+			if (data.lookBehindPosition != null) {
+				this.lookBehind.enable(data.lookBehindPosition);
 			}
 
 			this.checkEnvironmentTimer = data?.checkEnvironmentTimer || 0;
@@ -319,7 +328,9 @@ class TestTrain extends Entity {
 			speed: this.speed,
 			position: this.position,
 			frontPosition: this.front.position,
+			lookAheadPosition: this.lookAhead.position,
 			backPosition: this.back.position,
+			lookBehindPosition: this.lookBehind.position,
 			checkEnvironmentTimer: this.checkEnvironmentTimer,
 		});
 	}
