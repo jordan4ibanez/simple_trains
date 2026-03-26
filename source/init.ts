@@ -677,6 +677,7 @@ class TestTrain extends Entity {
 		if (!updateCheck) {
 			return;
 		}
+		// print("update check");
 		if (this.movement > 0) {
 			this.calculateFrontBackTrack();
 			if (!this.front.valid) {
