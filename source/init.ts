@@ -100,6 +100,8 @@ function isTrack(pos: Vec3): boolean {
 	return id == trackID;
 }
 
+function registerTrain(): void {
+
 class TestTrain extends Entity {
 	position: Vec3 = new Vec3();
 	direction: DIRECTION = DIRECTION.north;
@@ -524,3 +526,5 @@ class TestTrain extends Entity {
 }
 
 registerEntity("simple_trains:train", TestTrain);
+
+}
