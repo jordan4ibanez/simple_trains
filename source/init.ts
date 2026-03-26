@@ -68,6 +68,8 @@ enum TRAIN_SLOPE {
 	none = 0,
 	up = 1,
 	down = 2,
+	flat_to_up = 3,
+	flat_to_down = 4,
 }
 
 function swapTrainSlope(input: TRAIN_SLOPE) {
