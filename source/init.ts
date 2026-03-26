@@ -621,6 +621,12 @@ class TestTrain extends Entity {
 		this.object.set_pos(temp);
 	}
 
+	diff(front: boolean): void {
+		if (front) {
+		} else {
+		}
+	}
+
 	slopeCalculation(oldMove: number, newMove: number): void {
 		print("fix the slope calculation!!");
 		// todo: fix the slope calculation
