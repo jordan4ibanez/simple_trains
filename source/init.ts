@@ -628,8 +628,6 @@ class TestTrain extends Entity {
 	}
 
 	slopeCalculation(oldMove: number, newMove: number): void {
-		print("fix the slope calculation!!");
-		// todo: fix the slope calculation
 		// Trigger incline checks.
 		if (oldMove < 0.5 && newMove >= 0.5) {
 			// print("forward (moving forward)");
