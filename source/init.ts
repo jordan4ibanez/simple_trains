@@ -171,6 +171,7 @@ class TestTrain extends Entity {
 			this.direction = data.direction || DIRECTION.north;
 			this.movement = data.movement || 0;
 			this.speed = data.speed || 0;
+			this.slope = data.slope || TRAIN_SLOPE.flat;
 
 			this.position = new Vec3()
 				.setVec(data.position || this.object.get_pos())
@@ -195,6 +196,7 @@ class TestTrain extends Entity {
 
 		this.object.set_armor_groups({ punch_activated: 1 });
 		this.setRotation();
+		this.setSlope();
 	}
 
 	get_staticdata(): string {
@@ -202,6 +204,7 @@ class TestTrain extends Entity {
 			direction: this.direction,
 			movement: this.movement,
 			speed: this.speed,
+			slope: this.slope,
 			position: this.position,
 			frontPosition: this.front.position,
 			backPosition: this.back.position,
@@ -380,6 +383,8 @@ class TestTrain extends Entity {
 		const dir = new Vec3()
 			.setVec(dirToVector[this.direction])
 			.multiply(new Vec3(this.movement, this.movement, this.movement));
+
+		// This overshoots by 0.2. But I do not think it is fixable.
 
 		if (this.slope == TRAIN_SLOPE.up) {
 			dir.y += this.movement + 0.7;
