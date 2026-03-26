@@ -130,6 +130,9 @@ const directionInversion: DIRECTION[] = [
 	DIRECTION.east, //  3 - 1
 ];
 
+// Special for __findTrack.
+const __yPosOrder = [0, 1, -2];
+
 /**
  * Check if a position is track.
  * @param pos A position.
@@ -416,6 +419,18 @@ class TestTrain extends Entity {
 		if (!DEBUG_MODE) {
 			this.smoothMove();
 		}
+	}
+
+	// This mutates pos as a result.
+	__findTrack(pos: Vec3): boolean {
+		for (let y of __yPosOrder) {
+			pos.y += y;
+			if (isTrack(pos)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
