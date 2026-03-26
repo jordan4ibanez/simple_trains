@@ -68,8 +68,6 @@ enum TRAIN_SLOPE {
 	flat = 0,
 	up = 1,
 	down = 2,
-	flat_to_up = 3,
-	flat_to_down = 4,
 }
 
 function swapTrainSlope(input: TRAIN_SLOPE) {
@@ -290,17 +288,11 @@ class TestTrain extends Entity {
 			const old = this.object.get_rotation();
 			old.x = 0;
 			this.object.set_rotation(old);
-		} else if (
-			this.slope == TRAIN_SLOPE.up ||
-			this.slope == TRAIN_SLOPE.flat_to_up
-		) {
+		} else if (this.slope == TRAIN_SLOPE.up) {
 			const old = this.object.get_rotation();
 			old.x = math.pi * 0.25;
 			this.object.set_rotation(old);
-		} else if (
-			this.slope == TRAIN_SLOPE.down ||
-			this.slope == TRAIN_SLOPE.flat_to_down
-		) {
+		} else if (this.slope == TRAIN_SLOPE.down) {
 			const old = this.object.get_rotation();
 			old.x = -math.pi * 0.25;
 			this.object.set_rotation(old);
@@ -460,6 +452,7 @@ class TestTrain extends Entity {
 	}
 
 	nodeMove(): void {
+		// todo: remove turning from here!!
 		if (this.movement == 0.5) {
 			this.calculateFrontBackTrack();
 			this.movement = -0.49;
@@ -467,30 +460,7 @@ class TestTrain extends Entity {
 			// Train tries to move forwards.
 			if (this.front.valid) {
 				this.position.setVec(this.front.position);
-				this.object.move_to(this.position);
 				this.calculateFrontBackTrack();
-				// Train moved forwards, but now has to check if it needs to turn.
-				if (!this.front.valid) {
-					const result = this.turn();
-					if (result.success) {
-						this.direction = result.direction;
-						this.setRotation();
-						this.calculateFrontBackTrack();
-					}
-				}
-			} else {
-				// A backup check in the turn logic.
-				const result = this.turn();
-				if (result.success) {
-					this.direction = result.direction;
-					this.setRotation();
-					this.calculateFrontBackTrack();
-				} else {
-					// Train fell off track.
-					print("train fell off track forward?");
-					// this.position.setVec(straightRes.position);
-					// this.object.move_to(this.position);
-				}
 			}
 		} else if (this.movement == -0.5) {
 			this.calculateFrontBackTrack();
@@ -499,30 +469,7 @@ class TestTrain extends Entity {
 			// Train tries to move backwards.
 			if (this.back.valid) {
 				this.position.setVec(this.back.position);
-				this.object.move_to(this.position);
 				this.calculateFrontBackTrack();
-				// Train moved forwards, but now has to check if it needs to turn.
-				if (!this.back.valid) {
-					const result = this.turn();
-					if (result.success) {
-						this.direction = directionInversion[result.direction];
-						this.setRotation();
-						this.calculateFrontBackTrack();
-					}
-				}
-			} else {
-				// A backup check in the turn logic.
-				const result = this.turn();
-				if (result.success) {
-					this.direction = directionInversion[result.direction];
-					this.setRotation();
-					this.calculateFrontBackTrack();
-				} else {
-					// Train fell off track.
-					print("train fell off the track backward?");
-					// this.position.setVec(straightRes.position);
-					// this.object.move_to(this.position);
-				}
 			}
 		}
 	}
@@ -556,49 +503,6 @@ class TestTrain extends Entity {
 			print("forward (moving forward)");
 			// In front of train position.
 			// Direction.
-
-			if (this.front.valid) {
-				if (this.front.position.y == this.position.y) {
-					if (this.lookAhead.valid) {
-						// Going from flat to slope.
-						if (this.lookAhead.position.y > this.front.position.y) {
-							print(1);
-							this.slope = TRAIN_SLOPE.flat_to_up;
-						} else {
-							print(2);
-							// Still on flat.
-							this.slope = TRAIN_SLOPE.flat;
-						}
-					} else {
-						print(3);
-						// Still on flat.
-						this.slope = TRAIN_SLOPE.flat;
-					}
-				} else if (this.front.position.y > this.position.y) {
-					if (this.lookAhead.valid) {
-						if (this.lookAhead.position.y > this.front.position.y) {
-							print(4);
-							// Still on a slope.
-							this.slope = TRAIN_SLOPE.up;
-						} else {
-							print(5);
-							// Going from up to flat.
-							this.slope = TRAIN_SLOPE.flat;
-						}
-					} else {
-						print(6);
-						// Going from up to flat.
-						this.slope = TRAIN_SLOPE.flat;
-					}
-				} else if (this.front.position.y < this.position.y) {
-					print(7);
-					// Going from flat to down.
-					this.slope = TRAIN_SLOPE.flat_to_down;
-				}
-			} else {
-				print(8);
-				this.slope = TRAIN_SLOPE.flat;
-			}
 
 			// const checker = new Vec3()
 			// 	.setVec(this.position)
