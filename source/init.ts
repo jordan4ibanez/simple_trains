@@ -290,11 +290,17 @@ class TestTrain extends Entity {
 			const old = this.object.get_rotation();
 			old.x = 0;
 			this.object.set_rotation(old);
-		} else if (this.slope == TRAIN_SLOPE.up) {
+		} else if (
+			this.slope == TRAIN_SLOPE.up ||
+			this.slope == TRAIN_SLOPE.flat_to_up
+		) {
 			const old = this.object.get_rotation();
 			old.x = math.pi * 0.25;
 			this.object.set_rotation(old);
-		} else if (this.slope == TRAIN_SLOPE.down) {
+		} else if (
+			this.slope == TRAIN_SLOPE.down ||
+			this.slope == TRAIN_SLOPE.flat_to_down
+		) {
 			const old = this.object.get_rotation();
 			old.x = -math.pi * 0.25;
 			this.object.set_rotation(old);
