@@ -678,6 +678,7 @@ class TestTrain extends Entity {
 			return;
 		}
 		if (this.movement > 0) {
+			this.calculateFrontBackTrack();
 			if (!this.front.valid) {
 				const result = this.turn();
 				if (result.success) {
@@ -692,6 +693,7 @@ class TestTrain extends Entity {
 				}
 			}
 		} else {
+			this.calculateFrontBackTrack();
 			if (!this.back.valid) {
 				const result = this.turn();
 				if (result.success) {
