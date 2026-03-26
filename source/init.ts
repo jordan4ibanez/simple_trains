@@ -671,9 +671,8 @@ class TestTrain extends Entity {
 		if (!updateCheck) {
 			return;
 		}
-		// print("update check");
 		if (this.movement > 0) {
-			if (!this.continueStraight(false).success) {
+			if (!this.front.valid) {
 				const result = this.turn();
 				if (result.success) {
 					// The train can continue.
@@ -687,7 +686,7 @@ class TestTrain extends Entity {
 				}
 			}
 		} else {
-			if (!this.continueStraight(true).success) {
+			if (!this.back.valid) {
 				const result = this.turn();
 				if (result.success) {
 					// The train can continue.
