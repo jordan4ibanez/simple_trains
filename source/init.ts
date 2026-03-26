@@ -644,7 +644,6 @@ class TestTrain extends Entity {
 			// print("forward (moving backward)");
 			// In front of train position.
 			// Inverse of direction.
-
 			// const checker = new Vec3().setVec(this.position);
 			// this.slope = swapTrainSlope(
 			// 	slopeCheck(checker, directionInversion[this.direction]),
@@ -653,17 +652,14 @@ class TestTrain extends Entity {
 			// if (this.slope == TRAIN_SLOPE.none) {
 			// 	this.slope = slopeCheck(checker, this.direction);
 			// }
-
 			// this.setSlope();
 		} else if (oldMove > -0.5 && newMove <= -0.5) {
 			// print("backward (moving backward)");
 			// Behind train position.
 			// Inverse of direction.
-
 			// const checker = new Vec3()
 			// 	.setVec(this.position)
 			// 	.add(dirToVector[directionInversion[this.direction]]);
-
 			// this.slope = swapTrainSlope(
 			// 	slopeCheck(checker, directionInversion[this.direction]),
 			// );
@@ -672,7 +668,6 @@ class TestTrain extends Entity {
 			// print("backward (moving forward)");
 			// Behind train position.
 			// Direction.
-
 			// const checker = new Vec3().setVec(this.position);
 			// this.slope = slopeCheck(checker, this.direction);
 			// // If it fails, check in the other direction.
