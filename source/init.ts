@@ -537,12 +537,12 @@ class TestTrain extends Entity {
 			this.movement = 0;
 			// print("drive forward!");
 			// Train tries to move forwards.
-			const straightRes = this.continueStraight(false);
-			if (straightRes.success) {
-				this.position.setVec(straightRes.position);
+
+			if (this.front.valid) {
+				this.position.setVec(this.front.position);
 				this.object.move_to(this.position);
 				// Train moved forwards, but now has to check if it needs to turn.
-				if (!this.continueStraight(false).success) {
+				if (!this.lookAhead.valid) {
 					const result = this.turn();
 					if (result.success) {
 						this.direction = result.direction;
@@ -557,8 +557,9 @@ class TestTrain extends Entity {
 					this.setRotation();
 				} else {
 					// Train fell off track.
-					this.position.setVec(straightRes.position);
-					this.object.move_to(this.position);
+					print("train fell off track forward?");
+					// this.position.setVec(straightRes.position);
+					// this.object.move_to(this.position);
 				}
 			}
 		} else if (this.movement == -1) {
