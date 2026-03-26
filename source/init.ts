@@ -133,7 +133,7 @@ const directionInversion: DIRECTION[] = [
 ];
 
 // Special for __findTrack.
-const __yPosOrder = [0, 1, -2];
+const __yPosOrder = [0, 1, -2, 3, -4];
 
 /**
  * Check if a position is track.
