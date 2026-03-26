@@ -455,27 +455,8 @@ class TestTrain extends Entity {
 
 		//~ Front checks.
 
-		// Flat land.
-		if (isTrack(front)) {
+		if (this.__findTrack(front)) {
 			this.front.enable(front);
-		}
-
-		// Slope up.
-		if (!this.front.valid) {
-			front.add(new Vec3(0, 1, 0));
-
-			if (isTrack(front)) {
-				this.front.enable(front);
-			}
-		}
-
-		// Slope down.
-		if (!this.front.valid) {
-			front.subtract(new Vec3(0, 2, 0));
-
-			if (isTrack(front)) {
-				this.front.enable(front);
-			}
 		}
 
 		//~ Back checks.
