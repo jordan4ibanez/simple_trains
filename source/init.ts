@@ -436,6 +436,8 @@ class TestTrain extends Entity {
 
 		if (this.slope == TRAIN_SLOPE.up) {
 			dir.y += this.movement + 0.7;
+		} else if (this.slope == TRAIN_SLOPE.down) {
+			dir.y -= this.movement - 0.7;
 		}
 
 		temp.add(dir);
