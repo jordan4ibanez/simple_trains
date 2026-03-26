@@ -329,9 +329,9 @@ class TestTrain extends Entity {
 
 		this.updateCalculation(updateCheck);
 
-		this.nodeMove();
-
 		this.smoothMove();
+
+		this.nodeMove();
 	}
 
 	// This mutates pos as a result.
