@@ -541,7 +541,7 @@ class TestTrain extends Entity {
 				this.position.setVec(this.front.position);
 				this.object.move_to(this.position);
 				// Train moved forwards, but now has to check if it needs to turn.
-				if (!this.lookAhead.valid) {
+				if (!this.front.valid) {
 					const result = this.turn();
 					if (result.success) {
 						this.direction = result.direction;
@@ -570,7 +570,7 @@ class TestTrain extends Entity {
 				this.position.setVec(this.back.position);
 				this.object.move_to(this.position);
 				// Train moved forwards, but now has to check if it needs to turn.
-				if (!this.lookBehind.valid) {
+				if (!this.back.valid) {
 					const result = this.turn();
 					if (result.success) {
 						this.direction = directionInversion[result.direction];
