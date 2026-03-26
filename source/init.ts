@@ -161,8 +161,6 @@ class TestTrain extends Entity {
 	driver: ObjectRef | null = null;
 
 	slope: TRAIN_SLOPE = TRAIN_SLOPE.none;
-	oldSlope: TRAIN_SLOPE = TRAIN_SLOPE.none;
-	wasOnUphill: boolean = false;
 
 	/**
 	 * Lerp forward to backward. (node center to node center)
@@ -288,12 +286,6 @@ class TestTrain extends Entity {
 	}
 
 	setSlope(): void {
-		if (this.speed < 0) {
-			this.wasOnUphill = this.oldSlope == TRAIN_SLOPE.down;
-		} else if (this.speed > 0) {
-			this.wasOnUphill = this.oldSlope == TRAIN_SLOPE.up;
-		}
-
 		if (this.slope == TRAIN_SLOPE.none) {
 			const old = this.object.get_rotation();
 			old.x = 0;
@@ -348,9 +340,6 @@ class TestTrain extends Entity {
 		} else if (this.movement <= -1) {
 			this.movement = -1;
 		}
-
-		// Save the state.
-		this.oldSlope = this.slope;
 
 		// if (!DEBUG_MODE) {
 		this.slopeCalculation(oldMove, newMove);
