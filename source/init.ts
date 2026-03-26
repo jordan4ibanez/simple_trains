@@ -628,6 +628,27 @@ class TestTrain extends Entity {
 			// In front of train position.
 			// Direction.
 
+			if (this.front.valid) {
+				if (this.front.position.y == this.position.y) {
+					if (this.lookAhead.valid) {
+						// Going from flat to slope.
+						if (this.lookAhead.position.y > this.front.position.y) {
+							print(1);
+							this.slope = TRAIN_SLOPE.flat_to_up;
+						}
+					} else {
+						print(2);
+						this.slope = TRAIN_SLOPE.none;
+					}
+				} else if (this.front.position.y > this.position.y) {
+					print(3);
+					this.slope = TRAIN_SLOPE.up;
+				}
+			} else {
+				print(4);
+				this.slope = TRAIN_SLOPE.none;
+			}
+
 			// const checker = new Vec3()
 			// 	.setVec(this.position)
 			// 	.add(dirToVector[this.direction]);
