@@ -27,18 +27,6 @@ core.register_chatcommand("t", {
 	},
 });
 
-class StraightResult {
-	success: boolean;
-	position: Vec3;
-	slope: TRAIN_SLOPE;
-
-	constructor(suc: boolean, pos: Vec3, slo: TRAIN_SLOPE) {
-		this.success = suc;
-		this.position = pos;
-		this.slope = slo;
-	}
-}
-
 class TurnResult {
 	success: boolean;
 	direction: DIRECTION;
@@ -70,30 +58,11 @@ enum TRAIN_SLOPE {
 	down = 2,
 }
 
-function swapTrainSlope(input: TRAIN_SLOPE) {
-	if (input == TRAIN_SLOPE.down) {
-		return TRAIN_SLOPE.up;
-	} else if (input == TRAIN_SLOPE.up) {
-		return TRAIN_SLOPE.down;
-	}
-	return TRAIN_SLOPE.flat;
-}
-
-enum STATE {
-	idle = 0,
-	rolling = 1,
-	halted = 2,
-}
 enum DIRECTION {
 	north = 0, // +Z
 	east = 1, //  +X
 	south = 2, // -Z
 	west = 3, //  -X
-}
-
-const __dirToString: string[] = ["north", "east", "south", "west"];
-function dirToString(input: DIRECTION): string {
-	return __dirToString[input];
 }
 
 enum AXIS {
@@ -108,16 +77,6 @@ const dirToVector: Vec3[] = [
 	new Vec3(1, 0, 0), //  1 - East.
 	new Vec3(0, 0, -1), // 2 - South.
 	new Vec3(-1, 0, 0), // 3 - West.
-];
-
-/**
- * Convert a direction index into an enum.
- */
-const reverseLookupEnum = [
-	DIRECTION.north,
-	DIRECTION.east,
-	DIRECTION.south,
-	DIRECTION.west,
 ];
 
 /**
