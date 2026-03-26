@@ -461,26 +461,8 @@ class TestTrain extends Entity {
 
 		//~ Back checks.
 
-		if (isTrack(back)) {
+		if (this.__findTrack(back)) {
 			this.back.enable(back);
-		}
-
-		// Slope up.
-		if (!this.back.valid) {
-			back.add(new Vec3(0, 1, 0));
-
-			if (isTrack(back)) {
-				this.back.enable(back);
-			}
-		}
-
-		// Slope down.
-		if (!this.back.valid) {
-			back.subtract(new Vec3(0, 2, 0));
-
-			if (isTrack(back)) {
-				this.back.enable(back);
-			}
 		}
 
 		//! Debug front.
