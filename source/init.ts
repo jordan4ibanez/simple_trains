@@ -131,7 +131,7 @@ const directionInversion: DIRECTION[] = [
 ];
 
 // Special for __findTrack.
-const __yPosOrder = [0, 1, -2, 3, -4];
+const __yPosOrder = [0, 1, -2];
 
 /**
  * Check if a position is track.
@@ -440,24 +440,18 @@ class TestTrain extends Entity {
 			.setVec(dirToVector[this.direction])
 			.multiply(new Vec3(this.movement, this.movement, this.movement));
 
-		// if (this.slope != TRAIN_SLOPE.none) {
-		// 	const i = this.slope == TRAIN_SLOPE.up ? 1 : -1;
-		// 	dir.y += i * this.movement + 0.7;
-		// }
 		if (this.slope == TRAIN_SLOPE.up) {
 			dir.y += this.movement + 0.7;
 		}
-
-		// todo: figure out why this is so glitchy
-		// if (this.slope == TRAIN_SLOPE.none && this.wasOnUphill) {
-		// 	dir.y += 1;
-		// }
 
 		temp.add(dir);
 		this.object.set_pos(temp);
 	}
 
 	slopeCalculation(oldMove: number, newMove: number): void {
+		if (this.front.valid) {
+		}
+
 		// Trigger incline checks.
 		if (oldMove < 0.5 && newMove >= 0.5) {
 			print("forward (moving forward)");
