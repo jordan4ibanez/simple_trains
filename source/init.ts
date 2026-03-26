@@ -537,7 +537,6 @@ class TestTrain extends Entity {
 			this.movement = 0;
 			// print("drive forward!");
 			// Train tries to move forwards.
-
 			if (this.front.valid) {
 				this.position.setVec(this.front.position);
 				this.object.move_to(this.position);
@@ -567,7 +566,6 @@ class TestTrain extends Entity {
 			this.movement = 0;
 			// print("drive backward!");
 			// Train tries to move backwards.
-
 			if (this.back.valid) {
 				this.position.setVec(this.back.position);
 				this.object.move_to(this.position);
