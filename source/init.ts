@@ -434,7 +434,7 @@ class TestTrain extends Entity {
 		this.object.set_pos(temp);
 	}
 
-	slopeCalculation(oldMove: number, newMove: number): void {
+	slopeCalculation(): void {
 		if (this.front.valid) {
 			if (this.front.position.y > this.position.y) {
 				this.slope = TRAIN_SLOPE.up;
