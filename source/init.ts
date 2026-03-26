@@ -164,7 +164,7 @@ class TestTrain extends Entity {
 
 	/**
 	 * Lerp forward to backward. (node center to node center)
-	 * -1.0 - 1.0
+	 * -0.5 - 0.5
 	 */
 	movement: number = 0;
 	// vecMovement: Vec3 = new Vec3();
@@ -341,10 +341,10 @@ class TestTrain extends Entity {
 		// This also checks to ensure the train doesn't fall off the rails.
 		let updateCheck = oldSign != newSign;
 
-		if (this.movement >= 1) {
-			this.movement = 1;
-		} else if (this.movement <= -1) {
-			this.movement = -1;
+		if (this.movement >= 0.5) {
+			this.movement = 0.5;
+		} else if (this.movement <= -0.5) {
+			this.movement = -0.5;
 		}
 
 		// if (!DEBUG_MODE) {
@@ -460,9 +460,9 @@ class TestTrain extends Entity {
 	}
 
 	nodeMove(): void {
-		if (this.movement == 1) {
+		if (this.movement == 0.5) {
 			this.calculateFrontBackTrack();
-			this.movement = 0;
+			this.movement = -0.49;
 			// print("drive forward!");
 			// Train tries to move forwards.
 			if (this.front.valid) {
@@ -492,9 +492,9 @@ class TestTrain extends Entity {
 					// this.object.move_to(this.position);
 				}
 			}
-		} else if (this.movement == -1) {
+		} else if (this.movement == -0.5) {
 			this.calculateFrontBackTrack();
-			this.movement = 0;
+			this.movement = 0.49;
 			// print("drive backward!");
 			// Train tries to move backwards.
 			if (this.back.valid) {
