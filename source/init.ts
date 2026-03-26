@@ -149,11 +149,7 @@ class TestTrain extends Entity {
 
 	checkEnvironmentTimer: number = 0;
 	front: TrackStatus = new TrackStatus();
-	// 2 nodes in front.
-	lookAhead: TrackStatus = new TrackStatus();
 	back: TrackStatus = new TrackStatus();
-	// 2 nodes behind.
-	lookBehind: TrackStatus = new TrackStatus();
 
 	speed: number = 0; // negative is backwards.
 	driver: ObjectRef | null = null;
@@ -229,18 +225,10 @@ class TestTrain extends Entity {
 			if (data.frontPosition != null) {
 				this.front.enable(data.frontPosition);
 			}
-			this.lookAhead = new TrackStatus();
-			if (data.lookAheadPosition != null) {
-				this.lookAhead.enable(data.lookAheadPosition);
-			}
 
 			this.back = new TrackStatus();
 			if (data.backPosition != null) {
 				this.back.enable(data.backPosition);
-			}
-			this.lookBehind = new TrackStatus();
-			if (data.lookBehindPosition != null) {
-				this.lookBehind.enable(data.lookBehindPosition);
 			}
 
 			this.checkEnvironmentTimer = data?.checkEnvironmentTimer || 0;
@@ -257,9 +245,7 @@ class TestTrain extends Entity {
 			speed: this.speed,
 			position: this.position,
 			frontPosition: this.front.position,
-			lookAheadPosition: this.lookAhead.position,
 			backPosition: this.back.position,
-			lookBehindPosition: this.lookBehind.position,
 			checkEnvironmentTimer: this.checkEnvironmentTimer,
 		});
 	}
@@ -392,38 +378,20 @@ class TestTrain extends Entity {
 			.subtract(dirToVector[this.direction]);
 
 		this.front.disable();
-		this.lookAhead.disable();
 		this.back.disable();
-		this.lookBehind.disable();
 
 		if (this.__findTrack(front)) {
 			this.front.enable(front);
-		}
-
-		if (this.__findTrack(lookAhead)) {
-			this.lookAhead.enable(lookAhead);
 		}
 
 		if (this.__findTrack(back)) {
 			this.back.enable(back);
 		}
 
-		if (this.__findTrack(lookBehind)) {
-			this.lookBehind.enable(lookBehind);
-		}
-
 		//! Debug front.
 		if (this.front.valid) {
 			core.add_particle({
 				pos: this.front.position,
-				velocity: new Vec3(0, 2, 0),
-				size: 1,
-				texture: "default_stone.png",
-			});
-		}
-		if (this.lookAhead.valid) {
-			core.add_particle({
-				pos: this.lookAhead.position,
 				velocity: new Vec3(0, 2, 0),
 				size: 1,
 				texture: "default_stone.png",
@@ -437,14 +405,6 @@ class TestTrain extends Entity {
 				velocity: new Vec3(0, 2, 0),
 				size: 1,
 				texture: "default_wood.png",
-			});
-		}
-		if (this.lookBehind.valid) {
-			core.add_particle({
-				pos: this.lookBehind.position,
-				velocity: new Vec3(0, 2, 0),
-				size: 1,
-				texture: "default_stone.png",
 			});
 		}
 
