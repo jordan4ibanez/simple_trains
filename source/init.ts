@@ -469,8 +469,16 @@ class TestTrain extends Entity {
 			this.front.enable(front);
 		}
 
+		if (this.__findTrack(lookAhead)) {
+			this.lookAhead.enable(lookAhead);
+		}
+
 		if (this.__findTrack(back)) {
 			this.back.enable(back);
+		}
+
+		if (this.__findTrack(lookBehind)) {
+			this.lookBehind.enable(lookBehind);
 		}
 
 		//! Debug front.
