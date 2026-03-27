@@ -173,6 +173,13 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				new Vec3(0, 0, 0),
 			);
 			setAnimation(clicker, "sit");
+			if (definition?.offset != null) {
+				clicker.set_eye_offset(
+					definition.offset,
+					definition.offset,
+					definition.offset,
+				);
+			}
 		}
 
 		on_activate(staticData: string, delta: number): void {
