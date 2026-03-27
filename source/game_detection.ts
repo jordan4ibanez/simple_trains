@@ -1,5 +1,7 @@
 export class TrackIdentities {
 	normal: number;
+	// booster
+	// brake
 
 	constructor(normal: number) {
 		this.normal = normal;
