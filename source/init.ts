@@ -581,9 +581,13 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 							.subtract(otherPos);
 
 						const calcForce = (axisValue: number) => {
+							// Sign.
 							const s = sign(axisValue);
+							// Abs.
 							const a = math.abs(axisValue);
+							// Product.
 							const p = this.size - a;
+							// Result.
 							const r = p * s;
 							// print(r, "a");
 							return r;
