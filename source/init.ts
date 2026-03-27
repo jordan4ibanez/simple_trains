@@ -192,6 +192,10 @@ function registerRailVehicle(definition: VehicleDefinition): void {
 				}
 
 				this.checkEnvironmentTimer = data?.checkEnvironmentTimer || 0;
+			} else {
+				this.position = new Vec3()
+					.setVec(this.object.get_pos())
+					.round();
 			}
 
 			this.object.set_armor_groups({ punch_activated: 1 });
