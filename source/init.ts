@@ -597,7 +597,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 							if (this.direction == DIRECTION.east) {
 								this.speed += calcForce(output.x);
 							} else {
-								this.speed -= output.x;
+								this.speed -= calcForce(output.x);
 							}
 						} else {
 							if (this.direction == DIRECTION.north) {
