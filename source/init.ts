@@ -149,6 +149,11 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 					thing.set_detach();
 					if (thing.is_player()) {
 						setAnimation(thing, "stand");
+						clicker.set_eye_offset(
+							new Vec3(0, 0, 0),
+							new Vec3(0, 0, 0),
+							new Vec3(0, 0, 0),
+						);
 					}
 				});
 				return;
