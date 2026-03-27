@@ -21,12 +21,13 @@ export const __trackIdentity: TrackIdentities = (() => {
 	);
 })();
 
-export const __attachFunction = () => {
+export const __playerAnimationFunction: (p: ObjectRef) => void = (() => {
 	const gameID = core.get_game_info().id;
 
 	if (gameID == "minetest") {
-		return () => {
-			print("test");
+		return (player: ObjectRef) => {
+			let p_api = (globalThis as any).player_api;
+			// player_api.set_animation();
 		};
 	}
 
@@ -34,4 +35,4 @@ export const __attachFunction = () => {
 		`\nGame < ${gameID} > is not supported by simple_trains!\n` +
 			"Please submit a PR with the player attachment function so that this game can be added.",
 	);
-};
+})();
