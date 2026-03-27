@@ -612,7 +612,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		}
 	}
 
-	registerEntity("simple_trains:train", RailVehicle);
+	registerEntity(definition?.name || "", RailVehicle);
 }
 
 class VehicleDefinition {
@@ -629,7 +629,6 @@ const minecart = new VehicleDefinition();
 minecart.name = "simple_trains:minecart";
 minecart.mesh = "simple_minecart.gltf";
 minecart.textures = ["simple_minecart.png"];
-
 registerRailVehicle(minecart);
 
 // void MapblockMeshGenerator::drawRaillikeNode()
