@@ -120,8 +120,10 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		 */
 		movement: number = 0;
 
+		// Defineable components.
 		powered: boolean = definition?.powered || false;
 		rideable: boolean = definition?.rideable || false;
+		size: number = definition?.size || 1;
 
 		initial_properties: ObjectProperties = {
 			visual: EntityVisual.mesh,
@@ -547,6 +549,8 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 class VehicleDefinition {
 	powered?: boolean = false;
 	rideable?: boolean = false;
+	// radius from center size. Used for collision detection.
+	size?: number = 1;
 }
 
 registerRailVehicle(new VehicleDefinition());
