@@ -540,11 +540,22 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			} else {
 				// An unpowered vehicle.
 
+				// todo: Check if this is in a train before applying gravity and friction.
+
 				// Gravity.
 				if (this.slope == TRAIN_SLOPE.down) {
-					this.speed += delta * 2;
+					this.speed += delta * 10;
 				} else if (this.slope == TRAIN_SLOPE.up) {
-					this.speed -= delta * 2;
+					this.speed -= delta * 10;
+				} else {
+					// Friction
+					const multiplicitive = sign(this.speed) * -1;
+					if (multiplicitive != 0) {
+						this.speed += delta * multiplicitive * 1.5;
+						if (math.abs(this.speed) < 0.1) {
+							this.speed = 0;
+						}
+					}
 				}
 
 				const pos = new Vec3().setVec(this.object.get_pos());
