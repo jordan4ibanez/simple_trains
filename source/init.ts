@@ -1,12 +1,12 @@
-import { trackID, trackRegistration } from "./track";
+import { trackIdentity } from "./game_detection";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual, LogLevel } from "./utility/enums";
 import { degToRad, sign } from "./utility/math";
 import { Vec3 } from "./utility/vector";
 
-trackRegistration();
-
 const DEBUG_MODE = true;
+
+const trackIDs = trackIdentity;
 
 core.register_chatcommand("t", {
 	func: (name: string) => {
@@ -19,7 +19,7 @@ core.register_chatcommand("t", {
 
 		const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
 
-		if (id == trackID) {
+		if (id == trackIDs.normal) {
 			core.add_entity(pos, "simple_trains:0_3_0_tank_engine");
 		}
 	},
@@ -97,7 +97,7 @@ const __yPosOrder = [0, 1, -2];
  */
 function isTrack(pos: Vec3): boolean {
 	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
-	return id == trackID;
+	return id == trackIDs.normal;
 }
 
 function registerRailVehicle(definition?: VehicleDefinition): void {
