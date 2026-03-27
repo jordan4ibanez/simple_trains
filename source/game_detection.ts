@@ -21,13 +21,16 @@ export const __trackIdentity: TrackIdentities = (() => {
 	);
 })();
 
-export const __playerAnimationFunction: (p: ObjectRef) => void = (() => {
+export const __playerAnimationFunction: (
+	p: ObjectRef,
+	animation: string,
+) => void = (() => {
 	const gameID = core.get_game_info().id;
 
 	if (gameID == "minetest") {
-		return (player: ObjectRef) => {
+		return (player: ObjectRef, animation: string) => {
 			let p_api = (globalThis as any).player_api;
-			// player_api.set_animation();
+			p_api.set_animation(player, animation);
 		};
 	}
 
