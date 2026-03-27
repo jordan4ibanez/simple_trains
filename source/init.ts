@@ -115,7 +115,7 @@ function registerTrain(definition: VehicleDefinition): void {
 		slope: TRAIN_SLOPE = TRAIN_SLOPE.flat;
 
 		/**
-		 * Lerp forward to backward. (node center to node center)
+		 * Lerp forward to backward. (node edge to node edge)
 		 * -0.5 - 0.5
 		 */
 		movement: number = 0;
