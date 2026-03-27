@@ -616,6 +616,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 }
 
 class VehicleDefinition {
+	name?: string = undefined;
 	powered?: boolean = false;
 	rideable?: boolean = false;
 	// radius from center size. Used for collision detection.
@@ -625,6 +626,7 @@ class VehicleDefinition {
 }
 
 const minecart = new VehicleDefinition();
+minecart.name = "simple_trains:minecart";
 minecart.mesh = "simple_minecart.gltf";
 minecart.textures = ["simple_minecart.png"];
 
