@@ -29,8 +29,12 @@ export const __playerAnimationFunction: (
 
 	if (gameID == "minetest") {
 		return (player: ObjectRef, animation: string) => {
-			let p_api = (globalThis as any).player_api;
-			p_api.set_animation(player, animation);
+			const [attach] = player.get_attach();
+			(globalThis as any).player_api.player_attached[
+				player.get_player_name()
+			] = attach != null;
+
+			(globalThis as any).player_api.set_animation(player, animation);
 		};
 	}
 
