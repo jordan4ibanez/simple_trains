@@ -1,4 +1,4 @@
-import { __trackIdentity } from "./game_detection";
+import { __playerAnimationFunction, __trackIdentity } from "./game_detection";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual, LogLevel } from "./utility/enums";
 import { degToRad, sign } from "./utility/math";
@@ -7,6 +7,7 @@ import { Vec3 } from "./utility/vector";
 const DEBUG_MODE = true;
 
 const trackIDs = __trackIdentity;
+const setAnimation = __playerAnimationFunction;
 
 core.register_chatcommand("t", {
 	func: (name: string) => {
