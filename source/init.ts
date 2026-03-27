@@ -20,7 +20,7 @@ core.register_chatcommand("t", {
 		const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
 
 		if (id == trackID) {
-			core.add_entity(pos, "simple_trains:train");
+			core.add_entity(pos, "simple_trains:0_3_0_tank_engine");
 		}
 	},
 });
@@ -630,6 +630,13 @@ minecart.name = "simple_trains:minecart";
 minecart.mesh = "simple_minecart.gltf";
 minecart.textures = ["simple_minecart.png"];
 registerRailVehicle(minecart);
+
+const tank_engine_0_3_0 = new VehicleDefinition();
+tank_engine_0_3_0.name = "simple_trains:0_3_0_tank_engine";
+tank_engine_0_3_0.mesh = "0_3_0_tank_engine.gltf";
+tank_engine_0_3_0.textures = undefined;
+tank_engine_0_3_0.powered = true;
+registerRailVehicle(tank_engine_0_3_0);
 
 // void MapblockMeshGenerator::drawRaillikeNode()
 // GX suggests to copy the way rails are drawn to make them work
