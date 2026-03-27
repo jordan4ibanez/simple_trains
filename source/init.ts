@@ -539,6 +539,14 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				}
 			} else {
 				// An unpowered vehicle.
+
+				// Gravity.
+				if (this.slope == TRAIN_SLOPE.down) {
+					this.speed += delta * 2;
+				} else if (this.slope == TRAIN_SLOPE.up) {
+					this.speed -= delta * 2;
+				}
+
 			}
 		}
 	}
