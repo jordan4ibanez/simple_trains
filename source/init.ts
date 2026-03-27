@@ -101,7 +101,7 @@ function isTrack(pos: Vec3): boolean {
 }
 
 function registerTrain(definition: VehicleDefinition): void {
-	class TestTrain extends Entity {
+	class RailVehicle extends Entity {
 		position: Vec3 = new Vec3();
 		direction: DIRECTION = DIRECTION.north;
 
@@ -525,7 +525,7 @@ function registerTrain(definition: VehicleDefinition): void {
 		}
 	}
 
-	registerEntity("simple_trains:train", TestTrain);
+	registerEntity("simple_trains:train", RailVehicle);
 }
 
 class VehicleDefinition {
