@@ -120,6 +120,8 @@ function registerRailVehicle(definition: VehicleDefinition): void {
 		 */
 		movement: number = 0;
 
+		powered: boolean = definition.powered || false;
+
 		initial_properties: ObjectProperties = {
 			visual: EntityVisual.mesh,
 			mesh: "test_train.gltf",
