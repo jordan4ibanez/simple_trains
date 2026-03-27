@@ -20,3 +20,18 @@ export const __trackIdentity: TrackIdentities = (() => {
 			"Please submit a PR with the rail type so that this game can be added.",
 	);
 })();
+
+export const __attachFunction = () => {
+	const gameID = core.get_game_info().id;
+
+	if (gameID == "minetest") {
+		return () => {
+			print("test");
+		};
+	}
+
+	throw new Error(
+		`\nGame < ${gameID} > is not supported by simple_trains!\n` +
+			"Please submit a PR with the player attachment function so that this game can be added.",
+	);
+};
