@@ -568,7 +568,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 					if (obj == this.object) {
 						continue;
 					}
-					// Add option for mobs too.
+					// todo: Add option for mobs too.
 					if (obj.is_player()) {
 						const otherPos = obj.get_pos();
 
