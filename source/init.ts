@@ -125,6 +125,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		movement: number = 0;
 
 		powered: boolean = definition.powered || false;
+		rideable: boolean = definition.powered || false;
 
 		initial_properties: ObjectProperties = {
 			visual: EntityVisual.mesh,
@@ -540,6 +541,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 
 class VehicleDefinition {
 	powered?: boolean = false;
+	rideable?: boolean = false;
 }
 
 registerRailVehicle(new VehicleDefinition());
