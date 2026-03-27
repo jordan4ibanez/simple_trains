@@ -570,6 +570,10 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 					}
 					// todo: Add option for mobs too.
 					if (obj.is_player()) {
+						if (obj == this.driver) {
+							continue;
+						}
+
 						const otherPos = obj.get_pos();
 
 						const output = new Vec3()
