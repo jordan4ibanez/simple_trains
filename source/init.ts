@@ -101,10 +101,6 @@ function isTrack(pos: Vec3): boolean {
 }
 
 function registerRailVehicle(definition?: VehicleDefinition): void {
-	if (definition == null) {
-		throw new Error("No definition provided!");
-	}
-
 	class RailVehicle extends Entity {
 		position: Vec3 = new Vec3();
 		direction: DIRECTION = DIRECTION.north;
@@ -124,8 +120,8 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		 */
 		movement: number = 0;
 
-		powered: boolean = definition.powered || false;
-		rideable: boolean = definition.powered || false;
+		powered: boolean = definition?.powered || false;
+		rideable: boolean = definition?.rideable || false;
 
 		initial_properties: ObjectProperties = {
 			visual: EntityVisual.mesh,
