@@ -590,12 +590,12 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 							// Result.
 							const r = p * s;
 							// print(r, "a");
-							return r;
+							return r * 25 * delta;
 						};
 
 						if (DIR_TO_AXIS[this.direction] == AXIS.X) {
 							if (this.direction == DIRECTION.east) {
-								this.speed += output.x;
+								this.speed += calcForce(output.x);
 							} else {
 								this.speed -= output.x;
 							}
