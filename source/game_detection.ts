@@ -8,7 +8,7 @@ export class TrackIdentities {
 	}
 }
 
-export const trackIdentity: TrackIdentities = (() => {
+export const __trackIdentity: TrackIdentities = (() => {
 	const gameID = core.get_game_info().id;
 
 	if (gameID == "minetest") {
