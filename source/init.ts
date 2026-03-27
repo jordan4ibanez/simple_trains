@@ -577,9 +577,17 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 							.subtract(otherPos);
 
 						if (DIR_TO_AXIS[this.direction] == AXIS.X) {
-							this.speed += output.x * 0.1;
+							if (this.direction == DIRECTION.east) {
+								this.speed += output.x;
+							} else {
+								this.speed -= output.x;
+							}
 						} else {
-							this.speed += output.z * 0.1;
+							if (this.direction == DIRECTION.north) {
+								this.speed += output.z;
+							} else {
+								this.speed -= output.z;
+							}
 						}
 					}
 				}
