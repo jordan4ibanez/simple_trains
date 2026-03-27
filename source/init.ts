@@ -127,8 +127,8 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 
 		initial_properties: ObjectProperties = {
 			visual: EntityVisual.mesh,
-			mesh: "test_train.gltf",
-			textures: ["test_train.png"],
+			mesh: definition?.mesh,
+			textures: definition?.textures,
 			physical: false,
 			collide_with_objects: false,
 			selectionbox: [-0.2, -0.4, -0.2, 0.2, 0.4, 0.2],
@@ -607,6 +607,12 @@ class VehicleDefinition {
 	rideable?: boolean = false;
 	// radius from center size. Used for collision detection.
 	size?: number = 1;
+	mesh?: string = "";
+	textures?: string[] = [""];
 }
 
-registerRailVehicle(new VehicleDefinition());
+const minecart = new VehicleDefinition();
+minecart.mesh = "simple_minecart.gltf";
+minecart.textures = ["simple_minecart.png"];
+
+registerRailVehicle(minecart);
