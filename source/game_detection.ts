@@ -1,8 +1,16 @@
-export const track: string = (() => {
+export class TrackIdentities {
+	normal: number;
+
+	constructor(normal: number) {
+		this.normal = normal;
+	}
+}
+
+export const trackIdentity: TrackIdentities = (() => {
 	const gameID = core.get_game_info().id;
 
 	if (gameID == "minetest") {
-		return "carts:rail";
+		return new TrackIdentities(core.get_content_id("carts:rail"));
 	}
 
 	throw new Error(
