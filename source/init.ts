@@ -171,6 +171,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				new Vec3(0, 0, 0),
 				new Vec3(0, 0, 0),
 			);
+			setAnimation(clicker, "sit");
 		}
 
 		on_activate(staticData: string, delta: number): void {
