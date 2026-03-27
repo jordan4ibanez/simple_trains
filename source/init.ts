@@ -540,7 +540,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			} else {
 				// An unpowered vehicle.
 
-				// todo: Check if this is in a train before applying gravity and friction.
+				// todo: Check if this is in a train before applying gravity, friction, and powered rail.
 
 				// Gravity.
 				if (this.slope == TRAIN_SLOPE.down) {
