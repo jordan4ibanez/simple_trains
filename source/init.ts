@@ -1,3 +1,4 @@
+import { ShallowVector3 } from "../luanti-api";
 import { __playerAnimationFunction, __trackIdentity } from "./game_detection";
 import { Entity, registerEntity } from "./utility/entity";
 import { EntityVisual, LogLevel } from "./utility/enums";
@@ -168,7 +169,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			clicker.set_attach(
 				this.object,
 				"",
-				new Vec3(0, 0, 0),
+				definition?.offset || new Vec3(0, 0, 0),
 				new Vec3(0, 0, 0),
 			);
 			setAnimation(clicker, "sit");
@@ -628,6 +629,7 @@ class VehicleDefinition {
 	size?: number = 1;
 	mesh?: string = "";
 	textures?: string[] = [""];
+	offset?: ShallowVector3 = new Vec3(0, 0, 0);
 }
 
 const minecart = new VehicleDefinition();
@@ -641,6 +643,7 @@ tank_engine_0_3_0.name = "simple_trains:0_3_0_tank_engine";
 tank_engine_0_3_0.mesh = "0_3_0_tank_engine.gltf";
 tank_engine_0_3_0.textures = undefined;
 tank_engine_0_3_0.powered = true;
+tank_engine_0_3_0.offset = new Vec3(1, 0, 0);
 registerRailVehicle(tank_engine_0_3_0);
 
 // void MapblockMeshGenerator::drawRaillikeNode()
