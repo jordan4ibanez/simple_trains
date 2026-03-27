@@ -547,6 +547,31 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 					this.speed -= delta * 2;
 				}
 
+				const pos = new Vec3().setVec(this.object.get_pos());
+
+				// Magnetic collision with entities.
+				for (const obj of core.get_objects_inside_radius(
+					pos,
+					this.size,
+				)) {
+					if (obj == this.object) {
+						continue;
+					}
+					// Add option for mobs too.
+					if (obj.is_player()) {
+						const otherPos = obj.get_pos();
+
+						const output = new Vec3()
+							.setVec(pos)
+							.subtract(otherPos);
+
+						if (DIR_TO_AXIS[this.direction] == AXIS.X) {
+							this.speed += output.x * 0.1;
+						} else {
+							this.speed += output.z * 0.1;
+						}
+					}
+				}
 			}
 		}
 	}
