@@ -119,7 +119,6 @@ function registerTrain(definition: VehicleDefinition): void {
 		 * -0.5 - 0.5
 		 */
 		movement: number = 0;
-		// vecMovement: Vec3 = new Vec3();
 
 		initial_properties: ObjectProperties = {
 			visual: EntityVisual.mesh,
