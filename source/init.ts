@@ -616,3 +616,6 @@ minecart.mesh = "simple_minecart.gltf";
 minecart.textures = ["simple_minecart.png"];
 
 registerRailVehicle(minecart);
+
+// void MapblockMeshGenerator::drawRaillikeNode()
+// GX suggests to copy the way rails are drawn to make them work
