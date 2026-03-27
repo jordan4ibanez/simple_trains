@@ -225,6 +225,8 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			this.object.set_armor_groups({ punch_activated: 1 });
 			this.setRotation();
 			this.setSlope();
+
+			this.object.set_animation({ x: 0, y: 1 }, this.speed, 0, true);
 		}
 
 		get_staticdata(): string {
@@ -322,6 +324,12 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			this.smoothMove();
 
 			this.nodeMove();
+
+			this.updateAnimation();
+		}
+
+		updateAnimation(): void {
+			this.object.set_animation_frame_speed(this.speed);
 		}
 
 		// This mutates pos as a result.
