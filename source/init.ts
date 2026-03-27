@@ -264,11 +264,15 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 
 			this.drive(delta);
 
-			this.checkEnvironmentTimer += delta;
+			if (this.speed == 0) {
+				this.checkEnvironmentTimer += delta;
 
-			if (this.checkEnvironmentTimer > 0.25) {
-				this.checkEnvironmentTimer -= 0.25;
-				// this.calculateFrontBackTrack();
+				if (this.checkEnvironmentTimer > 0.5) {
+					this.checkEnvironmentTimer -= 0.5;
+					this.calculateFrontBackTrack();
+					this.slopeCalculation();
+					this.setSlope();
+				}
 			}
 
 			if (!isTrack(this.position)) {
