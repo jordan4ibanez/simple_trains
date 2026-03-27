@@ -146,6 +146,9 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				this.driver = null;
 				data.forEach((thing) => {
 					thing.set_detach();
+					if (thing.is_player()) {
+						setAnimation(thing, "stand");
+					}
 				});
 				return;
 			}
