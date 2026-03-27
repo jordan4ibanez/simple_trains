@@ -580,6 +580,15 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 							.setVec(pos)
 							.subtract(otherPos);
 
+						const calcForce = (axisValue: number) => {
+							const s = sign(axisValue);
+							const a = math.abs(axisValue);
+							const p = this.size - a;
+							const r = p * s;
+							// print(r, "a");
+							return r;
+						};
+
 						if (DIR_TO_AXIS[this.direction] == AXIS.X) {
 							if (this.direction == DIRECTION.east) {
 								this.speed += output.x;
