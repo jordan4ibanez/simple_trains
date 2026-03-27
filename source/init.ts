@@ -506,32 +506,37 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		}
 
 		drive(delta: number): void {
-			if (this.driver == null) {
-				return;
-			}
+			if (this.powered) {
+				// A powered vehicle.
+				if (this.driver == null) {
+					return;
+				}
 
-			if (this.driver.get_player_control().sneak) {
-				print(this.speed);
-			}
+				if (this.driver.get_player_control().sneak) {
+					print(this.speed);
+				}
 
-			if (DEBUG_MODE) {
-				if (this.driver.get_player_control().up) {
-					this.speed = 2;
-				} else if (this.driver.get_player_control().down) {
-					this.speed = -2;
+				if (DEBUG_MODE) {
+					if (this.driver.get_player_control().up) {
+						this.speed = 2;
+					} else if (this.driver.get_player_control().down) {
+						this.speed = -2;
+					} else {
+						this.speed = 0;
+					}
 				} else {
-					this.speed = 0;
+					if (this.driver.get_player_control().up) {
+						if (this.speed < 5) {
+							this.speed += delta;
+						}
+					} else if (this.driver.get_player_control().down) {
+						if (this.speed > -5) {
+							this.speed -= delta;
+						}
+					}
 				}
 			} else {
-				if (this.driver.get_player_control().up) {
-					if (this.speed < 5) {
-						this.speed += delta;
-					}
-				} else if (this.driver.get_player_control().down) {
-					if (this.speed > -5) {
-						this.speed -= delta;
-					}
-				}
+				// An unpowered vehicle.
 			}
 		}
 	}
