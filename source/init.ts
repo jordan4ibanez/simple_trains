@@ -643,7 +643,7 @@ tank_engine_0_3_0.name = "simple_trains:0_3_0_tank_engine";
 tank_engine_0_3_0.mesh = "0_3_0_tank_engine.gltf";
 tank_engine_0_3_0.textures = undefined;
 tank_engine_0_3_0.powered = true;
-tank_engine_0_3_0.offset = new Vec3(1, 0, 0);
+tank_engine_0_3_0.offset = new Vec3(0, 0, -8);
 registerRailVehicle(tank_engine_0_3_0);
 
 // void MapblockMeshGenerator::drawRaillikeNode()
