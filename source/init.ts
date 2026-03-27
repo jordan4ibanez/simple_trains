@@ -173,11 +173,11 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				new Vec3(0, 0, 0),
 			);
 			setAnimation(clicker, "sit");
-			if (definition?.seatingOffset != null) {
+			if (definition?.eyeOffset != null) {
 				clicker.set_eye_offset(
-					definition.seatingOffset,
-					definition.seatingOffset,
-					definition.seatingOffset,
+					definition.eyeOffset,
+					definition.eyeOffset,
+					definition.eyeOffset,
 				);
 			}
 		}
@@ -637,6 +637,7 @@ class VehicleDefinition {
 	mesh?: string = "";
 	textures?: string[] = [""];
 	seatingOffset?: ShallowVector3 = new Vec3(0, 0, 0);
+	eyeOffset?: ShallowVector3 = new Vec3(0, 0, 0);
 }
 
 const minecart = new VehicleDefinition();
@@ -651,6 +652,7 @@ tank_engine_0_3_0.mesh = "0_3_0_tank_engine.gltf";
 tank_engine_0_3_0.textures = undefined;
 tank_engine_0_3_0.powered = true;
 tank_engine_0_3_0.seatingOffset = new Vec3(0, 0, -8);
+tank_engine_0_3_0.eyeOffset = new Vec3(0, 3, 0);
 registerRailVehicle(tank_engine_0_3_0);
 
 // void MapblockMeshGenerator::drawRaillikeNode()
