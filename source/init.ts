@@ -99,7 +99,9 @@ const __yPosOrder = [0, 1, -2];
  */
 function isTrack(pos: Vec3): boolean {
 	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
-	return id == trackIDs.normal;
+	return (
+		id == trackIDs.normal || id == trackIDs.booster || id == trackIDs.brake
+	);
 }
 
 function isBoost(pos: Vec3): boolean {
