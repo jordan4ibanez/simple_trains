@@ -663,7 +663,7 @@ registerRailVehicle(minecart);
 const tank_engine_0_3_0 = new VehicleDefinition();
 tank_engine_0_3_0.name = "simple_trains:0_3_0_tank_engine";
 tank_engine_0_3_0.mesh = "0_3_0_tank_engine.gltf";
-tank_engine_0_3_0.textures = undefined;
+tank_engine_0_3_0.textures = ["0_3_0_tank_engine.png"];
 tank_engine_0_3_0.powered = true;
 tank_engine_0_3_0.seatingOffset = new Vec3(0, 0, -8);
 tank_engine_0_3_0.eyeOffset = new Vec3(0, 3, 0);
