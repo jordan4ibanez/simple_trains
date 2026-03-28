@@ -126,6 +126,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		powered: boolean = definition?.powered || false;
 		rideable: boolean = definition?.rideable || false;
 		size: number = definition?.size || 1;
+		animSpeed = definition?.animationSpeed || 1;
 
 		initial_properties: ObjectProperties = {
 			visual: EntityVisual.mesh,
@@ -329,7 +330,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		}
 
 		updateAnimation(): void {
-			this.object.set_animation_frame_speed(this.speed);
+			this.object.set_animation_frame_speed(this.speed * this.animSpeed);
 		}
 
 		// This mutates pos as a result.
@@ -652,6 +653,7 @@ class VehicleDefinition {
 	textures?: string[] = [""];
 	seatingOffset?: ShallowVector3 = new Vec3(0, 0, 0);
 	eyeOffset?: ShallowVector3 = new Vec3(0, 0, 0);
+	animationSpeed?: number = 1;
 }
 
 const minecart = new VehicleDefinition();
@@ -667,6 +669,7 @@ tank_engine_0_3_0.textures = ["0_3_0_tank_engine.png"];
 tank_engine_0_3_0.powered = true;
 tank_engine_0_3_0.seatingOffset = new Vec3(0, 0, -8);
 tank_engine_0_3_0.eyeOffset = new Vec3(0, 3, 0);
+tank_engine_0_3_0.animationSpeed = 0.9;
 registerRailVehicle(tank_engine_0_3_0);
 
 // void MapblockMeshGenerator::drawRaillikeNode()
