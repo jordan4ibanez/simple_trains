@@ -102,6 +102,22 @@ function isTrack(pos: Vec3): boolean {
 	return id == trackIDs.normal;
 }
 
+function isBoost(pos: Vec3): boolean {
+	if (trackIDs.booster == null) {
+		return false;
+	}
+	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
+	return id == trackIDs.booster;
+}
+
+function isBrake(pos: Vec3): boolean {
+	if (trackIDs.brake == null) {
+		return false;
+	}
+	const [id] = core.get_node_raw(pos.x, pos.y, pos.z);
+	return id == trackIDs.brake;
+}
+
 function registerRailVehicle(definition?: VehicleDefinition): void {
 	class RailVehicle extends Entity {
 		position: Vec3 = new Vec3();
@@ -115,6 +131,9 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		driver: ObjectRef | null = null;
 
 		slope: TRAIN_SLOPE = TRAIN_SLOPE.flat;
+
+		boosted: boolean = false;
+		braked: boolean = false;
 
 		/**
 		 * Lerp forward to backward. (node edge to node edge)
