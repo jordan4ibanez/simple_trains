@@ -322,6 +322,14 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 
 			if (!isTrack(this.position)) {
 				this.speed = 0;
+			} else {
+				this.boosted = false;
+				this.braked = false;
+				if (isBoost(this.position)) {
+					this.boosted = true;
+				} else if (isBrake(this.position)) {
+					this.braked = true;
+				}
 			}
 
 			const oldSign = sign(this.movement);
