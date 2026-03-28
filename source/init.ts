@@ -131,6 +131,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 
 		speed: number = 0; // negative is backwards.
 		driver: ObjectRef | null = null;
+		topSpeed: number = definition?.topSpeed || 10;
 
 		slope: TRAIN_SLOPE = TRAIN_SLOPE.flat;
 
@@ -690,6 +691,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 class VehicleDefinition {
 	name?: string = undefined;
 	powered?: boolean = false;
+	topSpeed?: number = 10;
 	rideable?: boolean = false;
 	// radius from center size. Used for collision detection.
 	size?: number = 1;
