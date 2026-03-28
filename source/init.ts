@@ -605,7 +605,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				} else if (this.slope == TRAIN_SLOPE.up) {
 					this.speed -= delta * 10;
 				} else {
-					// Friction
+					// Friction.
 					const multiplicitive = sign(this.speed) * -1;
 					if (multiplicitive != 0) {
 						this.speed += delta * multiplicitive * 1.5;
