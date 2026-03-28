@@ -310,6 +310,12 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 
 			this.drive(delta);
 
+			// todo: Check if in train before limiting.
+			if (math.abs(this.speed) > this.topSpeed) {
+				const multiplicitive = sign(this.speed);
+				this.speed = this.topSpeed * multiplicitive;
+			}
+
 			if (this.speed == 0) {
 				this.checkEnvironmentTimer += delta;
 
