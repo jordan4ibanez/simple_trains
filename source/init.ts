@@ -615,6 +615,21 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 					}
 				}
 
+				if (this.boosted) {
+					// Booster.
+					const multiplicitive = sign(this.speed);
+					this.speed += delta * 15 * multiplicitive;
+				} else if (this.braked) {
+					// Brake.
+					const multiplicitive = sign(this.speed) * -1;
+					if (multiplicitive != 0) {
+						this.speed += delta * multiplicitive * 12;
+						if (math.abs(this.speed) < 0.1) {
+							this.speed = 0;
+						}
+					}
+				}
+
 				const pos = new Vec3().setVec(this.object.get_pos());
 
 				// Magnetic collision with entities.
