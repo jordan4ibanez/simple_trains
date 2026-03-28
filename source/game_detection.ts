@@ -1,7 +1,7 @@
 export class TrackIdentities {
 	normal: number;
-	// booster
-	// brake
+	booster?: number;
+	brake?: number;
 
 	constructor(normal: number) {
 		this.normal = normal;
@@ -12,7 +12,10 @@ export const __trackIdentity: TrackIdentities = (() => {
 	const gameID = core.get_game_info().id;
 
 	if (gameID == "minetest") {
-		return new TrackIdentities(core.get_content_id("carts:rail"));
+		const data = new TrackIdentities(core.get_content_id("carts:rail"));
+		data.booster = core.get_content_id("carts:powerrail");
+		data.brake = core.get_content_id("carts:brakerail");
+		return data;
 	}
 
 	throw new Error(
