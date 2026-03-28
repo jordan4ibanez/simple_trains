@@ -1,3 +1,4 @@
+import { SelectionBox } from "./source/utility/entity";
 import {
 	AreaStoreType,
 	BlockStatusCondition,
@@ -1820,7 +1821,7 @@ declare global {
 		wield_item?: string;
 		collide_with_objects?: boolean;
 		collisionbox?: CollisionBox;
-		selectionbox?: number[];
+		selectionbox?: SelectionBox;
 		pointable?: boolean;
 		visual?: EntityVisual;
 		visual_size?: ShallowVector3 | ShallowVector2;

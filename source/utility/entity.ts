@@ -64,3 +64,27 @@ export function spawnEntity(
 	}
 	return ent;
 }
+
+export class SelectionBox {
+	[1]: number;
+	[2]: number;
+	[3]: number;
+	[4]: number;
+	[5]: number;
+	[6]: number;
+	rotate: boolean;
+
+	constructor(data: number[], rotate?: boolean) {
+		if (rotate == null) {
+			this.rotate = false;
+		} else {
+			this.rotate = rotate;
+		}
+		this[1] = data[0];
+		this[2] = data[1];
+		this[3] = data[2];
+		this[4] = data[3];
+		this[5] = data[4];
+		this[6] = data[5];
+	}
+}

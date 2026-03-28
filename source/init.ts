@@ -1,6 +1,6 @@
 import { ShallowVector3 } from "../luanti-api";
 import { __playerAnimationFunction, __trackIdentity } from "./game_detection";
-import { Entity, registerEntity } from "./utility/entity";
+import { Entity, registerEntity, SelectionBox } from "./utility/entity";
 import { EntityVisual, LogLevel } from "./utility/enums";
 import { degToRad, sign } from "./utility/math";
 import { Vec3 } from "./utility/vector";
@@ -26,6 +26,29 @@ core.register_chatcommand("t", {
 		}
 	},
 });
+
+function isRailVehicle(obj: ObjectRef): boolean {
+	if (obj.is_player()) {
+		return false;
+	}
+	const luaEnt = obj.get_luaentity();
+	if (luaEnt == null) {
+		return false;
+	}
+	return (luaEnt as any).simple_train_uuid != null;
+}
+
+namespace STUUID {
+	const id = "__s_train_uuid_ref_data";
+	const modStorage = core.get_mod_storage();
+	let nextUUID = modStorage.get_int(id);
+	export function giveUUID(): number {
+		const st = nextUUID;
+		nextUUID += 1;
+		modStorage.set_int(id, nextUUID);
+		return st;
+	}
+}
 
 class TurnResult {
 	success: boolean;
@@ -121,7 +144,10 @@ function isBrake(pos: Vec3): boolean {
 }
 
 function registerRailVehicle(definition?: VehicleDefinition): void {
+	const sBox = definition?.collisionBox || new Vec3(1, 1, 1);
+
 	class RailVehicle extends Entity {
+		simple_train_uuid?: number;
 		position: Vec3 = new Vec3();
 		direction: DIRECTION = DIRECTION.north;
 
@@ -156,7 +182,25 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			textures: definition?.textures,
 			physical: false,
 			collide_with_objects: false,
-			selectionbox: [-0.2, -0.4, -0.2, 0.2, 0.4, 0.2],
+			collisionbox: [
+				-sBox.x + 0.5,
+				-0.5,
+				-sBox.z + 0.5,
+				sBox.x - 0.5,
+				-0.5 + sBox.y,
+				sBox.z - 0.5,
+			],
+			selectionbox: new SelectionBox(
+				[
+					-sBox.x + 0.5,
+					-0.5,
+					-sBox.z + 0.5,
+					sBox.x - 0.5,
+					-0.5 + sBox.y,
+					sBox.z - 0.5,
+				],
+				true,
+			),
 		};
 
 		on_rightclick(clicker: ObjectRef): void {
@@ -244,6 +288,8 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 					.setVec(this.object.get_pos())
 					.round();
 			}
+			this.simple_train_uuid =
+				data?.simple_train_uuid || STUUID.giveUUID();
 
 			this.object.set_armor_groups({ punch_activated: 1 });
 			this.setRotation();
@@ -262,6 +308,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				frontPosition: this.front.position,
 				backPosition: this.back.position,
 				checkEnvironmentTimer: this.checkEnvironmentTimer,
+				simple_train_uuid: this.simple_train_uuid,
 			});
 		}
 
@@ -606,22 +653,6 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 
 				// todo: Check if this is in a train before applying gravity, friction, and powered rail.
 
-				// Gravity.
-				if (this.slope == TRAIN_SLOPE.down) {
-					this.speed += delta * 10;
-				} else if (this.slope == TRAIN_SLOPE.up) {
-					this.speed -= delta * 10;
-				} else {
-					// Friction.
-					const multiplicitive = sign(this.speed) * -1;
-					if (multiplicitive != 0) {
-						this.speed += delta * multiplicitive * 1.5;
-						if (math.abs(this.speed) < 0.1) {
-							this.speed = 0;
-						}
-					}
-				}
-
 				if (this.boosted) {
 					// Booster.
 					const multiplicitive = sign(this.speed);
@@ -637,6 +668,8 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 					}
 				}
 
+				let collision = false;
+
 				const pos = new Vec3().setVec(this.object.get_pos());
 
 				// Magnetic collision with entities.
@@ -648,10 +681,12 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 						continue;
 					}
 					// todo: Add option for mobs too.
-					if (obj.is_player()) {
+					if (obj.is_player() || isRailVehicle(obj)) {
 						if (obj == this.driver) {
 							continue;
 						}
+
+						collision = true;
 
 						const otherPos = obj.get_pos();
 
@@ -667,7 +702,13 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 							// Product.
 							const p = this.size - a;
 							// Result.
-							const r = p * s;
+							let r = p * s;
+
+							// 2 vehicles are in same position.
+							if (r == 0) {
+								r = math.random() * math.random(-1, 1);
+							}
+
 							// print(r, "a");
 							return r * 25 * delta;
 						};
@@ -687,6 +728,24 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 						}
 					}
 				}
+
+				// Gravity.
+				if (this.slope == TRAIN_SLOPE.down) {
+					this.speed += delta * 10;
+				} else if (this.slope == TRAIN_SLOPE.up) {
+					this.speed -= delta * 10;
+				} else {
+					// Friction.
+					if (!collision) {
+						const multiplicitive = sign(this.speed) * -1;
+						if (multiplicitive != 0) {
+							this.speed += delta * multiplicitive * 1.5;
+							if (math.abs(this.speed) < 0.1) {
+								this.speed = 0;
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -700,7 +759,10 @@ class VehicleDefinition {
 	topSpeed?: number = 10;
 	rideable?: boolean = false;
 	// radius from center size. Used for collision detection.
-	size?: number = 1;
+	size?: number = 1.5;
+	// X and Z are the widths. (total)
+	// Y is the height of the vehicle. (total)
+	collisionBox?: ShallowVector3 = new Vec3(1, 1, 1);
 	mesh?: string = "";
 	textures?: string[] = [""];
 	seatingOffset?: ShallowVector3 = new Vec3(0, 0, 0);
@@ -723,6 +785,20 @@ tank_engine_0_3_0.seatingOffset = new Vec3(0, 0, -8);
 tank_engine_0_3_0.eyeOffset = new Vec3(0, 3, 0);
 tank_engine_0_3_0.animationSpeed = 0.9;
 registerRailVehicle(tank_engine_0_3_0);
+
+const goodsWagon = new VehicleDefinition();
+goodsWagon.name = "simple_trains:goods_wagon";
+goodsWagon.mesh = "goods_wagon.gltf";
+goodsWagon.textures = ["goods_wagon.png"];
+goodsWagon.collisionBox = new Vec3(1, 1.06, 1.61);
+registerRailVehicle(goodsWagon);
+
+const goodsVan = new VehicleDefinition();
+goodsVan.name = "simple_trains:goods_van";
+goodsVan.mesh = "goods_van.gltf";
+goodsVan.textures = ["goods_van.png"];
+goodsVan.collisionBox = new Vec3(1, 1.8, 1.61);
+registerRailVehicle(goodsVan);
 
 // void MapblockMeshGenerator::drawRaillikeNode()
 // GX suggests to copy the way rails are drawn to make them work
