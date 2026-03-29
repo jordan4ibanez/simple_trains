@@ -375,12 +375,12 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		}
 
 		on_step(delta: number, moveResult: MoveResult | null): void {
-			core.add_particle({
-				pos: this.position,
-				velocity: new Vec3(0, 2, 0),
-				size: 1,
-				texture: "default_stone.png",
-			});
+			// core.add_particle({
+			// 	pos: this.position,
+			// 	velocity: new Vec3(0, 2, 0),
+			// 	size: 1,
+			// 	texture: "default_stone.png",
+			// });
 
 			this.drive(delta);
 
@@ -484,24 +484,24 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			}
 
 			//! Debug front.
-			if (this.front.valid) {
-				core.add_particle({
-					pos: this.front.position,
-					velocity: new Vec3(0, 2, 0),
-					size: 1,
-					texture: "default_stone.png",
-				});
-			}
+			// if (this.front.valid) {
+			// 	core.add_particle({
+			// 		pos: this.front.position,
+			// 		velocity: new Vec3(0, 2, 0),
+			// 		size: 1,
+			// 		texture: "default_stone.png",
+			// 	});
+			// }
 
 			//! Debug back.
-			if (this.back.valid) {
-				core.add_particle({
-					pos: this.back.position,
-					velocity: new Vec3(0, 2, 0),
-					size: 1,
-					texture: "default_wood.png",
-				});
-			}
+			// if (this.back.valid) {
+			// 	core.add_particle({
+			// 		pos: this.back.position,
+			// 		velocity: new Vec3(0, 2, 0),
+			// 		size: 1,
+			// 		texture: "default_wood.png",
+			// 	});
+			// }
 		}
 
 		nodeMove(): void {
