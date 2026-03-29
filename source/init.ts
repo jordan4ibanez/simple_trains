@@ -108,19 +108,19 @@ enum TRAIN_SLOPE {
 	down = 2,
 }
 
-export enum DIRECTION {
+enum DIRECTION {
 	north = 0, // +Z
 	east = 1, //  +X
 	south = 2, // -Z
 	west = 3, //  -X
 }
 
-export enum AXIS {
+enum AXIS {
 	X = 0,
 	Z = 1,
 }
 
-export const DIR_TO_AXIS: AXIS[] = [AXIS.Z, AXIS.X, AXIS.Z, AXIS.X];
+const DIR_TO_AXIS: AXIS[] = [AXIS.Z, AXIS.X, AXIS.Z, AXIS.X];
 
 const dirToVector: Vec3[] = [
 	new Vec3(0, 0, 1), //  0 - North.
