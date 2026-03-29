@@ -38,10 +38,8 @@ class AABB {
 
 		if (axis == AXIS.Z) {
 			this.size.set(cbox[3], cbox[5]);
-			print("regular");
 		} else {
 			this.size.set(cbox[5], cbox[3]);
-			print("turned");
 		}
 	}
 }
