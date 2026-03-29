@@ -3,7 +3,7 @@ import { __playerAnimationFunction, __trackIdentity } from "./game_detection";
 import { Entity, registerEntity, SelectionBox } from "./utility/entity";
 import { EntityVisual, LogLevel } from "./utility/enums";
 import { degToRad, sign } from "./utility/math";
-import { Vec3 } from "./utility/vector";
+import { Vec2, Vec3 } from "./utility/vector";
 
 const DEBUG_MODE = true;
 
@@ -14,21 +14,32 @@ const setAnimation = __playerAnimationFunction;
 // I would not use this in other mods.
 class AABB {
 	pos: Vec3 = new Vec3();
-	size: Vec3 = new Vec3();
+	size: Vec2 = new Vec2();
 
 	set(thing: LuaEntity): void {
 		this.pos.setVec(thing.object.get_pos());
+
 		const dir: DIRECTION = (thing as any).direction;
+
+		const cbox = thing.initial_properties?.collisionbox;
+
+		if (cbox == null) {
+			throw new Error("Not an entity.");
+		}
+
 		if (dir == null) {
-			throw new Error("Not a rail vehicle.");
+			this.size.set(cbox[3], cbox[5]);
+			return;
 		}
 
 		// Z axis is default.
 		const axis: AXIS = DIR_TO_AXIS[dir];
 
 		if (axis == AXIS.Z) {
+			this.size.set(cbox[3], cbox[5]);
 			print("regular");
 		} else {
+			this.size.set(cbox[5], cbox[3]);
 			print("turned");
 		}
 	}
