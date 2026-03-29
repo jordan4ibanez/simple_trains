@@ -1,6 +1,5 @@
 import { ShallowVector3 } from "../luanti-api";
 import { __playerAnimationFunction, __trackIdentity } from "./game_detection";
-import { AABB } from "./utility/aabb";
 import { Entity, registerEntity, SelectionBox } from "./utility/entity";
 import { EntityVisual, LogLevel } from "./utility/enums";
 import { degToRad, sign } from "./utility/math";
@@ -10,6 +9,30 @@ const DEBUG_MODE = true;
 
 const trackIDs = __trackIdentity;
 const setAnimation = __playerAnimationFunction;
+
+// This is specifically used to calculate if a rail vehicle collides with something.
+// I would not use this in other mods.
+class AABB {
+	pos: Vec3 = new Vec3();
+	size: Vec3 = new Vec3();
+
+	set(thing: LuaEntity): void {
+		this.pos.setVec(thing.object.get_pos());
+		const dir: DIRECTION = (thing as any).direction;
+		if (dir == null) {
+			throw new Error("Not a rail vehicle.");
+		}
+
+		// Z axis is default.
+		const axis: AXIS = DIR_TO_AXIS[dir];
+
+		if (axis == AXIS.Z) {
+			print("regular");
+		} else {
+			print("turned");
+		}
+	}
+}
 
 const thisAABB = new AABB();
 const otherAABB = new AABB();
@@ -675,6 +698,8 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				let collision = false;
 
 				const pos = new Vec3().setVec(this.object.get_pos());
+
+				thisAABB.set(this);
 
 				// Magnetic collision with entities.
 				for (const obj of core.get_objects_inside_radius(
