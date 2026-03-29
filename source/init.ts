@@ -27,6 +27,7 @@ class AABB {
 			throw new Error("Not an entity.");
 		}
 
+		// It is a plain entity.
 		if (dir == null) {
 			this.size.set(cbox[3], cbox[5]);
 			return;
