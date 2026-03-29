@@ -1,5 +1,6 @@
 import { ShallowVector3 } from "../luanti-api";
 import { __playerAnimationFunction, __trackIdentity } from "./game_detection";
+import { AABB } from "./utility/aabb";
 import { Entity, registerEntity, SelectionBox } from "./utility/entity";
 import { EntityVisual, LogLevel } from "./utility/enums";
 import { degToRad, sign } from "./utility/math";
@@ -9,6 +10,9 @@ const DEBUG_MODE = true;
 
 const trackIDs = __trackIdentity;
 const setAnimation = __playerAnimationFunction;
+
+const thisAABB = new AABB();
+const otherAABB = new AABB();
 
 core.register_chatcommand("t", {
 	func: (name: string) => {
