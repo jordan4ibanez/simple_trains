@@ -635,14 +635,16 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				return;
 			}
 
-			if (!this.lockedIn) {
-				const data = vehicleTable.get(this.following);
+			const data = vehicleTable.get(this.following);
 
-				if (data == null) {
-					print("upstream disappeared.");
-					return;
-				}
+			if (data == null) {
+				print("upstream disappeared.");
+				return;
+			}
 
+			if (this.lockedIn) {
+				this.speed = (data.object as RailVehicle).speed;
+			} else {
 				const upStreamPos = new Vec3().setVec(data.position);
 				const current = new Vec3().setVec(this.object.get_pos());
 				const output = upStreamPos.subtractImmutable(current);
@@ -671,6 +673,11 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 					} else {
 						this.speed = -calcForce(output.z);
 					}
+				}
+
+				if (finalCalc == 0) {
+					print("locked");
+					this.lockedIn = true;
 				}
 			}
 		}
