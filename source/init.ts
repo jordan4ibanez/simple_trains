@@ -923,7 +923,9 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 
 				// todo: Check if this is in a train before applying gravity, friction, and powered rail.
 
-				return;
+				if (this.following != -1) {
+					return;
+				}
 
 				if (this.boosted) {
 					// Booster.
