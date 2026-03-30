@@ -822,8 +822,9 @@ class VehicleDefinition {
 	rideable?: boolean = false;
 	// radius from center size. Used for collision detection.
 	size?: number = 2;
-	// X and Z are the widths. (total)
+	// X is the width. (total)
 	// Y is the height of the vehicle. (total)
+	// Z is always the length of the vehicle. (total)
 	collisionBox?: ShallowVector3 = new Vec3(1, 1, 1);
 	mesh?: string = "";
 	textures?: string[] = [""];
