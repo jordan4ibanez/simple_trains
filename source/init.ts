@@ -10,6 +10,66 @@ const DEBUG_MODE = true;
 const trackIDs = __trackIdentity;
 const setAnimation = __playerAnimationFunction;
 
+// How a player can connect two vehicles together.
+class ConnectionLinkage {
+	timer: number = 0;
+	origin: number = -1;
+	constructor(origin: number) {
+		this.origin = origin;
+		this.timer = 5;
+	}
+}
+
+const connections = new Map<string, ConnectionLinkage>();
+
+namespace ____ConnectionHandler {
+	let deletionData: string[] = [];
+
+	core.register_globalstep((delta: number) => {
+		if (connections.size == 0) {
+			return;
+		}
+		connections.forEach((value: ConnectionLinkage, playerName: string) => {
+			value.timer -= delta;
+			if (value.timer <= 0) {
+				deletionData.push(playerName);
+			}
+		});
+		deletionData.forEach((value) => {
+			print(value, "linking timed out");
+			connections.delete(value);
+		});
+		deletionData = [];
+	});
+}
+
+// Vehicles report their position into the global hashmap for easy use.
+class VehicleData {
+	position: Vec3;
+	object: Entity;
+	constructor(pos: ShallowVector3, obj: Entity) {
+		this.position = new Vec3().setVec(pos);
+		this.object = obj;
+	}
+	update(pos: ShallowVector3): void {
+		this.position.setVec(pos);
+	}
+}
+
+const vehicleTable = new Map<number, VehicleData>();
+
+/**
+ * // todo: Note:
+ * Can store trains in an array then use mod storage to store them so they can be easily accessed.
+ *
+ */
+
+core.register_globalstep(() => {
+	vehicleTable.forEach((value, key) => {
+		// print(dump(value));
+	});
+});
+
 // This is specifically used to calculate if a rail vehicle collides with something.
 // I would not use this in other mods.
 class AABB {
@@ -201,7 +261,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 	const sBox = definition?.collisionBox || new Vec3(1, 1, 1);
 
 	class RailVehicle extends Entity {
-		simple_train_uuid?: number;
+		simple_train_uuid: number = -1;
 		position: Vec3 = new Vec3();
 		direction: DIRECTION = DIRECTION.north;
 
@@ -229,6 +289,10 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		rideable: boolean = definition?.rideable || false;
 		size: number = definition?.size || 1;
 		animSpeed = definition?.animationSpeed || 1;
+
+		// How trains move in sync. A doubly linked list.
+		following: number = -1;
+		follower: number = -1;
 
 		initial_properties: ObjectProperties = {
 			visual: EntityVisual.mesh,
@@ -350,9 +414,19 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			this.setSlope();
 
 			this.object.set_animation({ x: 0, y: 1 }, this.speed, 0, true);
+
+			// Used to report position data.
+			if (this.simple_train_uuid == -1) {
+				throw new Error("Rail vehicle failed to generate UUID.");
+			}
+			vehicleTable.set(
+				this.simple_train_uuid,
+				new VehicleData(this.object.get_pos(), this),
+			);
 		}
 
 		get_staticdata(): string {
+			vehicleTable.delete(this.simple_train_uuid);
 			return core.serialize({
 				direction: this.direction,
 				movement: this.movement,
@@ -373,9 +447,94 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			dir: Vec3 | null,
 			damage: number,
 		): void {
-			if (puncher?.is_player() && puncher.get_player_control().sneak) {
-				this.object.remove();
+			if (puncher == null) {
+				return;
 			}
+			if (!puncher.is_player()) {
+				return;
+			}
+			if (puncher.get_player_control().sneak) {
+				this.object.remove();
+			} else {
+				this.connectionLogic(puncher.get_player_name());
+			}
+		}
+
+		connectionLogic(name: string): void {
+			const existingConnection: ConnectionLinkage | undefined =
+				connections.get(name);
+
+			// Player tried to connect something to this thing.
+			if (existingConnection != null) {
+				if (existingConnection.origin == this.simple_train_uuid) {
+					print("Vehicle cannot follow itself.");
+					return;
+				}
+
+				//! Note: Allow overwriting follower. Do not disqualify if follower is already defined.
+				// This allows it to be easier to use.
+
+				if (this.powered) {
+					print("unpowered vehicle cannot be a follower.");
+				} else {
+					const data: VehicleData | undefined = vehicleTable.get(
+						existingConnection.origin,
+					);
+
+					if (data == null) {
+						print("Other vehicle disappeared.");
+						connections.delete(name);
+						return;
+					}
+
+					print(
+						"Doing linkage. UUID:",
+						this.simple_train_uuid,
+						"follows:",
+						existingConnection.origin,
+					);
+
+					// Connection gets defined.
+					(data.object as RailVehicle).follower =
+						this.simple_train_uuid;
+					this.following = existingConnection.origin;
+
+					connections.delete(name);
+				}
+			} else {
+				// Player is trying to connect this thing to something.
+				if (this.follower == -1) {
+					connections.set(
+						name,
+						new ConnectionLinkage(this.simple_train_uuid),
+					);
+					print(
+						"Starting linkage from UUID:",
+						this.simple_train_uuid,
+						"Please wait 5 seconds if this was a mistake.",
+					);
+				} else {
+					// Cannot have 2 followers.
+					print("Vehicle already has follower. Unlink.");
+				}
+			}
+		}
+
+		reportVehicleData(): void {
+			const data = vehicleTable.get(this.simple_train_uuid);
+			if (data == null) {
+				// Used to report position data.
+				if (this.simple_train_uuid == -1) {
+					throw new Error("Rail vehicle failed to generate UUID.");
+				}
+				vehicleTable.set(
+					this.simple_train_uuid,
+					new VehicleData(this.object.get_pos(), this),
+				);
+				return;
+			}
+
+			data.update(this.object.get_pos());
 		}
 
 		/**
@@ -464,6 +623,58 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 			this.nodeMove();
 
 			this.updateAnimation();
+
+			this.reportVehicleData();
+
+			this.followLogic(delta);
+		}
+
+		followLogic(delta: number): void {
+			if (this.following == -1) {
+				return;
+			}
+
+			const data = vehicleTable.get(this.following);
+
+			if (data == null) {
+				print("upstream disappeared.");
+				return;
+			}
+
+			const upStreamPos = new Vec3().setVec(data.position);
+
+			const current = new Vec3().setVec(this.object.get_pos());
+
+			const output = upStreamPos.subtractImmutable(current);
+
+			const calcForce = (axisValue: number) => {
+				// Sign.
+				const s = sign(axisValue);
+				// Abs.
+				const a = math.abs(axisValue);
+
+				const distance = 2.5;
+
+				const rigidity = 1500;
+
+				const r = (distance - a) * s * delta * rigidity;
+
+				return r;
+			};
+
+			if (DIR_TO_AXIS[this.direction] == AXIS.X) {
+				if (this.direction == DIRECTION.east) {
+					this.speed = -calcForce(output.x);
+				} else {
+					this.speed = calcForce(output.x);
+				}
+			} else {
+				if (this.direction == DIRECTION.north) {
+					this.speed = calcForce(output.z);
+				} else {
+					this.speed = -calcForce(output.z);
+				}
+			}
 		}
 
 		updateAnimation(): void {
@@ -706,6 +917,8 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				// An unpowered vehicle.
 
 				// todo: Check if this is in a train before applying gravity, friction, and powered rail.
+
+				return;
 
 				if (this.boosted) {
 					// Booster.
