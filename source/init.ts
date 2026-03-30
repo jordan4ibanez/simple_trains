@@ -16,16 +16,24 @@ class AABB {
 	pos: Vec3 = new Vec3();
 	size: Vec2 = new Vec2();
 
-	set(thing: LuaEntity): void {
-		this.pos.setVec(thing.object.get_pos());
+	set(thing: ObjectRef): void {
+		this.pos.setVec(thing.get_pos());
 
-		const dir: DIRECTION = (thing as any).direction;
-
-		const cbox = thing.initial_properties?.collisionbox;
+		const cbox = thing.get_properties().collisionbox;
 
 		if (cbox == null) {
 			throw new Error("Not an entity.");
 		}
+
+		const luaEntity = thing.get_luaentity();
+
+		// It is a player.
+		if (luaEntity == null) {
+			this.size.set(cbox[3], cbox[5]);
+			return;
+		}
+
+		const dir: DIRECTION = (luaEntity as any).direction;
 
 		// It is a plain entity.
 		if (dir == null) {
@@ -41,6 +49,15 @@ class AABB {
 		} else {
 			this.size.set(cbox[5], cbox[3]);
 		}
+	}
+
+	collides(other: AABB) {
+		return !(
+			this.pos.x - this.size.x > other.pos.x + other.size.x ||
+			this.pos.x + this.size.x < other.pos.x - other.size.x ||
+			this.pos.z - this.size.y > other.pos.z + other.size.y ||
+			this.pos.z + this.size.y < other.pos.z - other.size.y
+		);
 	}
 }
 
@@ -709,7 +726,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 
 				const pos = new Vec3().setVec(this.object.get_pos());
 
-				thisAABB.set(this);
+				thisAABB.set(this.object);
 
 				// Magnetic collision with entities.
 				for (const obj of core.get_objects_inside_radius(
@@ -722,6 +739,12 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 					// todo: Add option for mobs too.
 					if (obj.is_player() || isRailVehicle(obj)) {
 						if (obj == this.driver) {
+							continue;
+						}
+
+						otherAABB.set(obj);
+
+						if (!thisAABB.collides(otherAABB)) {
 							continue;
 						}
 
@@ -798,7 +821,7 @@ class VehicleDefinition {
 	topSpeed?: number = 10;
 	rideable?: boolean = false;
 	// radius from center size. Used for collision detection.
-	size?: number = 1.5;
+	size?: number = 2;
 	// X and Z are the widths. (total)
 	// Y is the height of the vehicle. (total)
 	collisionBox?: ShallowVector3 = new Vec3(1, 1, 1);
