@@ -291,6 +291,7 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 		animSpeed = definition?.animationSpeed || 1;
 
 		// How trains move in sync. A doubly linked list.
+		lockedIn: boolean = false;
 		following: number = -1;
 		follower: number = -1;
 
@@ -634,45 +635,42 @@ function registerRailVehicle(definition?: VehicleDefinition): void {
 				return;
 			}
 
-			const data = vehicleTable.get(this.following);
+			if (!this.lockedIn) {
+				const data = vehicleTable.get(this.following);
 
-			if (data == null) {
-				print("upstream disappeared.");
-				return;
-			}
-
-			const upStreamPos = new Vec3().setVec(data.position);
-
-			const current = new Vec3().setVec(this.object.get_pos());
-
-			const output = upStreamPos.subtractImmutable(current);
-
-			const calcForce = (axisValue: number) => {
-				// Sign.
-				const s = sign(axisValue);
-				// Abs.
-				const a = math.abs(axisValue);
-
-				const distance = 2.5;
-
-				const rigidity = 1500;
-
-				const r = (distance - a) * s * delta * rigidity;
-
-				return r;
-			};
-
-			if (DIR_TO_AXIS[this.direction] == AXIS.X) {
-				if (this.direction == DIRECTION.east) {
-					this.speed = -calcForce(output.x);
-				} else {
-					this.speed = calcForce(output.x);
+				if (data == null) {
+					print("upstream disappeared.");
+					return;
 				}
-			} else {
-				if (this.direction == DIRECTION.north) {
-					this.speed = calcForce(output.z);
+
+				const upStreamPos = new Vec3().setVec(data.position);
+				const current = new Vec3().setVec(this.object.get_pos());
+				const output = upStreamPos.subtractImmutable(current);
+				let finalCalc = Infinity;
+				const calcForce = (axisValue: number) => {
+					// Sign.
+					const s = sign(axisValue);
+					// Abs.
+					const a = math.abs(axisValue);
+					const distance = 2.5;
+					const rigidity = 1500;
+					const r = (distance - a) * s * delta * rigidity;
+					finalCalc = r;
+					return r;
+				};
+
+				if (DIR_TO_AXIS[this.direction] == AXIS.X) {
+					if (this.direction == DIRECTION.east) {
+						this.speed = -calcForce(output.x);
+					} else {
+						this.speed = calcForce(output.x);
+					}
 				} else {
-					this.speed = -calcForce(output.z);
+					if (this.direction == DIRECTION.north) {
+						this.speed = calcForce(output.z);
+					} else {
+						this.speed = -calcForce(output.z);
+					}
 				}
 			}
 		}
