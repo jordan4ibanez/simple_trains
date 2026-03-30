@@ -14,10 +14,14 @@ const DEBUG_MODE = true;
  * Trains must be set up in a row. There needs to be a calculation that forces the train to be in a row before
  * vehicles are connected to it.
  *
+ * When a vehicle gets connected to another it must inherit it's direction as well.
+ *
  * They must move in sync or else they will get weird distance issues.
  *
  * Perhaps some kind of inline correction can be made so they attempt to reallocate the distance
  * when moving in a straight line on a flat surface.
+ *
+ *
  *
  */
 
