@@ -821,7 +821,7 @@ class VehicleDefinition {
 	topSpeed?: number = 10;
 	rideable?: boolean = false;
 	// radius from center size. Used for collision detection.
-	size?: number = 2;
+	size?: number = 2.5;
 	// X is the width. (total)
 	// Y is the height of the vehicle. (total)
 	// Z is always the length of the vehicle. (total)
@@ -847,6 +847,7 @@ tank_engine_0_3_0.powered = true;
 tank_engine_0_3_0.seatingOffset = new Vec3(0, 0, -8);
 tank_engine_0_3_0.eyeOffset = new Vec3(0, 3, 0);
 tank_engine_0_3_0.animationSpeed = 0.9;
+tank_engine_0_3_0.collisionBox = new Vec3(1, 1.8, 1.61);
 registerRailVehicle(tank_engine_0_3_0);
 
 const goodsWagon = new VehicleDefinition();
